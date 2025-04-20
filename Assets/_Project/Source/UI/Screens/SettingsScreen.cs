@@ -10,10 +10,17 @@ namespace Source.UI.Screens
     public class SettingsScreen : UIScreen
     {
         [SerializeField] private Button _backButton;
+        [SerializeField] private Toggle _soundsToggle;
 
         protected override void OnCreated()
         {
             _backButton.onClick.AddListener(OnBackButtonClicked);
+            _soundsToggle.onValueChanged.AddListener(OnSoundsToggleValueChanged);
+        }
+
+        private void OnSoundsToggleValueChanged(bool isOn)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnBackButtonClicked()

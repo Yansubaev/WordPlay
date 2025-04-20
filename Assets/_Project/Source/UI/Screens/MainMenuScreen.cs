@@ -11,13 +11,11 @@ namespace Source.UI.Screens
     {
         [SerializeField] private Button _playButton;
         [SerializeField] private Button _settingsButton;
-        [SerializeField] private Button _exitButton;
         
         protected override void OnCreated()
         {
             _playButton.onClick.AddListener(OnPlayButtonClicked);
             _settingsButton.onClick.AddListener(OnSettingsButtonClicked);
-            _exitButton.onClick.AddListener(OnExitButtonClicked);
         }
 
         private void OnPlayButtonClicked()
@@ -28,11 +26,6 @@ namespace Source.UI.Screens
         private void OnSettingsButtonClicked()
         {
             SignalBus.Fire<OpenSettingsSignal>();
-        }
-
-        private void OnExitButtonClicked()
-        {
-            throw new NotImplementedException();
         }
     }
 }
