@@ -1,26 +1,47 @@
 using Source.Infrastructure.Services;
+using Source.UI.Screens;
 using UnityEngine;
 using Zenject;
 
-namespace Source.Infrastructure.UI
+namespace Source.UI
 {
-    public class MainMenuUIEntryPoint
+    public class MainMenuPresenter
     {
-        private IUIService _uiService;
+        private IScreenService _uiService;
+        private DiContainer _container;
+        private MainMenuScreen _mainMenuScreen;
+        private SettingsScreen _settingsScreen;
 
         [Inject]
-        public void Inject(IUIService uiService)
+        public void Inject(IScreenService uiService, DiContainer container)
         {
             _uiService = uiService;
+            _container = container;
 
-            Debug.Log("<color=magenta>MainMenuUIEntryPoint injected</color>");
+            Debug.Log("<color=magenta>MainMenuPresenter injected</color>");
         }
 
         public async void ShowMainMenu()
         {
-            Debug.Log("<color=blue>MainMenuUIEntryPoint: ShowMainMenu()</color>");
-            
-            await _uiService.OpenScreen<MainMenuScreen>();
+            Debug.Log("<color=blue>MainMenuPresenter: ShowMainMenu()</color>");
+
+            _mainMenuScreen = await _uiService.OpenScreen<MainMenuScreen>();
+
+        }
+
+        public async void ShowSettingsScreen()
+        {
+            Debug.Log("<color=blue>MainMenuPresenter: ShowSettingsScreen()</color>");
+
+            _settingsScreen = await _uiService.OpenScreen<SettingsScreen>();
+        }
+
+        public async void CloseSettings()
+        {
+            Debug.Log("<color=blue>MainMenuPresenter: CloseSettings()</color>");
+
+            if (_settingsScreen != null)
+                await _uiService.CloseScreen(_settingsScreen);
         }
     }
 
