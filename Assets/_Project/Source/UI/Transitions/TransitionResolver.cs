@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Source.UI.Transitions;
+using Source.Infrastructure.UI;
+using Source.Infrastructure.UI.Transitions;
 
-namespace Source.Infrastructure.UI.Transitions
+namespace Source.UI.Transitions
 {
     public class TransitionResolver : ITransitionResolver
     {

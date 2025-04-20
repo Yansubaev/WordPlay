@@ -26,4 +26,12 @@ namespace Source.UI.Transitions
             return UniTask.WhenAll(tasks);
         }
     }
+
+    public class TransitionEmpty : ITransition
+    {
+        public UniTask Play(UIScreen from, UIScreen to)
+        {
+            return UniTask.CompletedTask;
+        }
+    }
 }

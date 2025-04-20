@@ -6,13 +6,14 @@ namespace Source.Infrastructure.UI
 {
     public abstract class UIScreen : UIBehaviour
     {
+        [SerializeField] private Canvas _canvas;
         [SerializeField] private RectTransform _transitionRoot;
         [SerializeField] private CanvasGroup _fadeRoot;
         [SerializeField] private RectTransform _wrapper;
 
         private SignalBus _signalBus;
 
-
+        public Canvas Canvas => _canvas;
         public RectTransform TransitionRoot => _transitionRoot;
         public CanvasGroup FadeRoot => _fadeRoot;
         protected SignalBus SignalBus => _signalBus;
