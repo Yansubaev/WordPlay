@@ -1,6 +1,7 @@
 using Source.Infrastructure.SceneManagement;
 using Source.Infrastructure.StateMachine;
 using Source.Infrastructure.StateMachine.States;
+using Source.Signals;
 using UnityEngine;
 using Zenject;
 
@@ -11,14 +12,28 @@ namespace Source.Infrastructure
         public override void InstallBindings()
         {
             Debug.Log("<color=green>[ZEN] BootstrapInstaller.InstallBindings</color>");
-            
+
             SignalBusInstaller.Install(Container);
 
-            Container.Bind<SceneLoaderService>().AsSingle();
+            DeclareSignals();
+
+            Container.Bind<ISceneLoaderService>().To<SceneLoaderService>().AsSingle();
             Container.Bind<GameStateMachine>().AsSingle();
 
+            BindStates();
+        }
+
+        private void DeclareSignals()
+        {
+            Container.DeclareSignal<ShowMainMenuSignal>();
+        }
+
+        private void BindStates()
+        {
             Container.Bind<BootstrapState>().AsTransient();
-            Container.Bind<LoadMainMenuState>().AsTransient();
+            Container.Bind<LoadMainSceneState>().AsTransient();
+            Container.Bind<MainMenuState>().AsTransient();
+
         }
     }
 

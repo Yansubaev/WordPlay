@@ -14,7 +14,7 @@ namespace Source.Infrastructure.StateMachine.States
 
         public void Enter()
         {
-            _stateMachine.Enter<LoadMainMenuState>();
+            _stateMachine.Enter<LoadMainSceneState>();
         }
 
         public void Exit()

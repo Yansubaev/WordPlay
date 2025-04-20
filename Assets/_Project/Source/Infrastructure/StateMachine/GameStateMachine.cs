@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Source.Infrastructure.StateMachine.States;
+using UnityEngine;
 using Zenject;
 
 namespace Source.Infrastructure.StateMachine
@@ -11,16 +12,18 @@ namespace Source.Infrastructure.StateMachine
         private IState _activeState;
 
         [Inject]
-        public void Inject(BootstrapState bootstrap, LoadMainMenuState loadMainMenu)
+        public void Inject(BootstrapState bootstrap, LoadMainSceneState loadMainMenu, MainMenuState mainMenuState)
         {
             _states[typeof(BootstrapState)] = bootstrap;
-            _states[typeof(LoadMainMenuState)] = loadMainMenu;
+            _states[typeof(LoadMainSceneState)] = loadMainMenu;
+            _states[typeof(MainMenuState)] = mainMenuState;
         }
 
         public void Enter<TState>() where TState : IState
         {
             _activeState?.Exit();
             _activeState = _states[typeof(TState)];
+            Debug.Log($"GameStateMachine: Entering state: {_activeState.GetType().Name}");
             _activeState.Enter();
         }
     }
