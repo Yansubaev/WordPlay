@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
@@ -11,8 +13,10 @@ namespace Source.Infrastructure.SceneManagement
     /// This class is responsible for loading scenes and managing scene transitions.
     /// </summary>
 
-    public class SceneLoaderService
+    public class SceneLoaderService : ISceneLoaderService
     {
+        private IDictionary<string, SceneInstance> _loadedScenes = new Dictionary<string, SceneInstance>();
+
         SceneInstance _currentScene;
 
         /// <summary>
@@ -24,18 +28,28 @@ namespace Source.Infrastructure.SceneManagement
             if (mode == LoadSceneMode.Single && _currentScene.Scene.IsValid())
             {
                 await Addressables.UnloadSceneAsync(_currentScene, true);
+                _loadedScenes.Remove(_currentScene.Scene.name);
             }
 
             _currentScene = await Addressables.LoadSceneAsync(sceneKey, mode).ToUniTask(cancellationToken: cancellationToken);
+            _loadedScenes[sceneKey] = _currentScene;
         }
+
         /// <summary>
         /// Unloads a scene asynchronously.
         /// </summary>
         /// <param name="sceneName">The name of the scene to unload.</param>
-        public void UnloadScene(string sceneName)
+        public async UniTask UnloadScene(string sceneName, CancellationToken cancellationToken = default)
         {
-            // Implement scene unloading logic here
-            // For example, using Unity's SceneManager.UnloadSceneAsync
+            if (_loadedScenes.TryGetValue(sceneName, out SceneInstance sceneInstance))
+            {
+                _loadedScenes.Remove(sceneName);
+                await Addressables.UnloadSceneAsync(sceneInstance, true).ToUniTask(cancellationToken: cancellationToken);
+            }
+            else
+            {
+                Debug.LogWarning($"Scene {sceneName} is not loaded.");
+            }
         }
     }
 }

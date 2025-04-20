@@ -15,11 +15,23 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: bf9e68b53d1a6e24282f2713d7a068b1
   m_SerializeEntries:
+  - m_GUID: 7553f83793fe12940a403c4712a5e4c8
+    m_Address: UI/Root/UIRoot.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8c9cfa26abfee488c85f1582747f6a02
     m_Address: Main
     m_ReadOnly: 0
     m_SerializedLabels:
     - Scene
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb2875bcc6af7144591071f8f581df3f
+    m_Address: UI/Screens/MainMenuScreen.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 85610afe089c4874480e340fd4698d99, type: 2}
