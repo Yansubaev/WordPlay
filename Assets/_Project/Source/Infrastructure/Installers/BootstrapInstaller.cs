@@ -26,6 +26,10 @@ namespace Source.Infrastructure
         private void DeclareSignals()
         {
             Container.DeclareSignal<ShowMainMenuSignal>();
+            Container.DeclareSignal<OpenSettingsSignal>();
+            Container.DeclareSignal<CloseSettingsSignal>();
+            Container.DeclareSignal<StartGameSignal>();
+            Container.DeclareSignal<ExitGameSignal>();
         }
 
         private void BindStates()
