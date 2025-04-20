@@ -55,9 +55,17 @@ namespace Source.Infrastructure.UI
             var transition = _transitionResolver.Resolve(previous?.GetType(), typeof(T));
             await transition.Play(previous, newScreen);
 
+            if (previous != null)
+            {
+                previous.Canvas.enabled = false;
+                previous.transform.localPosition = Vector3.zero;
+                previous.transform.localScale = Vector3.one;
+            }
+
             _screenStack.Push(newScreen);
             _screens[typeof(T).Name] = newScreen;
 
+            newScreen.Canvas.enabled = true;
             newScreen.StartScreen();
             return newScreen;
         }
@@ -97,6 +105,7 @@ namespace Source.Infrastructure.UI
 
             if (isTop)
             {
+                newTop.Canvas.enabled = true;
                 var transition = _transitionResolver.Resolve(screen.GetType(), newTop?.GetType());
                 await transition.Play(screen, newTop);
             }
@@ -106,7 +115,9 @@ namespace Source.Infrastructure.UI
             GameObject.Destroy(screen.gameObject);
 
             if (isTop && newTop != null)
+            {
                 newTop.StartScreen();
+            }
         }
     }
 }
