@@ -15,6 +15,8 @@ namespace Source.Infrastructure.SceneManagement
 
     public class SceneLoaderService : ISceneLoaderService
     {
+        private const string SceneKeyTemplate = "Scenes/{0}";
+
         private IDictionary<string, SceneInstance> _loadedScenes = new Dictionary<string, SceneInstance>();
 
         SceneInstance _currentScene;
@@ -23,7 +25,7 @@ namespace Source.Infrastructure.SceneManagement
         /// Loads a scene asynchronously.
         /// </summary>
         /// <param name="sceneName">The name of the scene to load.</param>
-        public async UniTask LoadSceneAsync(string sceneKey, LoadSceneMode mode = LoadSceneMode.Single, CancellationToken cancellationToken = default)
+        public async UniTask LoadSceneAsync(string sceneName, LoadSceneMode mode = LoadSceneMode.Single, CancellationToken cancellationToken = default)
         {
             if (mode == LoadSceneMode.Single && _currentScene.Scene.IsValid())
             {
@@ -31,8 +33,11 @@ namespace Source.Infrastructure.SceneManagement
                 _loadedScenes.Remove(_currentScene.Scene.name);
             }
 
-            _currentScene = await Addressables.LoadSceneAsync(sceneKey, mode).ToUniTask(cancellationToken: cancellationToken);
-            _loadedScenes[sceneKey] = _currentScene;
+            _currentScene = await Addressables
+                .LoadSceneAsync(string.Format(SceneKeyTemplate, sceneName), mode)
+                .ToUniTask(cancellationToken: cancellationToken);
+                
+            _loadedScenes[sceneName] = _currentScene;
         }
 
         /// <summary>

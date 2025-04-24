@@ -37,7 +37,8 @@ namespace Source.Installers
             Container.Bind<BootstrapState>().AsTransient();
             Container.Bind<LoadMainSceneState>().AsTransient();
             Container.Bind<MainMenuState>().AsTransient();
-
+            Container.Bind<LoadGameSceneState>().AsTransient();
+            Container.Bind<GameState>().AsTransient();
         }
     }
 

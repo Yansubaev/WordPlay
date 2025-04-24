@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Source.Infrastructure.StateMachine.States
 {
-    public class LoadMainSceneState : IState
+    public class LoadGameSceneState : IState
     {
         private ISceneLoaderService _sceneLoader;
         private GameStateMachine _stateMachine;
@@ -19,9 +19,9 @@ namespace Source.Infrastructure.StateMachine.States
 
         public async UniTask Enter()
         {
-            await _sceneLoader.LoadSceneAsync("Main");
+            await _sceneLoader.LoadSceneAsync("Game");
 
-            await _stateMachine.Enter<MainMenuState>();
+            await _stateMachine.Enter<GameState>();
         }
 
         public UniTask Exit()

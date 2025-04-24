@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Zenject;
 
 namespace Source.Infrastructure.StateMachine.States
@@ -12,13 +13,14 @@ namespace Source.Infrastructure.StateMachine.States
             _stateMachine = stateMachine;
         }
 
-        public void Enter()
+        public UniTask Enter()
         {
-            _stateMachine.Enter<LoadMainSceneState>();
+            return _stateMachine.Enter<LoadMainSceneState>();
         }
 
-        public void Exit()
+        public UniTask Exit()
         {
+            return UniTask.CompletedTask;
         }
     }
 }
