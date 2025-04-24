@@ -27,8 +27,6 @@ namespace Source.Infrastructure.UI
         [Inject]
         public void Inject(UIRoot uIRoot, ITransitionResolver transitionResolver, SignalBus signalBus)
         {
-            Debug.Log($"<color=magenta>UIService.Inject(UIRoot: {uIRoot.name})</color>");
-
             _uiRoot = uIRoot;
             _transitionResolver = transitionResolver;
             _signalBus = signalBus;
@@ -36,8 +34,6 @@ namespace Source.Infrastructure.UI
 
         public async UniTask<T> OpenScreen<T>() where T : UIScreen
         {
-            Debug.Log($"<color=magenta>UIService.OpenScreen({typeof(T).Name})</color>");
-
             string address = string.Format(AddressTemplate, typeof(T).Name);
             var handle = Addressables.InstantiateAsync(address);
             var screenObject = await handle.ToUniTask();
@@ -50,7 +46,8 @@ namespace Source.Infrastructure.UI
 
             UIScreen previous = _screenStack.Count > 0 ? _screenStack.Peek() : null;
 
-            previous?.StopScreen();
+            if (previous != null)
+                previous.StopScreen();
 
             var transition = _transitionResolver.Resolve(previous?.GetType(), typeof(T));
             await transition.Play(previous, newScreen);
@@ -112,7 +109,7 @@ namespace Source.Infrastructure.UI
 
             screen.Close();
             Addressables.Release(screen.gameObject);
-            GameObject.Destroy(screen.gameObject);
+            Object.Destroy(screen.gameObject);
 
             if (isTop && newTop != null)
             {

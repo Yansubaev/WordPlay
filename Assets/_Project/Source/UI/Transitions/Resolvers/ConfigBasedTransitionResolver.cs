@@ -24,7 +24,7 @@ namespace Source.UI.Transitions
                 ? transition
                 : _map.TryGetValue(("null", to?.Name ?? "null"), out var fallback)
                     ? fallback
-                    : new TransitionFade(); // default
+                    : new TransitionEmpty();
         }
     }
 }
