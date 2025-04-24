@@ -1,5 +1,4 @@
 
-using Source.Infrastructure.Installers;
 using Source.Infrastructure.SceneManagement;
 using Zenject;
 

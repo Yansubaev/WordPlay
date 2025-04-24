@@ -20,28 +20,37 @@ namespace Source.Infrastructure.UI
 
         public void Create(SignalBus signalBus)
         {
+#if LOG_SCREEN_LIFECYCLE
             Debug.Log($"<color=green>[SCREEN] {name}.Create</color>", gameObject);
-
+#endif
             _signalBus = signalBus;
-            
+
             OnCreated();
         }
 
         public void StartScreen()
         {
-            Debug.Log($"<color=green>[SCREEN] {name}.StartScreen</color>", gameObject);
+#if LOG_SCREEN_LIFECYCLE
+            Debug.Log($"<color=blue>[SCREEN] {name}.StartScreen</color>", gameObject);
+#endif
             OnStarted();
         }
 
         public void StopScreen()
         {
-            Debug.Log($"<color=green>[SCREEN] {name}.StopScreen</color>", gameObject);
+#if LOG_SCREEN_LIFECYCLE
+            Debug.Log($"<color=yellow>[SCREEN] {name}.StopScreen</color>", gameObject);
+#endif
+
             OnStopped();
         }
 
         public void Close()
         {
-            Debug.Log($"<color=green>[SCREEN] {name}.Close</color>", gameObject);
+#if LOG_SCREEN_LIFECYCLE
+            Debug.Log($"<color=magenta>[SCREEN] {name}.Close</color>", gameObject);
+#endif
+
             OnClosed();
         }
 

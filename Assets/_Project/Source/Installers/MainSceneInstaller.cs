@@ -6,7 +6,7 @@ using Source.UI;
 using UnityEngine;
 using Zenject;
 
-namespace Source.Infrastructure.Installers
+namespace Source.Installers
 {
 
     public class MainSceneInstaller : MonoInstaller

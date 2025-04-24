@@ -5,7 +5,7 @@ using Source.Signals;
 using UnityEngine;
 using Zenject;
 
-namespace Source.Infrastructure
+namespace Source.Installers
 {
     public class BootstrapInstaller : MonoInstaller
     {
