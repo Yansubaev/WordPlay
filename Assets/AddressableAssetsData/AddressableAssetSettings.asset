@@ -60,6 +60,7 @@ MonoBehaviour:
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
   - {fileID: 11400000, guid: a5c6db12f142c56408460b040bbf7a5a, type: 2}
+  - {fileID: 11400000, guid: 8eb6ba5a68c8ee948ac474cbaa4876eb, type: 2}
   - {fileID: 11400000, guid: 4bee9df74ec84a14a8003ef9703b17c1, type: 2}
   m_BuildSettings:
     m_LogResourceManagerExceptions: 1
@@ -102,6 +103,7 @@ MonoBehaviour:
     - default
     - Scene
     - UI
+    - Level
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: e6cf0f2a018e97d40a066b975ccd3053, type: 2}
