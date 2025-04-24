@@ -20,7 +20,7 @@ namespace Source.UI.Screens
 
         private void OnPlayButtonClicked()
         {
-            throw new NotImplementedException();
+            SignalBus.Fire<StartGameSignal>();
         }
 
         private void OnSettingsButtonClicked()

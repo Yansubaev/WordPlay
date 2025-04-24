@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Source.Infrastructure.StateMachine.States;
 using UnityEngine;
 using Zenject;
@@ -12,19 +14,40 @@ namespace Source.Infrastructure.StateMachine
         private IState _activeState;
 
         [Inject]
-        public void Inject(BootstrapState bootstrap, LoadMainSceneState loadMainMenu, MainMenuState mainMenuState)
+        public void Inject(
+            BootstrapState bootstrap,
+            LoadMainSceneState loadMainMenu,
+            MainMenuState mainMenuState,
+            LoadGameSceneState loadGameSceneState,
+            GameState gameState
+            )
         {
             _states[typeof(BootstrapState)] = bootstrap;
             _states[typeof(LoadMainSceneState)] = loadMainMenu;
             _states[typeof(MainMenuState)] = mainMenuState;
+            _states[typeof(LoadGameSceneState)] = loadGameSceneState;
+            _states[typeof(GameState)] = gameState;
         }
 
-        public void Enter<TState>() where TState : IState
+        public async UniTask Enter<TState>() where TState : IState
         {
-            _activeState?.Exit();
+            if (_activeState != null)
+            {
+#if LOG_FSM_EVENTS
+                Debug.Log($"<color=blue>[FSM] GameStateMachine: Exiting state: {_activeState.GetType().Name}</color>");
+#endif                
+
+                await _activeState.Exit();
+            }
+
             _activeState = _states[typeof(TState)];
-            Debug.Log($"GameStateMachine: Entering state: {_activeState.GetType().Name}");
-            _activeState.Enter();
+            
+#if LOG_FSM_EVENTS
+
+            Debug.Log($"<color=blue>[FSM] GameStateMachine: Entering state: {_activeState.GetType().Name}</color>");
+#endif
+
+            await _activeState.Enter();
         }
     }
 

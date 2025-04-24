@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Source.Infrastructure.Services;
+using Source.Infrastructure.StateMachine.States;
 using Source.Infrastructure.UI;
 using Source.Signals;
 using Source.UI;
@@ -13,15 +14,11 @@ namespace Source.Installers
     {
         [SerializeField] private UIRoot _uiRoot;
 
-        public static UniTaskCompletionSource SceneLoaded { get; private set; }
-
         public override void InstallBindings()
         {
             Debug.Log("<color=green>[ZEN] MainSceneInstaller.InstallBindings</color>");
 
-            SceneLoaded = new UniTaskCompletionSource();
-
-            Container.Bind<UIRootLoader>().AsSingle();
+            // Container.Bind<UIRootLoader>().AsSingle();
             Container.Bind<UIRoot>().FromInstance(_uiRoot).AsSingle();
             Container.Bind<IScreenService>().To<UIScreenService>().AsSingle();
             Container.Bind<MainMenuPresenter>().AsSingle();
@@ -41,6 +38,10 @@ namespace Source.Installers
 
             Container.BindSignal<CloseSettingsSignal>()
                 .ToMethod<MainMenuPresenter>(x => x.CloseSettings)
+                .FromResolve();
+
+            Container.BindSignal<StartGameSignal>()
+                .ToMethod<MainMenuState>(x => x.StartGame)
                 .FromResolve();
         }
     }

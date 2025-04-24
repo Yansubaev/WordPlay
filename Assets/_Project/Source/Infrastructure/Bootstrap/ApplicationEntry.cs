@@ -2,6 +2,7 @@ using UnityEngine;
 using Zenject;
 using Source.Infrastructure.StateMachine;
 using Source.Infrastructure.StateMachine.States;
+using Cysharp.Threading.Tasks;
 
 namespace Source.Infrastructure
 {
@@ -23,7 +24,7 @@ namespace Source.Infrastructure
             Debug.Log("ApplicationEntry: Starting the application entry");
             
             // Initialize the state machine with the bootstrap state
-            _stateMachine.Enter<BootstrapState>();
+            _stateMachine.Enter<BootstrapState>().Forget();
         }
     }
 

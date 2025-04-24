@@ -22,7 +22,13 @@ MonoBehaviour:
     - UI
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8c9cfa26abfee488c85f1582747f6a02
-    m_Address: Main
+    m_Address: Scenes/Main
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Scene
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d3d3ad985498dd44cbb894e9e25a8f0e
+    m_Address: Scenes/Game
     m_ReadOnly: 0
     m_SerializedLabels:
     - Scene
