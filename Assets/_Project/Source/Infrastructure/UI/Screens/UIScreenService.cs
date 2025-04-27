@@ -15,10 +15,13 @@ namespace Source.Infrastructure.UI
     /// </summary>
     public class UIScreenService : IScreenService
     {
-        private const string AddressTemplate = "UI/Screens/{0}.prefab";
+        private const string ScreenAddressTemplate = "UI/Screens/{0}.prefab";
+        private const string PopupAddressTemplate = "UI/Popups/{0}.prefab";
 
         private readonly Dictionary<string, UIScreen> _screens = new();
-        private readonly Stack<UIScreen> _screenStack = new();
+        private readonly List<UIScreen> _screenStack = new();
+        private readonly List<UIPopup> _popupStack = new();
+        private readonly List<ILifecycleOwner> _generalStack = new();
 
         private UIRoot _uiRoot;
         private ITransitionResolver _transitionResolver;
@@ -34,45 +37,54 @@ namespace Source.Infrastructure.UI
 
         public async UniTask<T> OpenScreen<T>() where T : UIScreen
         {
-            string address = string.Format(AddressTemplate, typeof(T).Name);
+            string address = string.Format(ScreenAddressTemplate, typeof(T).Name);
             var handle = Addressables.InstantiateAsync(address);
             var screenObject = await handle.ToUniTask();
             var newScreen = screenObject.GetComponent<T>();
 
-            newScreen.transform.SetParent(_uiRoot.ScreensRoot, false);
+            newScreen.transform.SetParent(_uiRoot.ScreenRoot, false);
             newScreen.transform.localPosition = Vector3.zero;
             newScreen.transform.localScale = Vector3.one;
             newScreen.Create(_signalBus);
 
-            UIScreen previous = _screenStack.Count > 0 ? _screenStack.Peek() : null;
+            UIScreen previous = _screenStack.Count > 0 ? _screenStack.LastOrDefault() : null;
 
             if (previous != null)
-                previous.StopScreen();
+                previous.PauseLifecycle();
 
             var transition = _transitionResolver.Resolve(previous?.GetType(), typeof(T));
             await transition.Play(previous, newScreen);
 
             if (previous != null)
-            {
-                previous.Canvas.enabled = false;
-                previous.transform.localPosition = Vector3.zero;
-                previous.transform.localScale = Vector3.one;
-            }
+                previous.StopLifecycle();
 
-            _screenStack.Push(newScreen);
+            _screenStack.Add(newScreen);
             _screens[typeof(T).Name] = newScreen;
 
             newScreen.Canvas.enabled = true;
-            newScreen.StartScreen();
+            newScreen.StartLifecycle();
+
+            _generalStack.Add(newScreen);
             return newScreen;
         }
 
         public UniTask CloseTop()
         {
-            if (_screenStack.Count == 0)
+            if (_generalStack.Count == 0)
                 return UniTask.CompletedTask;
 
-            return CloseScreen(_screenStack.Peek());
+            var topScreen = _generalStack.LastOrDefault();
+
+            if (topScreen is UIScreen screen)
+            {
+                return CloseScreen(screen);
+            }
+            else if (topScreen is UIPopup popup)
+            {
+                return ClosePopup(popup);
+            }
+
+            throw new System.Exception("Unknown screen type in stack.");
         }
 
         public async UniTask CloseScreen(UIScreen screen)
@@ -83,22 +95,21 @@ namespace Source.Infrastructure.UI
                 return;
             }
 
-            var tempStack = new Stack<UIScreen>(_screenStack.Reverse());
-            _screenStack.Clear();
-
-            bool isTop = tempStack.Peek() == screen;
+            bool isTop = _screenStack.Last() == screen;
 
             UIScreen newTop = null;
-            foreach (var scr in tempStack)
-            {
-                if (scr == screen) continue;
-                _screenStack.Push(scr);
-            }
-            newTop = _screenStack.Count > 0 ? _screenStack.Peek() : null;
+            _screenStack.Remove(screen);
+
+            newTop = _screenStack.Count > 0 ? _screenStack.LastOrDefault() : null;
 
             _screens.Remove(screen.GetType().Name);
 
-            screen.StopScreen();
+            screen.PauseLifecycle();
+
+            if (newTop != null)
+            {
+                newTop.StartLifecycle();
+            }
 
             if (isTop)
             {
@@ -107,14 +118,72 @@ namespace Source.Infrastructure.UI
                 await transition.Play(screen, newTop);
             }
 
+            screen.StopLifecycle();
             screen.Close();
-            Addressables.Release(screen.gameObject);
-            Object.Destroy(screen.gameObject);
+
+            _generalStack.Remove(screen);
+
+            Addressables.ReleaseInstance(screen.gameObject);
+            // Object.Destroy(screen.gameObject);
 
             if (isTop && newTop != null)
             {
-                newTop.StartScreen();
+                newTop.ResumeLifecycle();
             }
+        }
+
+        public async UniTask<T> OpenPopup<T>() where T : UIPopup
+        {
+            string address = string.Format(PopupAddressTemplate, typeof(T).Name);
+            var handle = Addressables.InstantiateAsync(address);
+            var popupObject = await handle.ToUniTask();
+
+            var newPopup = popupObject.GetComponent<T>();
+
+            newPopup.transform.SetParent(_uiRoot.PopupRoot, false);
+            newPopup.transform.localPosition = Vector3.zero;
+            newPopup.transform.localScale = Vector3.one;
+            newPopup.Create(_signalBus);
+            newPopup.StartLifecycle();
+
+            var topScreen = _screenStack.Count > 0 ? _screenStack.LastOrDefault() : null;
+            if (topScreen != null)
+            {
+                topScreen.PauseLifecycle();
+            }
+
+            newPopup.ResumeLifecycle();
+
+            _popupStack.Add(newPopup);
+            _generalStack.Add(newPopup);
+
+            return newPopup;
+        }
+
+        public UniTask ClosePopup(UIPopup popup)
+        {
+            if (!_popupStack.Contains(popup))
+            {
+                Debug.LogWarning($"Popup {popup.GetType().Name} is not open.");
+                return UniTask.CompletedTask;
+            }
+
+            popup.PauseLifecycle();
+
+            var newTop = _screenStack.Count > 0 ? _screenStack.LastOrDefault() : null;
+            if (newTop != null)
+            {
+                newTop.ResumeLifecycle();
+            }
+
+
+            _generalStack.Remove(popup);
+
+            popup.StopLifecycle();
+            popup.Close();
+
+            Addressables.ReleaseInstance(popup.gameObject);
+            return UniTask.CompletedTask;
         }
     }
 }

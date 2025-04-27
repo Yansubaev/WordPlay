@@ -40,7 +40,7 @@ namespace Source.Installers
                 .ToMethod<MainMenuPresenter>(x => x.CloseSettings)
                 .FromResolve();
 
-            Container.BindSignal<StartGameSignal>()
+            Container.BindSignal<OpenGameSignal>()
                 .ToMethod<MainMenuState>(x => x.StartGame)
                 .FromResolve();
         }

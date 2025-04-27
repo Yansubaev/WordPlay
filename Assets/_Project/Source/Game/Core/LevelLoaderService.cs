@@ -9,7 +9,7 @@ namespace Source.Game.Core
 {
     public class LevelLoaderService : ILevelLoaderService
     {
-        private const string AddressTemplate = "Level/ru/{0}.json";
+        private const string AddressTemplate = "Level/ru/{0}";
 
         public async UniTask<LevelData> LoadLevel(string levelId, CancellationToken ct)
         {

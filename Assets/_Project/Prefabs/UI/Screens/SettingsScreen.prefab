@@ -501,6 +501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvas: {fileID: 3515898706688488047}
+  _graphicRaycaster: {fileID: 588691881487756237}
   _transitionRoot: {fileID: 4974199828500621136}
   _fadeRoot: {fileID: 6885038993408407691}
   _wrapper: {fileID: 4639015539996158246}
@@ -536,7 +537,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0

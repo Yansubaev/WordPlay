@@ -509,6 +509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvas: {fileID: 21991484601973393}
+  _graphicRaycaster: {fileID: 3070293490637884317}
   _transitionRoot: {fileID: 1494603500865569909}
   _fadeRoot: {fileID: 999421269452391039}
   _wrapper: {fileID: 2019688652154736264}

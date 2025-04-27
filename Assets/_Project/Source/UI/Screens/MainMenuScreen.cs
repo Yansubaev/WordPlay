@@ -20,7 +20,7 @@ namespace Source.UI.Screens
 
         private void OnPlayButtonClicked()
         {
-            SignalBus.Fire<StartGameSignal>();
+            SignalBus.Fire<OpenGameSignal>();
         }
 
         private void OnSettingsButtonClicked()

@@ -1,4 +1,5 @@
 using Source.Infrastructure.Services;
+using Source.UI.Popups;
 using Source.UI.Screens;
 using UnityEngine;
 using Zenject;
@@ -37,6 +38,38 @@ namespace Source.UI
             else
             {
                 Debug.LogWarning("<color=red>Settings screen is null</color>");
+            }
+        }
+    }
+
+    public class GameplayPresenter
+    {
+        private IScreenService _uiService;
+        private GameplayScreen _gameplayScreen;
+        private PausePopup _pausePopup;
+
+        [Inject]
+        public void Inject(IScreenService uiService)
+        {
+            _uiService = uiService;
+        }
+
+        public async void ShowGameplayScreen()
+        {
+            _gameplayScreen = await _uiService.OpenScreen<GameplayScreen>();
+        }
+
+        public async void ShowPausePopup()
+        {
+            _pausePopup = await _uiService.OpenPopup<PausePopup>();
+        }
+
+        public async void ClosePausePopup()
+        {
+            if (_pausePopup != null)
+            {
+                await _uiService.ClosePopup(_pausePopup);
+                _pausePopup = null;
             }
         }
     }
