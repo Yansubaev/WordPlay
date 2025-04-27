@@ -7,6 +7,8 @@ namespace Source.Infrastructure.Services
     {
         UniTask<T> OpenScreen<T>() where T : UIScreen;
         UniTask CloseScreen(UIScreen screen);
+        UniTask<T> OpenPopup<T>() where T : UIPopup;
+        UniTask ClosePopup(UIPopup popup);
         UniTask CloseTop();
     }
 }

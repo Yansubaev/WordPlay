@@ -28,8 +28,12 @@ namespace Source.Installers
             Container.DeclareSignal<ShowMainMenuSignal>();
             Container.DeclareSignal<OpenSettingsSignal>();
             Container.DeclareSignal<CloseSettingsSignal>();
+            Container.DeclareSignal<OpenGameSignal>();
             Container.DeclareSignal<StartGameSignal>();
             Container.DeclareSignal<ExitGameSignal>();
+            Container.DeclareSignal<ShowGameplayScreenSignal>();
+            Container.DeclareSignal<PauseGameSignal>();
+            Container.DeclareSignal<ResumeGameSignal>();
         }
 
         private void BindStates()

@@ -12,7 +12,7 @@ namespace Source.UI.Screens
         [SerializeField] private Button _backButton;
         [SerializeField] private Toggle _soundsToggle;
 
-        protected override void OnCreated()
+        protected override void OnStarted()
         {
             _backButton.onClick.AddListener(OnBackButtonClicked);
             _soundsToggle.onValueChanged.AddListener(OnSoundsToggleValueChanged);

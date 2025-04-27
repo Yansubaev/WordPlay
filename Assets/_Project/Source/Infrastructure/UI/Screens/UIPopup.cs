@@ -5,14 +5,12 @@ using Zenject;
 
 namespace Source.Infrastructure.UI
 {
-
-    public abstract class UIScreen : UIBehaviour, ILifecycleOwner
+    public abstract class UIPopup : UIBehaviour, ILifecycleOwner
     {
         [SerializeField] private Canvas _canvas;
-        [SerializeField] private GraphicRaycaster _graphicRaycaster;
+        [SerializeField] GraphicRaycaster _graphicRaycaster;
         [SerializeField] private RectTransform _transitionRoot;
         [SerializeField] private CanvasGroup _fadeRoot;
-        [SerializeField] private RectTransform _wrapper;
 
         private SignalBus _signalBus;
 
@@ -46,6 +44,7 @@ namespace Source.Infrastructure.UI
 #if LOG_SCREEN_LIFECYCLE
             Debug.Log($"<color=blue>[SCREEN] {name}.StartScreen</color>", gameObject);
 #endif
+
             Canvas.enabled = true;
 
             OnStarted();
@@ -54,7 +53,7 @@ namespace Source.Infrastructure.UI
         public void ResumeLifecycle()
         {
 #if LOG_SCREEN_LIFECYCLE
-            Debug.Log($"<color=cyan>[SCREEN] {name}.ResumeScreen</color>", gameObject);
+            Debug.Log($"<color=cyan>[SCREEN] {name}.Resume</color>", gameObject);
 #endif
 
             GraphicRaycaster.enabled = true;
@@ -65,7 +64,7 @@ namespace Source.Infrastructure.UI
         public void PauseLifecycle()
         {
 #if LOG_SCREEN_LIFECYCLE
-            Debug.Log($"<color=orange>[SCREEN] {name}.PauseScreen</color>", gameObject);
+            Debug.Log($"<color=orange>[SCREEN] {name}.Pause</color>", gameObject);
 #endif
 
             GraphicRaycaster.enabled = false;
@@ -78,8 +77,9 @@ namespace Source.Infrastructure.UI
 #if LOG_SCREEN_LIFECYCLE
             Debug.Log($"<color=yellow>[SCREEN] {name}.StopScreen</color>", gameObject);
 #endif
+
             Canvas.enabled = false;
-            
+
             OnStopped();
         }
 

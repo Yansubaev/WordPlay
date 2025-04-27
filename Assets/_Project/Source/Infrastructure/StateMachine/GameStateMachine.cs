@@ -34,7 +34,7 @@ namespace Source.Infrastructure.StateMachine
             if (_activeState != null)
             {
 #if LOG_FSM_EVENTS
-                Debug.Log($"<color=blue>[FSM] GameStateMachine: Exiting state: {_activeState.GetType().Name}</color>");
+                Debug.Log($"<color=cyan>[FSM] GameStateMachine: Exiting state: {_activeState.GetType().Name}</color>");
 #endif                
 
                 await _activeState.Exit();
@@ -44,7 +44,7 @@ namespace Source.Infrastructure.StateMachine
             
 #if LOG_FSM_EVENTS
 
-            Debug.Log($"<color=blue>[FSM] GameStateMachine: Entering state: {_activeState.GetType().Name}</color>");
+            Debug.Log($"<color=cyan>[FSM] GameStateMachine: Entering state: {_activeState.GetType().Name}</color>");
 #endif
 
             await _activeState.Enter();

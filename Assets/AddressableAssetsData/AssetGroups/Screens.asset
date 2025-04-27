@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Screens
   m_GUID: 1e8c6704200dbbd4cbd29c031cc80af0
   m_SerializeEntries:
+  - m_GUID: 86efbec2ede1bbb4a8388bf53dd2fe1e
+    m_Address: UI/Screens/GameplayScreen.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb2875bcc6af7144591071f8f581df3f
     m_Address: UI/Screens/MainMenuScreen.prefab
     m_ReadOnly: 0

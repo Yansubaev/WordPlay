@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 6805910040548022102}
   - component: {fileID: 100726815846505298}
   m_Layer: 5
-  m_Name: ScreensRoot
+  m_Name: ScreenRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 4380948711881191589}
   - component: {fileID: 6600977532057410991}
   m_Layer: 5
-  m_Name: PopupsRoot
+  m_Name: PopupRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -384,7 +384,7 @@ MonoBehaviour:
   _canvas: {fileID: 582097590530546818}
   _canvasScaler: {fileID: 6753792190749419002}
   _graphicRaycaster: {fileID: 5216433069337845951}
-  _screensRoot: {fileID: 8154355783649542051}
+  _screenRoot: {fileID: 8154355783649542051}
   _popupRoot: {fileID: 1859627736981149274}
   _hudRoot: {fileID: 7863704059179507508}
 --- !u!1 &6044039159410774112
