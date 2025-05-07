@@ -1,20 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Zenject;
 
-namespace Source.Infrastructure.UI
+namespace Yans.UI.Screen
 {
-
     public abstract class UIScreen : UIBehaviour, ILifecycleOwner
     {
         [SerializeField] private Canvas _canvas;
         [SerializeField] private GraphicRaycaster _graphicRaycaster;
         [SerializeField] private RectTransform _transitionRoot;
         [SerializeField] private CanvasGroup _fadeRoot;
-        [SerializeField] private RectTransform _wrapper;
-
-        private SignalBus _signalBus;
 
         public Canvas Canvas => _canvas;
         public GraphicRaycaster GraphicRaycaster => _graphicRaycaster;
@@ -22,7 +18,7 @@ namespace Source.Infrastructure.UI
         public CanvasGroup FadeRoot => _fadeRoot;
         public GameObject GameObject => gameObject;
 
-        protected SignalBus SignalBus => _signalBus;
+        private List<ILifecycleListener> _lifecycleListeners;
 
         protected virtual void OnCreated() { }
         protected virtual void OnStarted() { }
@@ -31,13 +27,17 @@ namespace Source.Infrastructure.UI
         protected virtual void OnStopped() { }
         protected virtual void OnClosed() { }
 
-        public void Create(SignalBus signalBus)
+        void ILifecycleOwner.AddLifecycleListener(ILifecycleListener lifecycleListener)
+        {
+            _lifecycleListeners ??= new List<ILifecycleListener>();
+            _lifecycleListeners.Add(lifecycleListener);
+        }
+
+        public void Create()
         {
 #if LOG_SCREEN_LIFECYCLE
             Debug.Log($"<color=green>[SCREEN] {name}.Create</color>", gameObject);
 #endif
-            _signalBus = signalBus;
-
             OnCreated();
         }
 
@@ -79,7 +79,7 @@ namespace Source.Infrastructure.UI
             Debug.Log($"<color=yellow>[SCREEN] {name}.StopScreen</color>", gameObject);
 #endif
             Canvas.enabled = false;
-            
+
             OnStopped();
         }
 

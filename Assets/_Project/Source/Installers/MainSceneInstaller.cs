@@ -1,10 +1,9 @@
-using Cysharp.Threading.Tasks;
-using Source.Infrastructure.Services;
 using Source.Infrastructure.StateMachine.States;
 using Source.Infrastructure.UI;
 using Source.Signals;
 using Source.UI;
 using UnityEngine;
+using Yans.UI;
 using Zenject;
 
 namespace Source.Installers

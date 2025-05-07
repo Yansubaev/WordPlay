@@ -1,53 +1,63 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Source.Infrastructure.Services;
-using Source.Infrastructure.UI.Transitions;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using Yans.UI;
+using Yans.UI.Screen;
+using Yans.UI.Transitions;
 using Zenject;
 
 namespace Source.Infrastructure.UI
 {
 
     /// <summary>
-    /// This class is responsible for managing the UI elements in the game.
+    /// This class is responsible for managing the UI panels in the game.
     /// </summary>
     public class UIScreenService : IScreenService
     {
         private const string ScreenAddressTemplate = "UI/Screens/{0}.prefab";
         private const string PopupAddressTemplate = "UI/Popups/{0}.prefab";
 
-        private readonly Dictionary<string, UIScreen> _screens = new();
-        private readonly List<UIScreen> _screenStack = new();
+        private readonly Dictionary<string, UIPanel> _screens = new();
+        private readonly List<UIPanel> _screenStack = new();
         private readonly List<UIPopup> _popupStack = new();
-        private readonly List<ILifecycleOwner> _generalStack = new();
+        private readonly List<UIScreen> _generalStack = new();
+        private readonly Dictionary<string, AsyncOperationHandle<GameObject>> _popupHandles = new();
+        private readonly Dictionary<string, AsyncOperationHandle<GameObject>> _screenHandles = new();
 
+        private DiContainer _container;
         private UIRoot _uiRoot;
         private ITransitionResolver _transitionResolver;
-        private SignalBus _signalBus;
 
         [Inject]
-        public void Inject(UIRoot uIRoot, ITransitionResolver transitionResolver, SignalBus signalBus)
+        public void Inject(
+            DiContainer container,
+            UIRoot uIRoot,
+            ITransitionResolver transitionResolver)
         {
+            _container = container;
             _uiRoot = uIRoot;
             _transitionResolver = transitionResolver;
-            _signalBus = signalBus;
         }
 
-        public async UniTask<T> OpenScreen<T>() where T : UIScreen
+        public async UniTask<T> OpenScreen<T>() where T : UIPanel
         {
             string address = string.Format(ScreenAddressTemplate, typeof(T).Name);
-            var handle = Addressables.InstantiateAsync(address);
-            var screenObject = await handle.ToUniTask();
-            var newScreen = screenObject.GetComponent<T>();
+
+            var prefabHandle = Addressables.LoadAssetAsync<GameObject>(address);
+            _screenHandles[typeof(T).Name] = prefabHandle;
+
+            var prefab = (await prefabHandle).GetComponent<T>();
+            var newScreen = _container.InstantiatePrefabForComponent<T>(prefab);
 
             newScreen.transform.SetParent(_uiRoot.ScreenRoot, false);
             newScreen.transform.localPosition = Vector3.zero;
             newScreen.transform.localScale = Vector3.one;
-            newScreen.Create(_signalBus);
+            newScreen.Create();
 
-            UIScreen previous = _screenStack.Count > 0 ? _screenStack.LastOrDefault() : null;
+            UIPanel previous = _screenStack.Count > 0 ? _screenStack.LastOrDefault() : null;
 
             if (previous != null)
                 previous.PauseLifecycle();
@@ -75,7 +85,7 @@ namespace Source.Infrastructure.UI
 
             var topScreen = _generalStack.LastOrDefault();
 
-            if (topScreen is UIScreen screen)
+            if (topScreen is UIPanel screen)
             {
                 return CloseScreen(screen);
             }
@@ -87,7 +97,7 @@ namespace Source.Infrastructure.UI
             throw new System.Exception("Unknown screen type in stack.");
         }
 
-        public async UniTask CloseScreen(UIScreen screen)
+        public async UniTask CloseScreen(UIPanel screen)
         {
             if (!_screens.TryGetValue(screen.GetType().Name, out var existingScreen))
             {
@@ -97,7 +107,7 @@ namespace Source.Infrastructure.UI
 
             bool isTop = _screenStack.Last() == screen;
 
-            UIScreen newTop = null;
+            UIPanel newTop = null;
             _screenStack.Remove(screen);
 
             newTop = _screenStack.Count > 0 ? _screenStack.LastOrDefault() : null;
@@ -123,8 +133,13 @@ namespace Source.Infrastructure.UI
 
             _generalStack.Remove(screen);
 
+            string screenName = screen.GetType().Name;
+            if (_screenHandles.TryGetValue(screenName, out var handle))
+            {
+                Addressables.Release(handle);
+                _screenHandles.Remove(screenName);
+            }
             Addressables.ReleaseInstance(screen.gameObject);
-            // Object.Destroy(screen.gameObject);
 
             if (isTop && newTop != null)
             {
@@ -135,15 +150,16 @@ namespace Source.Infrastructure.UI
         public async UniTask<T> OpenPopup<T>() where T : UIPopup
         {
             string address = string.Format(PopupAddressTemplate, typeof(T).Name);
-            var handle = Addressables.InstantiateAsync(address);
-            var popupObject = await handle.ToUniTask();
 
-            var newPopup = popupObject.GetComponent<T>();
+            var prefabHandle = Addressables.LoadAssetAsync<GameObject>(address);
+            _popupHandles[typeof(T).Name] = prefabHandle;
+            var prefab = await prefabHandle;
+            var newPopup = _container.InstantiatePrefabForComponent<T>(prefab);
 
             newPopup.transform.SetParent(_uiRoot.PopupRoot, false);
             newPopup.transform.localPosition = Vector3.zero;
             newPopup.transform.localScale = Vector3.one;
-            newPopup.Create(_signalBus);
+            newPopup.Create();
             newPopup.StartLifecycle();
 
             var topScreen = _screenStack.Count > 0 ? _screenStack.LastOrDefault() : null;
@@ -176,13 +192,20 @@ namespace Source.Infrastructure.UI
                 newTop.ResumeLifecycle();
             }
 
-
             _generalStack.Remove(popup);
+            _popupStack.Remove(popup);
 
             popup.StopLifecycle();
             popup.Close();
 
+            string popupName = popup.GetType().Name;
+            if (_popupHandles.TryGetValue(popupName, out var handle))
+            {
+                Addressables.Release(handle);
+                _popupHandles.Remove(popupName);
+            }
             Addressables.ReleaseInstance(popup.gameObject);
+
             return UniTask.CompletedTask;
         }
     }

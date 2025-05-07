@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Source.Infrastructure.UI
+namespace Yans.UI
 {
     [DisallowMultipleComponent]
     public class UIRoot : MonoBehaviour

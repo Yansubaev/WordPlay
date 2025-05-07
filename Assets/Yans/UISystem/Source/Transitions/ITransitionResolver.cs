@@ -1,6 +1,6 @@
 using System;
 
-namespace Source.Infrastructure.UI.Transitions
+namespace Yans.UI.Transitions
 {
     public interface ITransitionResolver
     {

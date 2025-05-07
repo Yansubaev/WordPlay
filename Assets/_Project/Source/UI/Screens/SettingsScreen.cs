@@ -1,16 +1,24 @@
 using System;
-using Source.Infrastructure.UI;
 using Source.Signals;
 using UnityEngine;
 using UnityEngine.UI;
+using Yans.UI.Screen;
 using Zenject;
 
 namespace Source.UI.Screens
 {
-    public class SettingsScreen : UIScreen
+    public class SettingsScreen : UIPanel
     {
         [SerializeField] private Button _backButton;
         [SerializeField] private Toggle _soundsToggle;
+
+        private SignalBus _signalBus;
+
+        [Inject]
+        private void Inject(SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+        }
 
         protected override void OnStarted()
         {
@@ -26,7 +34,7 @@ namespace Source.UI.Screens
         private void OnBackButtonClicked()
         {
             Debug.Log("<color=blue>SettingsScreen: OnBackButtonClicked()</color>");
-            SignalBus.Fire<CloseSettingsSignal>();
+            _signalBus.Fire<CloseSettingsSignal>();
         }
     }
 }
