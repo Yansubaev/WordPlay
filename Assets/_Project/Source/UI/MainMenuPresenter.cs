@@ -1,7 +1,7 @@
-using Source.Infrastructure.Services;
 using Source.UI.Popups;
 using Source.UI.Screens;
 using UnityEngine;
+using Yans.UI;
 using Zenject;
 
 namespace Source.UI

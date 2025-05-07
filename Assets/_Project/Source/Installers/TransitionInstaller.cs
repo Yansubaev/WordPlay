@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Source.Infrastructure.UI.Transitions;
 using Source.UI.Transitions;
 using UnityEngine;
+using Yans.UI.Transitions;
 using Zenject;
 
 namespace Source.Installers

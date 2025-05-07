@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using Source.Infrastructure.UI;
-using Source.Infrastructure.UI.Transitions;
+using Yans.UI.Screen;
+using Yans.UI.Transitions;
 
 namespace Source.UI.Transitions
 {
     public class TransitionFade : ITransition
     {
-        public UniTask Play(UIScreen from, UIScreen to)
+        public UniTask Play(UIPanel from, UIPanel to)
         {
             var tasks = new List<UniTask>();
 
@@ -29,7 +29,7 @@ namespace Source.UI.Transitions
 
     public class TransitionEmpty : ITransition
     {
-        public UniTask Play(UIScreen from, UIScreen to)
+        public UniTask Play(UIPanel from, UIPanel to)
         {
             return UniTask.CompletedTask;
         }
