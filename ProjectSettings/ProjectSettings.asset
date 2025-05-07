@@ -671,7 +671,7 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   scriptingDefineSymbols:
-    Android: DOTWEEN;LOG_FSM_EVENTS;LOG_SCREEN_LIFECYCLE
+    Android: DOTWEEN;LOG_FSM_EVENTS1;LOG_SCREEN_LIFECYCLE1
     EmbeddedLinux: DOTWEEN
     GameCoreScarlett: DOTWEEN
     GameCoreXboxOne: DOTWEEN

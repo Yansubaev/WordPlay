@@ -1,21 +1,26 @@
-using System;
 using Source.Infrastructure.UI;
+using Source.Infrastructure.UI.Views;
 using Source.Signals;
+using Source.UI.Views;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Source.UI.Screens
 {
     public class GameplayScreen : UIScreen
     {
-        [SerializeField] private Button _pauseButton;
+        [SerializeField] private ImageButtonView _pauseButton;
 
         protected override void OnStarted()
         {
-            _pauseButton.onClick.AddListener(OnPauseButtonClicked);
+            _pauseButton.OnClick += HandlePauseButtonClicked;
         }
 
-        private void OnPauseButtonClicked()
+        protected override void OnStopped()
+        {
+            _pauseButton.OnClick -= HandlePauseButtonClicked;
+        }
+
+        private void HandlePauseButtonClicked(View view)
         {
             SignalBus.Fire<PauseGameSignal>();
         }

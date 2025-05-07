@@ -1,29 +1,35 @@
-using System;
 using Source.Infrastructure.UI;
+using Source.Infrastructure.UI.Views;
 using Source.Signals;
+using Source.UI.Views;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace Source.UI.Screens
 {
     public class MainMenuScreen : UIScreen
     {
-        [SerializeField] private Button _playButton;
-        [SerializeField] private Button _settingsButton;
-        
-        protected override void OnCreated()
+        [SerializeField] private ButtonView _playButton;
+        [SerializeField] private ButtonView _settingsButton;
+
+        protected override void OnStarted()
         {
-            _playButton.onClick.AddListener(OnPlayButtonClicked);
-            _settingsButton.onClick.AddListener(OnSettingsButtonClicked);
+            _playButton.OnClick += HandlePlayButtonClicked;
+            _settingsButton.OnClick += HandleSettingsButtonClicked;
         }
 
-        private void OnPlayButtonClicked()
+        protected override void OnStopped()
+        {
+            _playButton.OnClick -= HandlePlayButtonClicked;
+            _settingsButton.OnClick -= HandleSettingsButtonClicked;
+        }
+
+        private void HandlePlayButtonClicked(View view)
         {
             SignalBus.Fire<OpenGameSignal>();
         }
 
-        private void OnSettingsButtonClicked()
+        private void HandleSettingsButtonClicked(View view)
         {
             SignalBus.Fire<OpenSettingsSignal>();
         }
