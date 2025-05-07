@@ -3,6 +3,10 @@ using UnityEngine.UI;
 
 namespace Yans.UI
 {
+    /// <summary>
+    /// Root object for UI screens such as panels and popups. Should be placed somewhere on scene.
+    /// Use it in screen service to attach screens to specified containers
+    /// </summary>
     [DisallowMultipleComponent]
     public class UIRoot : MonoBehaviour
     {
@@ -11,7 +15,6 @@ namespace Yans.UI
         [SerializeField] private GraphicRaycaster _graphicRaycaster;
         [SerializeField] private RectTransform _screenRoot;
         [SerializeField] private RectTransform _popupRoot;
-        [SerializeField] private RectTransform _hudRoot;
 
         public Canvas Canvas => _canvas;
         public CanvasScaler CanvasScaler => _canvasScaler;
@@ -19,8 +22,5 @@ namespace Yans.UI
 
         public RectTransform ScreenRoot => _screenRoot;
         public RectTransform PopupRoot => _popupRoot;
-        public RectTransform HudRoot => _hudRoot;
-
-        
     }
 }

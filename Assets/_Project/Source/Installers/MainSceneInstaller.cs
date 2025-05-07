@@ -8,7 +8,6 @@ using Zenject;
 
 namespace Source.Installers
 {
-
     public class MainSceneInstaller : MonoInstaller
     {
         [SerializeField] private UIRoot _uiRoot;
