@@ -208,8 +208,8 @@ MonoBehaviour:
   _graphicRaycaster: {fileID: 3095284384281243905}
   _transitionRoot: {fileID: 5281198612115704761}
   _fadeRoot: {fileID: 2646093682458066710}
-  _resumeButton: {fileID: 7035958558011618468}
-  _exitButton: {fileID: 7087051071697162793}
+  _resumeButton: {fileID: 0}
+  _exitButton: {fileID: 0}
 --- !u!223 &6256815564834746391
 Canvas:
   m_ObjectHideFlags: 0
@@ -260,6 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5442937935626468906}
   - component: {fileID: 6519388980352955343}
+  - component: {fileID: 2373348038698739579}
   - component: {fileID: 331631035510455356}
   - component: {fileID: 7087051071697162793}
   m_Layer: 5
@@ -298,6 +299,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902055932903841980}
   m_CullTransparentMesh: 1
+--- !u!114 &2373348038698739579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902055932903841980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89514b70aedbe1b4f98473f3d3e80093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 5442937935626468906}
+  _clickInterceptor: {fileID: 7087051071697162793}
 --- !u!114 &331631035510455356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -668,6 +683,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2289301720800675917}
   - component: {fileID: 6624468163109856491}
+  - component: {fileID: 6158196691597608863}
   - component: {fileID: 9124650533365398377}
   - component: {fileID: 7035958558011618468}
   m_Layer: 5
@@ -706,6 +722,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6635334964163405868}
   m_CullTransparentMesh: 1
+--- !u!114 &6158196691597608863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6635334964163405868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89514b70aedbe1b4f98473f3d3e80093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 2289301720800675917}
+  _clickInterceptor: {fileID: 7035958558011618468}
 --- !u!114 &9124650533365398377
 MonoBehaviour:
   m_ObjectHideFlags: 0

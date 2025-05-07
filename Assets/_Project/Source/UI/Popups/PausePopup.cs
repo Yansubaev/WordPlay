@@ -1,6 +1,8 @@
 using System;
 using Source.Infrastructure.UI;
+using Source.Infrastructure.UI.Views;
 using Source.Signals;
+using Source.UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,25 +10,30 @@ namespace Source.UI.Popups
 {
     public class PausePopup : UIPopup
     {
-        [SerializeField] private Button _resumeButton;
-        [SerializeField] private Button _exitButton;
+        [SerializeField] private ButtonView _resumeButton;
+        [SerializeField] private ButtonView _exitButton;
 
         protected override void OnStarted()
         {
-            _resumeButton.onClick.AddListener(OnResumeButtonClicked);
-            _exitButton.onClick.AddListener(OnExitButtonClicked);
+            _resumeButton.OnClick += HandleResumeButtonClicked;
+            _exitButton.OnClick += HandleExitButtonClicked;
         }
 
-        private void OnExitButtonClicked()
+        protected override void OnStopped()
         {
-            SignalBus.Fire<ExitGameSignal>();
+            _resumeButton.OnClick -= HandleResumeButtonClicked;
+            _exitButton.OnClick -= HandleExitButtonClicked;
         }
 
-        private void OnResumeButtonClicked()
+        private void HandleResumeButtonClicked(View view)
         {
             SignalBus.Fire<ResumeGameSignal>();
         }
 
+        private void HandleExitButtonClicked(View view)
+        {
+            SignalBus.Fire<ExitGameSignal>();
+        }
     }
 
 }
