@@ -4,6 +4,7 @@ using Source.UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
 using Yans.UI.Screen;
+using Yans.UI.Views;
 using Zenject;
 
 namespace Source.UI.Screens
@@ -35,7 +36,7 @@ namespace Source.UI.Screens
 
         private void HandleBackButtonClicked(View view)
         {
-            SignalBus.Fire<CloseSettingsSignal>();
+            _signalBus.Fire<CloseSettingsSignal>();
         }
 
         private void OnSoundsToggleValueChanged(bool isOn)

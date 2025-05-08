@@ -1,4 +1,3 @@
-using Source.Infrastructure.UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,6 +1,6 @@
-using Source.Infrastructure.UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
+using Yans.UI.Views;
 
 namespace Source.UI.Views
 {

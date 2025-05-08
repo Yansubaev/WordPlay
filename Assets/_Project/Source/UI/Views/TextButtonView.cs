@@ -1,4 +1,3 @@
-using Source.Infrastructure.UI.Views;
 using TMPro;
 using UnityEngine;
 
