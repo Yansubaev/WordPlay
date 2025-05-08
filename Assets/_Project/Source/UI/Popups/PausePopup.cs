@@ -1,6 +1,8 @@
 using Source.Signals;
+using Source.UI.Views;
 using UnityEngine;
 using Yans.UI.Screen;
+using Yans.UI.Views;
 using Zenject;
 
 namespace Source.UI.Popups

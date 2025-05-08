@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Source.Infrastructure.UI.Views
+namespace Yans.UI.Views
 {
     public class EnumerableView<V> : View, IEnumerable<V> where V : View
     {

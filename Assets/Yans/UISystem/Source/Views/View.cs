@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Source.Infrastructure.UI.Views
+namespace Yans.UI.Views
 {
     public class View : UIBehaviour
     {

@@ -1,8 +1,8 @@
 using Source.Signals;
 using Source.UI.Views;
 using UnityEngine;
-using UnityEngine.UI;
 using Yans.UI.Screen;
+using Yans.UI.Views;
 using Zenject;
 
 namespace Source.UI.Screens
@@ -11,6 +11,14 @@ namespace Source.UI.Screens
     {
         [SerializeField] private ButtonView _playButton;
         [SerializeField] private ButtonView _settingsButton;
+
+        private SignalBus _signalBus;
+
+        [Inject]
+        private void Inject(SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+        }
 
         protected override void OnStarted()
         {
