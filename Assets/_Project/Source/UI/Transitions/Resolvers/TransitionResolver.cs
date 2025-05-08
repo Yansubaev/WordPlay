@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Source.Infrastructure.UI;
-using Source.Infrastructure.UI.Transitions;
+using Yans.UI.Screen;
+using Yans.UI.Transitions;
 
 namespace Source.UI.Transitions
 {
@@ -9,7 +9,7 @@ namespace Source.UI.Transitions
     {
         private readonly Dictionary<(Type from, Type to), ITransition> _transitions = new();
 
-        public void Register<TFrom, TTo>(ITransition transition) where TFrom : UIScreen where TTo : UIScreen
+        public void Register<TFrom, TTo>(ITransition transition) where TFrom : UIPanel where TTo : UIPanel
         {
             _transitions[(typeof(TFrom), typeof(TTo))] = transition;
         }

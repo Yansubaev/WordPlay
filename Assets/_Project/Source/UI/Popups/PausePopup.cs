@@ -1,10 +1,7 @@
-using System;
-using Source.Infrastructure.UI;
-using Source.Infrastructure.UI.Views;
 using Source.Signals;
-using Source.UI.Views;
 using UnityEngine;
-using UnityEngine.UI;
+using Yans.UI.Screen;
+using Zenject;
 
 namespace Source.UI.Popups
 {
@@ -12,6 +9,14 @@ namespace Source.UI.Popups
     {
         [SerializeField] private ButtonView _resumeButton;
         [SerializeField] private ButtonView _exitButton;
+
+        private SignalBus _signalBus;
+
+        [Inject]
+        private void Inject(SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+        }
 
         protected override void OnStarted()
         {
@@ -27,12 +32,12 @@ namespace Source.UI.Popups
 
         private void HandleResumeButtonClicked(View view)
         {
-            SignalBus.Fire<ResumeGameSignal>();
+            _signalBus.Fire<ResumeGameSignal>();
         }
 
         private void HandleExitButtonClicked(View view)
         {
-            SignalBus.Fire<ExitGameSignal>();
+            _signalBus.Fire<ExitGameSignal>();
         }
     }
 

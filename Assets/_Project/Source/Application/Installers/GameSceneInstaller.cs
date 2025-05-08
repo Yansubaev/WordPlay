@@ -1,13 +1,13 @@
 using Source.Game.Controllers;
 using Source.Game.Core;
-using Source.Infrastructure.Services;
 using Source.Infrastructure.StateMachine.States;
 using Source.Infrastructure.UI;
 using Source.Signals;
 using Source.UI;
-using Unity.Collections;
-using Unity.VisualScripting;
+using Source.UI.ViewModels;
 using UnityEngine;
+using Yans.UI;
+using Yans.ViewModels;
 using Zenject;
 
 namespace Source.Installers
@@ -21,7 +21,8 @@ namespace Source.Installers
             Debug.Log("<color=green>[ZEN] GameSceneInstaller.InstallBindings</color>");
 
             Container.Bind<UIRoot>().FromInstance(_uiRoot).AsSingle();
-            Container.Bind<IScreenService>().To<UIScreenService>().AsSingle();
+            Container.Bind<IViewModelProvider>().To<ViewModelProvider>().AsSingle();
+            Container.Bind<IScreenManager>().To<ZenjectUIScreenManager>().AsSingle();
             Container.Bind<GameplayPresenter>().AsSingle();
             Container.Bind<ILevelLoaderService>().To<LevelLoaderService>().AsSingle();
             Container.Bind<IClusterGameService>().To<ClusterGameService>().AsSingle();

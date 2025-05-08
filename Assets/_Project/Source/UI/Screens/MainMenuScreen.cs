@@ -1,13 +1,13 @@
-using Source.Infrastructure.UI;
-using Source.Infrastructure.UI.Views;
 using Source.Signals;
 using Source.UI.Views;
 using UnityEngine;
+using UnityEngine.UI;
+using Yans.UI.Screen;
 using Zenject;
 
 namespace Source.UI.Screens
 {
-    public class MainMenuScreen : UIScreen
+    public class MainMenuScreen : UIPanel
     {
         [SerializeField] private ButtonView _playButton;
         [SerializeField] private ButtonView _settingsButton;
@@ -26,12 +26,12 @@ namespace Source.UI.Screens
 
         private void HandlePlayButtonClicked(View view)
         {
-            SignalBus.Fire<OpenGameSignal>();
+            _signalBus.Fire<OpenGameSignal>();
         }
 
         private void HandleSettingsButtonClicked(View view)
         {
-            SignalBus.Fire<OpenSettingsSignal>();
+            _signalBus.Fire<OpenSettingsSignal>();
         }
     }
 }

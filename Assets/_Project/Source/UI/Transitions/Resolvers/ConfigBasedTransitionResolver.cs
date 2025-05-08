@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Source.Infrastructure.UI.Transitions;
+using Yans.UI.Transitions;
 
 namespace Source.UI.Transitions
 {

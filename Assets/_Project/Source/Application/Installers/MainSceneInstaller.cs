@@ -1,15 +1,15 @@
-using Cysharp.Threading.Tasks;
-using Source.Infrastructure.Services;
 using Source.Infrastructure.StateMachine.States;
 using Source.Infrastructure.UI;
 using Source.Signals;
 using Source.UI;
+using Source.UI.ViewModels;
 using UnityEngine;
+using Yans.UI;
+using Yans.ViewModels;
 using Zenject;
 
 namespace Source.Installers
 {
-
     public class MainSceneInstaller : MonoInstaller
     {
         [SerializeField] private UIRoot _uiRoot;
@@ -18,9 +18,9 @@ namespace Source.Installers
         {
             Debug.Log("<color=green>[ZEN] MainSceneInstaller.InstallBindings</color>");
 
-            // Container.Bind<UIRootLoader>().AsSingle();
             Container.Bind<UIRoot>().FromInstance(_uiRoot).AsSingle();
-            Container.Bind<IScreenService>().To<UIScreenService>().AsSingle();
+            Container.Bind<IViewModelProvider>().To<ViewModelProvider>().AsSingle();
+            Container.Bind<IScreenManager>().To<ZenjectUIScreenManager>().AsSingle();
             Container.Bind<MainMenuPresenter>().AsSingle();
 
             BindSignals();
