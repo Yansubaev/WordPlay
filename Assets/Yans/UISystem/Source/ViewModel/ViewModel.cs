@@ -1,23 +1,15 @@
-using Yans.UI;
-
 namespace Yans.ViewModels
 {
-    public abstract class ViewModel : ILifecycleListener
+    public abstract class ViewModel
     {
-        private ILifecycleOwner _lifecycleOwner;
+        private ViewModel() { }
 
-        public ViewModel(ILifecycleOwner lifecycleOwner)
-        {
-            _lifecycleOwner = lifecycleOwner;
-            _lifecycleOwner.AddLifecycleListener(this);
-        }
-
-        public void OnOwnerCreated()
+        public void Create()
         {
             OnCreated();
         }
 
-        public void OnOwnerAborted()
+        public void Abort()
         {
             OnAborted();
         }

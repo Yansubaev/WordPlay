@@ -3,6 +3,7 @@ using Zenject;
 using Source.Infrastructure.StateMachine;
 using Source.Infrastructure.StateMachine.States;
 using Cysharp.Threading.Tasks;
+using UnityEngine.AddressableAssets;
 
 namespace Source.Infrastructure
 {
@@ -19,9 +20,11 @@ namespace Source.Infrastructure
             _stateMachine = stateMachine;
         }
 
-        private void Start()
+        private async void Start()
         {
             Debug.Log("ApplicationEntry: Starting the application entry");
+            
+            var t = await Addressables.InitializeAsync(true);
             
             // Initialize the state machine with the bootstrap state
             _stateMachine.Enter<BootstrapState>().Forget();

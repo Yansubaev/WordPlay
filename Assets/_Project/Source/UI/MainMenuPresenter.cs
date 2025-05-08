@@ -8,55 +8,45 @@ namespace Source.UI
 {
     public class MainMenuPresenter
     {
-        private IScreenService _uiService;
-        private MainMenuScreen _mainMenuScreen;
-        private SettingsScreen _settingsScreen;
+        private IScreenManager _uiService;
 
         [Inject]
-        public void Inject(IScreenService uiService)
+        public void Inject(IScreenManager uiService)
         {
             _uiService = uiService;
         }
 
         public async void ShowMainMenu()
         {
-            _mainMenuScreen = await _uiService.OpenScreen<MainMenuScreen>();
+            await _uiService.OpenPanel<MainMenuScreen>();
         }
 
         public async void ShowSettingsScreen()
         {
-            _settingsScreen = await _uiService.OpenScreen<SettingsScreen>();
+            await _uiService.OpenPanel<SettingsScreen>();
         }
 
         public async void CloseSettings()
         {
-            if (_settingsScreen != null)
-            {
-                await _uiService.CloseScreen(_settingsScreen);
-                _settingsScreen = null;
-            }
-            else
-            {
-                Debug.LogWarning("<color=red>Settings screen is null</color>");
-            }
+            await _uiService.CloseTop();
         }
     }
 
     public class GameplayPresenter
     {
-        private IScreenService _uiService;
+        private IScreenManager _uiService;
         private GameplayScreen _gameplayScreen;
         private PausePopup _pausePopup;
 
         [Inject]
-        public void Inject(IScreenService uiService)
+        public void Inject(IScreenManager uiService)
         {
             _uiService = uiService;
         }
 
         public async void ShowGameplayScreen()
         {
-            _gameplayScreen = await _uiService.OpenScreen<GameplayScreen>();
+            _gameplayScreen = await _uiService.OpenPanel<GameplayScreen>();
         }
 
         public async void ShowPausePopup()
