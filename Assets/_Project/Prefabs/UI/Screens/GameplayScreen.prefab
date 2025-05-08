@@ -57,6 +57,7 @@ MonoBehaviour:
   _transitionRoot: {fileID: 8093864126258600063}
   _fadeRoot: {fileID: 7564621492107646341}
   _wrapper: {fileID: 8093864126258600063}
+  Wrapper: {fileID: 8093864126258600063}
   _pauseButton: {fileID: 7132585196175272630}
 --- !u!225 &7564621492107646341
 CanvasGroup:

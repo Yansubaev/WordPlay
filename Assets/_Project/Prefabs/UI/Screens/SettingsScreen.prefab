@@ -430,6 +430,7 @@ MonoBehaviour:
   _transitionRoot: {fileID: 4974199828500621136}
   _fadeRoot: {fileID: 6885038993408407691}
   _wrapper: {fileID: 4639015539996158246}
+  Wrapper: {fileID: 4639015539996158246}
   _backButton: {fileID: 1721680929876608779}
   _soundsToggle: {fileID: 7964100350693168503}
 --- !u!225 &6885038993408407691
