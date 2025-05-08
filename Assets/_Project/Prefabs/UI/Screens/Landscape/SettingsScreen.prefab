@@ -38,7 +38,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4429800142949571073, guid: e27765958833a734689822b5554b1334, type: 3}
       propertyPath: m_Name
-      value: SettingsScreen Variant
+      value: SettingsScreen
       objectReference: {fileID: 0}
     - target: {fileID: 4974199828500621136, guid: e27765958833a734689822b5554b1334, type: 3}
       propertyPath: m_Pivot.x
@@ -120,6 +120,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5251874737878796528, guid: e27765958833a734689822b5554b1334, type: 3}
+      propertyPath: Wrapper
+      value: 
+      objectReference: {fileID: 4684928054933442674}
     - target: {fileID: 8269662868348061898, guid: e27765958833a734689822b5554b1334, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -157,3 +161,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e27765958833a734689822b5554b1334, type: 3}
+--- !u!224 &4684928054933442674 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4639015539996158246, guid: e27765958833a734689822b5554b1334, type: 3}
+  m_PrefabInstance: {fileID: 100536253424679252}
+  m_PrefabAsset: {fileID: 0}

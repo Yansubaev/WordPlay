@@ -208,8 +208,8 @@ MonoBehaviour:
   _graphicRaycaster: {fileID: 3095284384281243905}
   _transitionRoot: {fileID: 5281198612115704761}
   _fadeRoot: {fileID: 2646093682458066710}
-  _resumeButton: {fileID: 0}
-  _exitButton: {fileID: 0}
+  _resumeButton: {fileID: 6158196691597608863}
+  _exitButton: {fileID: 2373348038698739579}
 --- !u!223 &6256815564834746391
 Canvas:
   m_ObjectHideFlags: 0
