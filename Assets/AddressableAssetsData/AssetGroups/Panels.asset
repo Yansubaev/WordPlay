@@ -10,25 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Screens
+  m_Name: Panels
   m_EditorClassIdentifier: 
-  m_GroupName: Screens
+  m_GroupName: Panels
   m_GUID: 1e8c6704200dbbd4cbd29c031cc80af0
   m_SerializeEntries:
+  - m_GUID: 20ee5c99dd8c785418bacba389737f66
+    m_Address: UI/Panels/SettingsScreen/Landscape
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 86efbec2ede1bbb4a8388bf53dd2fe1e
-    m_Address: UI/Screens/GameplayScreen.prefab
+    m_Address: UI/Panels/GameplayScreen
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb2875bcc6af7144591071f8f581df3f
-    m_Address: UI/Screens/MainMenuScreen.prefab
+    m_Address: UI/Panels/MainMenuScreen
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e27765958833a734689822b5554b1334
-    m_Address: UI/Screens/SettingsScreen.prefab
+    m_Address: UI/Panels/SettingsScreen
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI
