@@ -1,18 +1,25 @@
 using System;
-using Source.Infrastructure.UI;
-using Source.Infrastructure.UI.Views;
 using Source.Signals;
 using Source.UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
+using Yans.UI.Screen;
 using Zenject;
 
 namespace Source.UI.Screens
 {
-    public class SettingsScreen : UIScreen
+    public class SettingsScreen : UIPanel
     {
         [SerializeField] private ImageButtonView _backButton;
         [SerializeField] private Toggle _soundsToggle;
+
+        private SignalBus _signalBus;
+
+        [Inject]
+        private void Inject(SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+        }
 
         protected override void OnStarted()
         {

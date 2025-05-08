@@ -4,7 +4,6 @@ using UnityEngine.AddressableAssets;
 
 namespace Source.Infrastructure.UI
 {
-
     /// <summary>
     /// Loads the UI root from the addressable assets.
     /// </summary>

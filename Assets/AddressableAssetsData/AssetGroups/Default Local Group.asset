@@ -27,11 +27,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Scene
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b27e6244cd6aa354e8343841e43c078b
-    m_Address: UI/Popups/PausePopup.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d3d3ad985498dd44cbb894e9e25a8f0e
     m_Address: Scenes/Game
     m_ReadOnly: 0
