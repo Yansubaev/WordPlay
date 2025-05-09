@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 namespace Yans.UI
 {
@@ -11,21 +11,54 @@ namespace Yans.UI
     [DisallowMultipleComponent]
     public class UIRoot : MonoBehaviour
     {
-        [SerializeField] private Canvas _canvas;
-        [SerializeField] private CanvasScaler _canvasScaler;
-        [SerializeField] private GraphicRaycaster _graphicRaycaster;
-        [SerializeField] private RectTransform _screenRoot;
-        [SerializeField] private RectTransform _popupRoot;
+        #region private fields
+
+        [SerializeField]
+        private Canvas _canvas;
+
+        [SerializeField]
+        private CanvasScaler _canvasScaler;
+
+        [SerializeField]
+        private GraphicRaycaster _graphicRaycaster;
+
+        [SerializeField]
+        private RectTransform _screenRoot;
+
+        [SerializeField]
+        private RectTransform _popupRoot;
 
         private ScreenOrientation _currentOrientation;
         private readonly List<IOrientationChangeListener> _orientationListeners = new();
+        #endregion
 
+        #region public properties
         public Canvas Canvas => _canvas;
         public CanvasScaler CanvasScaler => _canvasScaler;
         public GraphicRaycaster GraphicRaycaster => _graphicRaycaster;
         public RectTransform ScreenRoot => _screenRoot;
         public RectTransform PopupRoot => _popupRoot;
         public ScreenOrientation CurrentOrientation => _currentOrientation;
+        #endregion
+
+        #region public methods
+
+        public void AddOrientationListener(IOrientationChangeListener listener)
+        {
+            if (!_orientationListeners.Contains(listener))
+            {
+                _orientationListeners.Add(listener);
+            }
+        }
+
+        public void RemoveOrientationListener(IOrientationChangeListener listener)
+        {
+            _orientationListeners.Remove(listener);
+        }
+
+        #endregion
+
+        #region private methods
 
         private void Awake()
         {
@@ -46,19 +79,6 @@ namespace Yans.UI
             }
         }
 
-        public void AddOrientationListener(IOrientationChangeListener listener)
-        {
-            if (!_orientationListeners.Contains(listener))
-            {
-                _orientationListeners.Add(listener);
-            }
-        }
-
-        public void RemoveOrientationListener(IOrientationChangeListener listener)
-        {
-            _orientationListeners.Remove(listener);
-        }
-
         private void NotifyOrientationListeners()
         {
             foreach (var listener in _orientationListeners)
@@ -66,5 +86,7 @@ namespace Yans.UI
                 listener.OnOrientationChanged(_currentOrientation);
             }
         }
+
+        #endregion
     }
 }

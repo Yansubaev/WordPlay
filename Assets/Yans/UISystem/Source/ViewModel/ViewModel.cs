@@ -4,6 +4,8 @@ namespace Yans.ViewModels
     {
         private ViewModel() { }
 
+        #region public methods
+
         public void Create()
         {
             OnCreated();
@@ -14,9 +16,12 @@ namespace Yans.ViewModels
             OnAborted();
         }
 
+        #endregion
+
+        #region protected methods
         protected virtual void OnCreated() { }
 
         protected virtual void OnAborted() { }
-
+        #endregion
     }
 }

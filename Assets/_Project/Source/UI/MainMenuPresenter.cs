@@ -18,12 +18,12 @@ namespace Source.UI
 
         public async void ShowMainMenu()
         {
-            await _uiService.OpenPanel<MainMenuScreen>();
+            await _uiService.OpenPanel<MainMenuPanel>();
         }
 
         public async void ShowSettingsScreen()
         {
-            await _uiService.OpenPanel<SettingsScreen>();
+            await _uiService.OpenPanel<SettingsPanel>();
         }
 
         public async void CloseSettings()
@@ -35,7 +35,7 @@ namespace Source.UI
     public class GameplayPresenter
     {
         private IScreenManager _uiService;
-        private GameplayScreen _gameplayScreen;
+        private GameplayPanel _gameplayScreen;
         private PausePopup _pausePopup;
 
         [Inject]
@@ -46,7 +46,7 @@ namespace Source.UI
 
         public async void ShowGameplayScreen()
         {
-            _gameplayScreen = await _uiService.OpenPanel<GameplayScreen>();
+            _gameplayScreen = await _uiService.OpenPanel<GameplayPanel>();
         }
 
         public async void ShowPausePopup()

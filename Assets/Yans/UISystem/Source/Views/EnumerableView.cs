@@ -8,13 +8,18 @@ namespace Yans.UI.Views
 {
     public class EnumerableView<V> : View, IEnumerable<V> where V : View
     {
-        [SerializeField] private Transform _viewsContainer;
-        [SerializeField] private V _viewPrefab;
+        #region private fields
+
+        [SerializeField]
+        private Transform _viewsContainer;
+
+        [SerializeField]
+        private V _viewPrefab;
 
         private IViewInstantiator<V> _viewInstantiator;
         private List<V> _activeViewsCache;
         private ObjectPool<V> _viewPool;
-
+        #endregion
 
         public V this[int index]
         {
@@ -31,6 +36,8 @@ namespace Yans.UI.Views
             }
         }
 
+        #region public methods
+
         public void ReleaseView(V view)
         {
             if (_viewPool == null) Awake();
@@ -39,6 +46,7 @@ namespace Yans.UI.Views
                 _viewPool.Release(view);
             }
         }
+
         public void ReleaseAllViews()
         {
             if (_activeViewsCache == null) Awake();
@@ -47,15 +55,15 @@ namespace Yans.UI.Views
                 ReleaseView(_activeViewsCache[i]);
             }
         }
-        public IEnumerator<V> GetEnumerator()
-        {
-            return _activeViewsCache.GetEnumerator();
-        }
 
         public void SetViewInstantiator(IViewInstantiator<V> viewInstantiator)
         {
             _viewInstantiator = viewInstantiator;
         }
+
+        #endregion
+
+        #region protected methods
 
         protected override void Awake()
         {
@@ -65,6 +73,10 @@ namespace Yans.UI.Views
             _activeViewsCache = _viewsContainer.GetComponentsInChildren<V>(false).ToList();
             _viewPool = new ObjectPool<V>(CreateNewView, OnGetFromPool, OnReleaseToPool);
         }
+
+        #endregion
+
+        #region private methods
 
         private V CreateView()
         {
@@ -90,10 +102,7 @@ namespace Yans.UI.Views
             view.gameObject.SetActive(false);
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        #endregion
 
         public interface IViewInstantiator<T>
         {
@@ -102,10 +111,28 @@ namespace Yans.UI.Views
 
         private class DefaultViewInstantiator : IViewInstantiator<V>
         {
+            #region public methods
+
             public V InstantiateView(V prefab, Transform parent)
             {
                 return Instantiate(prefab, parent);
             }
+
+            #endregion
         }
+
+        #region interfaces
+
+        public IEnumerator<V> GetEnumerator()
+        {
+            return _activeViewsCache.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        #endregion
     }
 }
