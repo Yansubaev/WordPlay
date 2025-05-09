@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Source.UI.Screens
 {
-    public class MainMenuScreen : UIPanel
+    public class MainMenuPanel : UIPanel
     {
         [SerializeField] private ButtonView _playButton;
         [SerializeField] private ButtonView _settingsButton;

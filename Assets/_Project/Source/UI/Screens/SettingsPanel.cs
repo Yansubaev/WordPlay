@@ -9,7 +9,7 @@ using Zenject;
 
 namespace Source.UI.Screens
 {
-    public class SettingsScreen : UIPanel
+    public class SettingsPanel : UIPanel
     {
         [SerializeField] private ImageButtonView _backButton;
         [SerializeField] private Toggle _soundsToggle;

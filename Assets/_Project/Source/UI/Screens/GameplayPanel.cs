@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Source.UI.Screens
 {
-    public class GameplayScreen : UIPanel
+    public class GameplayPanel : UIPanel
     {
         [SerializeField] private ImageButtonView _pauseButton;
 
