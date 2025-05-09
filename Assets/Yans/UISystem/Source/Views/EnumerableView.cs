@@ -15,26 +15,38 @@ namespace Yans.UI.Views
         private List<V> _activeViewsCache;
         private ObjectPool<V> _viewPool;
 
+
         public V this[int index]
         {
             get
             {
+                if (_activeViewsCache == null) Awake();
                 while (index >= _activeViewsCache.Count)
                 {
                     CreateView();
                 }
-                return _activeViewsCache[index];
+                V view = _activeViewsCache[index];
+                view.transform.SetSiblingIndex(index);
+                return view;
             }
         }
 
         public void ReleaseView(V view)
         {
+            if (_viewPool == null) Awake();
             if (_activeViewsCache.Remove(view))
             {
                 _viewPool.Release(view);
             }
         }
-
+        public void ReleaseAllViews()
+        {
+            if (_activeViewsCache == null) Awake();
+            for (int i = _activeViewsCache.Count - 1; i >= 0; i--)
+            {
+                ReleaseView(_activeViewsCache[i]);
+            }
+        }
         public IEnumerator<V> GetEnumerator()
         {
             return _activeViewsCache.GetEnumerator();
@@ -48,6 +60,7 @@ namespace Yans.UI.Views
         protected override void Awake()
         {
             base.Awake();
+
             _viewInstantiator = new DefaultViewInstantiator();
             _activeViewsCache = _viewsContainer.GetComponentsInChildren<V>(false).ToList();
             _viewPool = new ObjectPool<V>(CreateNewView, OnGetFromPool, OnReleaseToPool);
@@ -55,8 +68,10 @@ namespace Yans.UI.Views
 
         private V CreateView()
         {
+            if (_viewPool == null) Awake();
             V view = _viewPool.Get();
             _activeViewsCache.Add(view);
+            view.transform.SetSiblingIndex(_activeViewsCache.Count - 1);
             return view;
         }
 
