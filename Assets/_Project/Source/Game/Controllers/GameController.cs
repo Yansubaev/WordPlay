@@ -1,25 +1,30 @@
-using System.Threading;
-using Newtonsoft.Json;
 using Source.Game.Core;
-using UnityEngine;
+using System;
+using System.Threading;
 using Zenject;
 
 namespace Source.Game.Controllers
 {
     public class GameController
     {
+        #region private fields
         private ILevelLoaderService _levelLoaderService;
         private IClusterGameService _clusterGameService;
         private IGameProgressService _gameProgressService;
         private LevelData _levelData;
         private CancellationTokenSource _cancellationTokenSource = new();
+        #endregion
+
+        public event Action<LevelData> OnLevelStarted;
+
+        #region public methods
 
         [Inject]
         public void Inject(
-            ILevelLoaderService levelLoaderService,
-            IClusterGameService clusterGameService,
-            IGameProgressService gameProgressService
-            )
+                    ILevelLoaderService levelLoaderService,
+                    IClusterGameService clusterGameService,
+                    IGameProgressService gameProgressService
+                    )
         {
             _levelLoaderService = levelLoaderService;
             _clusterGameService = clusterGameService;
@@ -28,21 +33,15 @@ namespace Source.Game.Controllers
 
         public async void StartGame()
         {
-            Debug.Log("<color=green>GameController.StartGame</color>");
-
             var progress = _gameProgressService.LoadProgress();
 
             _levelData = await _levelLoaderService.LoadLevel(progress.CurrentLevelId, _cancellationTokenSource.Token);
-
-            Debug.Log($"<color=green>GameController.StartGame</color> level:\n{JsonConvert.SerializeObject(_levelData)}");
-
             _clusterGameService.StartLevel(_levelData);
+            OnLevelStarted?.Invoke(_levelData);
         }
 
         public void CloseGame()
         {
-            Debug.Log("<color=green>GameController.CloseGame</color>");
-
             if (_clusterGameService.Validate(out var matches))
             {
             }
@@ -59,6 +58,7 @@ namespace Source.Game.Controllers
 
             _cancellationTokenSource.Cancel();
         }
+
+        #endregion
     }
 }
-

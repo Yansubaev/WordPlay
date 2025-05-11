@@ -2,7 +2,7 @@ namespace Yans.ViewModels
 {
     public abstract class ViewModel
     {
-        private ViewModel() { }
+        protected ViewModel() { }
 
         #region public methods
 

@@ -41,7 +41,8 @@ namespace Yans.UI
             var newScreen = await _screenInstantiator.InstantiateScreen<T>(_uiRoot.ScreenRoot, _currentScreenOrientation);
             var prevScreen = _generalStack.LastOrDefault();
             _generalStack.Add(newScreen);
-
+            
+            newScreen.Create(_viewModelProvider, newScreen.GetInstanceId());
             SafePauseLifecycle(prevScreen);
             SafeStartLifecycle(newScreen);
 
