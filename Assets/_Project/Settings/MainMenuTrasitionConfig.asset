@@ -13,9 +13,28 @@ MonoBehaviour:
   m_Name: MainMenuTrasitionConfig
   m_EditorClassIdentifier: 
   Transitions:
-  - From: MainMenuScreen
-    To: SettingsScreen
+  - From:
+      rid: 3521888791317184604
+    To:
+      rid: 3521888791317184605
     Type: 2
-  - From: SettingsScreen
-    To: MainMenuScreen
+  - From:
+      rid: 3521888791317184606
+    To:
+      rid: 3521888791317184607
     Type: 3
+  references:
+    version: 2
+    RefIds:
+    - rid: 3521888791317184604
+      type: {class: MainMenuPanelType, ns: Source.UI.Transitions, asm: Assembly-CSharp}
+      data: 
+    - rid: 3521888791317184605
+      type: {class: SettingsPanelType, ns: Source.UI.Transitions, asm: Assembly-CSharp}
+      data: 
+    - rid: 3521888791317184606
+      type: {class: SettingsPanelType, ns: Source.UI.Transitions, asm: Assembly-CSharp}
+      data: 
+    - rid: 3521888791317184607
+      type: {class: MainMenuPanelType, ns: Source.UI.Transitions, asm: Assembly-CSharp}
+      data: 

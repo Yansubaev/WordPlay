@@ -6,25 +6,23 @@ namespace Source.UI.Transitions
 {
     public class ConfigBasedTransitionResolver : ITransitionResolver
     {
-        private readonly Dictionary<(string from, string to), ITransition> _map = new();
+        private readonly Dictionary<(Type from, Type to), ITransition> _map = new();
 
         public ConfigBasedTransitionResolver(TransitionConfig config, Dictionary<TransitionType, ITransition> registry)
         {
             foreach (var entry in config.Transitions)
             {
-                var key = (entry.From, entry.To);
+                var key = (entry.From.GetScreenType(), entry.To.GetScreenType());
                 _map[key] = registry[entry.Type];
             }
         }
 
         public ITransition Resolve(Type from, Type to)
         {
-            var key = (from?.Name ?? "null", to?.Name ?? "null");
+            var key = (from, to);
             return _map.TryGetValue(key, out var transition)
                 ? transition
-                : _map.TryGetValue(("null", to?.Name ?? "null"), out var fallback)
-                    ? fallback
-                    : new TransitionEmpty();
+                : new TransitionEmpty();
         }
     }
 }

@@ -25,9 +25,6 @@ namespace Yans.UI
         [SerializeField]
         private RectTransform _screenRoot;
 
-        [SerializeField]
-        private RectTransform _popupRoot;
-
         private ScreenOrientation _currentOrientation;
         private readonly List<IOrientationChangeListener> _orientationListeners = new();
         #endregion
@@ -37,7 +34,6 @@ namespace Yans.UI
         public CanvasScaler CanvasScaler => _canvasScaler;
         public GraphicRaycaster GraphicRaycaster => _graphicRaycaster;
         public RectTransform ScreenRoot => _screenRoot;
-        public RectTransform PopupRoot => _popupRoot;
         public ScreenOrientation CurrentOrientation => _currentOrientation;
         #endregion
 

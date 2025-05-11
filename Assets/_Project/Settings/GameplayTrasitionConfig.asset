@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: GameplayTrasitionConfig
   m_EditorClassIdentifier: 
   Transitions: []
+  references:
+    version: 2
+    RefIds: []
