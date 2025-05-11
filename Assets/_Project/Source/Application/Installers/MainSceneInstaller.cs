@@ -1,30 +1,24 @@
 using Source.Infrastructure.StateMachine.States;
-using Source.Infrastructure.UI;
 using Source.Signals;
 using Source.UI;
-using Source.UI.ViewModels;
-using UnityEngine;
-using Yans.UI;
-using Yans.ViewModels;
 using Zenject;
 
 namespace Source.Installers
 {
     public class MainSceneInstaller : MonoInstaller
     {
-        [SerializeField] private UIRoot _uiRoot;
+        #region public methods
 
         public override void InstallBindings()
         {
-            Debug.Log("<color=green>[ZEN] MainSceneInstaller.InstallBindings</color>");
-
-            Container.Bind<UIRoot>().FromInstance(_uiRoot).AsSingle();
-            Container.Bind<IViewModelProvider>().To<ViewModelProvider>().AsSingle();
-            Container.Bind<IScreenManager>().To<ZenjectUIScreenManager>().AsSingle();
             Container.Bind<MainMenuPresenter>().AsSingle();
 
             BindSignals();
         }
+
+        #endregion
+
+        #region private methods
 
         private void BindSignals()
         {
@@ -44,5 +38,7 @@ namespace Source.Installers
                 .ToMethod<MainMenuState>(x => x.StartGame)
                 .FromResolve();
         }
+
+        #endregion
     }
 }

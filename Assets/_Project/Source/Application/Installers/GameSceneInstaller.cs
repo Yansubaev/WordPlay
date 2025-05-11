@@ -1,28 +1,21 @@
 using Source.Game.Controllers;
 using Source.Game.Core;
 using Source.Infrastructure.StateMachine.States;
-using Source.Infrastructure.UI;
 using Source.Signals;
 using Source.UI;
-using Source.UI.ViewModels;
 using UnityEngine;
-using Yans.UI;
-using Yans.ViewModels;
 using Zenject;
 
 namespace Source.Installers
 {
     public class GameSceneInstaller : MonoInstaller
     {
-        [SerializeField] private UIRoot _uiRoot;
+        #region public methods
 
         public override void InstallBindings()
         {
             Debug.Log("<color=green>[ZEN] GameSceneInstaller.InstallBindings</color>");
 
-            Container.Bind<UIRoot>().FromInstance(_uiRoot).AsSingle();
-            Container.Bind<IViewModelProvider>().To<ViewModelProvider>().AsSingle();
-            Container.Bind<IScreenManager>().To<ZenjectUIScreenManager>().AsSingle();
             Container.Bind<GameplayPresenter>().AsSingle();
             Container.Bind<ILevelLoaderService>().To<LevelLoaderService>().AsSingle();
             Container.Bind<IClusterGameService>().To<ClusterGameService>().AsSingle();
@@ -31,6 +24,10 @@ namespace Source.Installers
 
             BindSignals();
         }
+
+        #endregion
+
+        #region private methods
 
         private void BindSignals()
         {
@@ -45,7 +42,7 @@ namespace Source.Installers
             Container.BindSignal<PauseGameSignal>()
                 .ToMethod<GameplayPresenter>(x => x.ShowPausePopup)
                 .FromResolve();
-            
+
             Container.BindSignal<ResumeGameSignal>()
                 .ToMethod<GameplayPresenter>(x => x.ClosePausePopup)
                 .FromResolve();
@@ -58,5 +55,7 @@ namespace Source.Installers
                 .ToMethod<GameState>(x => x.ReturnToMainMenu)
                 .FromResolve();
         }
+
+        #endregion
     }
 }

@@ -21,8 +21,6 @@ namespace Source.Game.Controllers
             IGameProgressService gameProgressService
             )
         {
-            Debug.Log("<color=green>[ZEN] GameController.Inject</color>");
-
             _levelLoaderService = levelLoaderService;
             _clusterGameService = clusterGameService;
             _gameProgressService = gameProgressService;

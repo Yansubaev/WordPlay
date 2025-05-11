@@ -22,7 +22,7 @@ namespace Yans.UI.Screen
         protected IViewModelProvider ViewModelProvider => _viewModelProvider;
 
         public bool IsLifecycleStarted { get; private set; }
-        public bool IsLifecyclePaused { get; private set; }
+        public bool IsLifecycleResumed { get; private set; }
 
         protected virtual void OnCreated() { }
         protected virtual void OnStarted() { }
@@ -69,7 +69,7 @@ namespace Yans.UI.Screen
 
         public void ResumeLifecycle()
         {
-            if (!IsLifecyclePaused) return;
+            if (IsLifecycleResumed) return;
 
 #if LOG_SCREEN_LIFECYCLE
             Debug.Log($"<color=cyan>[SCREEN] {name}.ResumeScreen</color>", gameObject);
@@ -78,12 +78,12 @@ namespace Yans.UI.Screen
             GraphicRaycaster.enabled = true;
 
             OnResumed();
-            IsLifecyclePaused = false;
+            IsLifecycleResumed = true;
         }
 
         public void PauseLifecycle()
         {
-            if(IsLifecyclePaused) return;
+            if(!IsLifecycleResumed) return;
             
 #if LOG_SCREEN_LIFECYCLE
             Debug.Log($"<color=orange>[SCREEN] {name}.PauseScreen</color>", gameObject);
@@ -92,7 +92,7 @@ namespace Yans.UI.Screen
             GraphicRaycaster.enabled = false;
 
             OnPaused();
-            IsLifecyclePaused = true;
+            IsLifecycleResumed = false;
         }
 
         public void StopLifecycle()

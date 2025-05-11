@@ -1,11 +1,11 @@
+using Source.UI.Popups;
 using Source.UI.Screens;
 using Yans.UI;
 using Zenject;
 
 namespace Source.UI
 {
-
-    public class MainMenuPresenter
+    public class GameplayPresenter
     {
         #region private fields
         private IScreenManager _uiService;
@@ -19,17 +19,17 @@ namespace Source.UI
             _uiService = uiService;
         }
 
-        public async void ShowMainMenu()
+        public async void ShowGameplayScreen()
         {
-            await _uiService.OpenScreen<MainMenuPanel>();
+            await _uiService.OpenScreen<GameplayPanel>();
         }
 
-        public async void ShowSettingsScreen()
+        public async void ShowPausePopup()
         {
-            await _uiService.OpenScreen<SettingsPanel>();
+            await _uiService.OpenScreen<PausePopup>();
         }
 
-        public async void CloseSettings()
+        public async void ClosePausePopup()
         {
             await _uiService.CloseTop();
         }
