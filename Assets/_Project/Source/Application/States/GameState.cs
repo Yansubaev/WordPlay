@@ -1,5 +1,3 @@
-
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Source.Signals;
 using Zenject;
@@ -8,8 +6,12 @@ namespace Source.Infrastructure.StateMachine.States
 {
     public class GameState : IState
     {
+        #region private fields
         private SignalBus _signalBus;
         private GameStateMachine _stateMachine;
+        #endregion
+
+        #region public methods
 
         [Inject]
         public void Inject(SignalBus signalBus, GameStateMachine stateMachine)
@@ -21,7 +23,6 @@ namespace Source.Infrastructure.StateMachine.States
         public UniTask Enter()
         {
             _signalBus.Fire<StartGameSignal>();
-            _signalBus.Fire<ShowGameplayScreenSignal>();
 
             return UniTask.CompletedTask;
         }
@@ -35,5 +36,7 @@ namespace Source.Infrastructure.StateMachine.States
         {
             await _stateMachine.Enter<LoadMainSceneState>();
         }
+
+        #endregion
     }
 }

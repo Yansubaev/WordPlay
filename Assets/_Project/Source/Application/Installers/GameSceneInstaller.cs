@@ -14,8 +14,6 @@ namespace Source.Installers
 
         public override void InstallBindings()
         {
-            Debug.Log("<color=green>[ZEN] GameSceneInstaller.InstallBindings</color>");
-
             Container.Bind<GameplayPresenter>().AsSingle();
             Container.Bind<ILevelLoaderService>().To<LevelLoaderService>().AsSingle();
             Container.Bind<IClusterGameService>().To<ClusterGameService>().AsSingle();
@@ -31,7 +29,7 @@ namespace Source.Installers
 
         private void BindSignals()
         {
-            Container.BindSignal<ShowGameplayScreenSignal>()
+            Container.BindSignal<StartGameSignal>()
                 .ToMethod<GameplayPresenter>(x => x.ShowGameplayScreen)
                 .FromResolve();
 

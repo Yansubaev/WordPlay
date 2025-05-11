@@ -15,7 +15,7 @@ namespace Source.UI.ViewModels
             _container = container;
         }
 
-        public T GetViewModel<T>(IViewModelOwner viewModelOwner) where T : ViewModel
+        public T Get<T>(IViewModelOwner viewModelOwner) where T : ViewModel
         {
             if (_instantiatedViewModels.TryGetValue(viewModelOwner.GetInstanceId(), out var viewModel))
             {
@@ -28,7 +28,7 @@ namespace Source.UI.ViewModels
             return (T)viewModel;
         }
 
-        public void ClearViewModel(IViewModelOwner viewModelOwner)
+        public void Clear(IViewModelOwner viewModelOwner)
         {
             if (_instantiatedViewModels.TryGetValue(viewModelOwner.GetInstanceId(), out var viewModel))
             {
