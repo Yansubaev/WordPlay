@@ -1,5 +1,6 @@
 using R3;
 using Source.Signals;
+using Source.UI.Adapters;
 using Source.UI.Views;
 using UnityEngine;
 using Yans.UI.Views;
@@ -13,9 +14,16 @@ namespace Source.UI.Screens
 
         [SerializeField]
         private ImageButtonView _pauseButton;
+        [SerializeField]
+        private WordListView _wordListView;
+        [SerializeField]
+        private WordListView _clusterListView;
 
         private SignalBus _signalBus;
         private GameplayViewModel _viewModel;
+        private WordListAdapter _wordListAdapter;
+        private WordListAdapter _clusterListAdapter;
+
         #endregion
 
         #region public methods
@@ -26,11 +34,13 @@ namespace Source.UI.Screens
                 .Where(levelData => levelData != null)
                 .Subscribe(levelData =>
                 {
-                    // Handle level data updates here
                     Debug.Log($"Level ID: {levelData.LevelId}");
                     Debug.Log($"Target Words: {string.Join(", ", levelData.TargetWords)}");
                     Debug.Log($"Clusters: {string.Join(", ", levelData.Clusters)}");
                     Debug.Log($"Hints: {string.Join(", ", levelData.Hints)}");
+
+                    _wordListAdapter.UpdateDataset(levelData.TargetWords);
+                    _clusterListAdapter.UpdateDataset(levelData.Clusters);
                 })
                 .AddTo(disposables);
         }
@@ -42,6 +52,8 @@ namespace Source.UI.Screens
         protected override void OnCreated()
         {
             _viewModel = ViewModelProvider.Get<GameplayViewModel>(this);
+            _wordListAdapter = new WordListAdapter(_wordListView);
+            _clusterListAdapter = new WordListAdapter(_clusterListView);
         }
 
         protected override void OnStarted()
