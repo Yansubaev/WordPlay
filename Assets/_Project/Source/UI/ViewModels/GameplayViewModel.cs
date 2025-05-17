@@ -41,6 +41,8 @@ namespace Source.UI.Screens
 
         private void HandleLevelStarted(LevelData data)
         {
+            
+            
             var levelViewData = new LevelViewData(
                 data.LevelId,
                 data.TargetWords.ToArray(),

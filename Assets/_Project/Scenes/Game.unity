@@ -468,7 +468,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2815431220369986990, guid: c40cd66c641fcda4c87fa68bec5e793e, type: 3}
       propertyPath: _prefabs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2815431220369986990, guid: c40cd66c641fcda4c87fa68bec5e793e, type: 3}
       propertyPath: _prefabs.Array.data[0].screen
@@ -477,6 +477,10 @@ PrefabInstance:
     - target: {fileID: 2815431220369986990, guid: c40cd66c641fcda4c87fa68bec5e793e, type: 3}
       propertyPath: _prefabs.Array.data[1].screen
       value: 
+      objectReference: {fileID: 863847441043354104, guid: 16b8f7e2670aee04dac8c81197e5c881, type: 3}
+    - target: {fileID: 2815431220369986990, guid: c40cd66c641fcda4c87fa68bec5e793e, type: 3}
+      propertyPath: _prefabs.Array.data[2].screen
+      value: 
       objectReference: {fileID: 4911220180973104172, guid: b27e6244cd6aa354e8343841e43c078b, type: 3}
     - target: {fileID: 2815431220369986990, guid: c40cd66c641fcda4c87fa68bec5e793e, type: 3}
       propertyPath: _prefabs.Array.data[0].orientation
@@ -484,6 +488,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2815431220369986990, guid: c40cd66c641fcda4c87fa68bec5e793e, type: 3}
       propertyPath: _prefabs.Array.data[1].orientation
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815431220369986990, guid: c40cd66c641fcda4c87fa68bec5e793e, type: 3}
+      propertyPath: _prefabs.Array.data[2].orientation
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6785595948023195356, guid: c40cd66c641fcda4c87fa68bec5e793e, type: 3}
