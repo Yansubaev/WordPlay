@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Yans.ViewModels;
 
-namespace Yans.UI.Screen
+namespace Yans.UI.UIScreens
 {
     public abstract class UIScreen : UIBehaviour, IViewModelOwner
     {

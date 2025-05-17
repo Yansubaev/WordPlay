@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using Yans.UI.Screen;
+using Yans.UI.UIScreens;
 
 namespace Source.UI.Transitions.Editor
 {

@@ -1,7 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Yans.UI.Screen;
+using Yans.UI.UIScreens;
 
 namespace Yans.UI
 {

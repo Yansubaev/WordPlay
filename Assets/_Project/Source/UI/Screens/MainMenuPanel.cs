@@ -1,7 +1,7 @@
 using Source.Signals;
 using Source.UI.Views;
 using UnityEngine;
-using Yans.UI.Screen;
+using Yans.UI.UIScreens;
 using Yans.UI.Views;
 using Zenject;
 
@@ -22,12 +22,14 @@ namespace Source.UI.Screens
 
         protected override void OnStarted()
         {
+            base.OnStarted();
             _playButton.OnClick += HandlePlayButtonClicked;
             _settingsButton.OnClick += HandleSettingsButtonClicked;
         }
 
         protected override void OnStopped()
         {
+            base.OnStopped();
             _playButton.OnClick -= HandlePlayButtonClicked;
             _settingsButton.OnClick -= HandleSettingsButtonClicked;
         }

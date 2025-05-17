@@ -1,7 +1,7 @@
 using Source.Signals;
 using Source.UI.Views;
 using UnityEngine;
-using Yans.UI.Screen;
+using Yans.UI.UIScreens;
 using Yans.UI.Views;
 using Zenject;
 

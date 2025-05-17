@@ -1,6 +1,6 @@
 using UnityEngine;
 using Yans.UI;
-using Yans.UI.Screen;
+using Yans.UI.UIScreens;
 using Zenject;
 
 namespace Source.Infrastructure.UI

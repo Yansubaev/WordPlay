@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Yans.UI.Screen;
+using Yans.UI.UIScreens;
 using Yans.UI.Transitions;
 
 namespace Source.UI.Transitions
