@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4036679253076391244, guid: 86efbec2ede1bbb4a8388bf53dd2fe1e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 350
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 4036679253076391244, guid: 86efbec2ede1bbb4a8388bf53dd2fe1e, type: 3}
       propertyPath: m_SizeDelta.y
@@ -244,10 +244,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 0
-    m_Right: 0
+    m_Right: 32
     m_Top: 36
     m_Bottom: 36
-  m_ChildAlignment: 1
+  m_ChildAlignment: 2
   m_Spacing: 16
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1

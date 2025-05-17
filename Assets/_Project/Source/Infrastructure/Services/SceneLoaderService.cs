@@ -1,6 +1,6 @@
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
@@ -8,18 +8,22 @@ using UnityEngine.SceneManagement;
 
 namespace Source.Infrastructure.SceneManagement
 {
-
     /// <summary>
     /// This class is responsible for loading scenes and managing scene transitions.
     /// </summary>
 
     public class SceneLoaderService : ISceneLoaderService
     {
+        #region private constants
         private const string SceneKeyTemplate = "Scenes/{0}";
+        #endregion
 
+        #region private fields
         private IDictionary<string, SceneInstance> _loadedScenes = new Dictionary<string, SceneInstance>();
-
         SceneInstance _currentScene;
+        #endregion
+
+        #region public methods
 
         /// <summary>
         /// Loads a scene asynchronously.
@@ -27,17 +31,21 @@ namespace Source.Infrastructure.SceneManagement
         /// <param name="sceneName">The name of the scene to load.</param>
         public async UniTask LoadSceneAsync(string sceneName, LoadSceneMode mode = LoadSceneMode.Single, CancellationToken cancellationToken = default)
         {
-            if (mode == LoadSceneMode.Single && _currentScene.Scene.IsValid())
-            {
-                await Addressables.UnloadSceneAsync(_currentScene, true);
-                _loadedScenes.Remove(_currentScene.Scene.name);
-            }
-
+            var oldScene = _currentScene;
+            
             _currentScene = await Addressables
                 .LoadSceneAsync(string.Format(SceneKeyTemplate, sceneName), mode)
                 .ToUniTask(cancellationToken: cancellationToken);
-                
+
             _loadedScenes[sceneName] = _currentScene;
+
+            if (mode == LoadSceneMode.Single && oldScene.Scene.IsValid())
+            {
+                await Addressables.UnloadSceneAsync(oldScene, true)
+                    .ToUniTask(cancellationToken: cancellationToken);
+
+                _loadedScenes.Remove(oldScene.Scene.name);
+            }
         }
 
         /// <summary>
@@ -56,5 +64,7 @@ namespace Source.Infrastructure.SceneManagement
                 Debug.LogWarning($"Scene {sceneName} is not loaded.");
             }
         }
+
+        #endregion
     }
 }
