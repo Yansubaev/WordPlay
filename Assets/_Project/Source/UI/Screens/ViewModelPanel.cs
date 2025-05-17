@@ -1,5 +1,5 @@
 using R3;
-using Yans.UI.Screen;
+using Yans.UI.UIScreens;
 
 namespace Source.UI.Screens
 {
@@ -17,12 +17,14 @@ namespace Source.UI.Screens
 
         protected override void OnStarted()
         {
+            base.OnStarted();
             _disposables = new CompositeDisposable();
             OnSubscribeToViewModelEvents(_disposables);
         }
 
         protected override void OnStopped()
         {
+            base.OnStopped();
             _disposables?.Dispose();
             _disposables = null;
         }

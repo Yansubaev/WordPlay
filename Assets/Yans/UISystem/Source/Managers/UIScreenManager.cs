@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Yans.UI.Screen;
+using Yans.UI.UIScreens;
 using Yans.UI.Transitions;
 using Yans.ViewModels;
 

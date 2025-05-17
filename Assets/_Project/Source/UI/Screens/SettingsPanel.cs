@@ -3,7 +3,7 @@ using Source.Signals;
 using Source.UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
-using Yans.UI.Screen;
+using Yans.UI.UIScreens;
 using Yans.UI.Views;
 using Zenject;
 
@@ -24,12 +24,14 @@ namespace Source.UI.Screens
 
         protected override void OnStarted()
         {
+            base.OnStarted();
             _backButton.OnClick += HandleBackButtonClicked;
             _soundsToggle.onValueChanged.AddListener(OnSoundsToggleValueChanged);
         }
 
         protected override void OnStopped()
         {
+            base.OnStopped();
             _backButton.OnClick -= HandleBackButtonClicked;
             _soundsToggle.onValueChanged.RemoveListener(OnSoundsToggleValueChanged);
         }

@@ -120,8 +120,9 @@ MonoBehaviour:
   _graphicRaycaster: {fileID: 3070293490637884317}
   _transitionRoot: {fileID: 1494603500865569909}
   _fadeRoot: {fileID: 999421269452391039}
-  _wrapper: {fileID: 2019688652154736264}
   Wrapper: {fileID: 2019688652154736264}
+  _useSafeAreaOn: -1
+  _wrapper: {fileID: 2019688652154736264}
   _playButton: {fileID: 2810847033775142145}
   _settingsButton: {fileID: 7639303440792784354}
 --- !u!225 &999421269452391039

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
-using Yans.UI.Screen;
+using Yans.UI.UIScreens;
 using Yans.UI.Transitions;
 
 namespace Source.UI.Transitions

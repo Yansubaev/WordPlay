@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using Yans.UI.Screen;
+using Yans.UI.UIScreens;
 
 namespace Yans.UI
 {

@@ -1,5 +1,5 @@
 using Cysharp.Threading.Tasks;
-using Yans.UI.Screen;
+using Yans.UI.UIScreens;
 using Yans.UI.Transitions;
 
 namespace Source.UI.Transitions
