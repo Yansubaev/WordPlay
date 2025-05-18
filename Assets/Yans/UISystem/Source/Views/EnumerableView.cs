@@ -81,7 +81,16 @@ namespace Yans.UI.Views
 
             _viewInstantiator = new DefaultViewInstantiator();
             _activeViewsCache = _viewsContainer.GetComponentsInChildren<V>(false).ToList();
-            _viewPool = new ObjectPool<V>(CreateNewView, OnGetFromPool, OnReleaseToPool);
+            _viewPool = new ObjectPool<V>(CreateNewView, OnGetFromPool, OnReleaseToPool, OnDestroyView);
+        }
+
+        protected virtual V CreateNewView()
+        {
+            return _viewInstantiator.InstantiateView(_viewPrefab, _viewsContainer);
+        }
+
+        protected virtual void OnDestroyView(V view)
+        {
         }
 
         #endregion
@@ -95,11 +104,6 @@ namespace Yans.UI.Views
             _activeViewsCache.Add(view);
             view.transform.SetSiblingIndex(_activeViewsCache.Count - 1);
             return view;
-        }
-
-        private V CreateNewView()
-        {
-            return _viewInstantiator.InstantiateView(_viewPrefab, _viewsContainer);
         }
 
         private void OnGetFromPool(V view)

@@ -154,6 +154,7 @@ MonoBehaviour:
   _viewPrefab: {fileID: 9096006409401109893, guid: 8339d2b8be93ff6439aa2d1565cf6581, type: 3}
   _word: 
   _draggableComponent: {fileID: 2814488145588470606}
+  _canvasGroup: {fileID: 524663129142915319}
 --- !u!114 &2814488145588470606
 MonoBehaviour:
   m_ObjectHideFlags: 0

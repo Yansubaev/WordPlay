@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -33,11 +32,12 @@ namespace Source.UI.Components
         private bool thresholdReached = false;
         private bool shouldPassEventsToParent = true;
         private bool dragStartedEventFired = false;
+        private Vector2 dragOffset;
         #endregion
 
-        public event Action<PointerEventData, GameObject> OnDragStarted;
-        public event Action<PointerEventData, GameObject> OnDragging;
-        public event Action<PointerEventData, GameObject> OnDragEnded;
+        public event Action<PointerEventData> OnDragStarted;
+        public event Action<PointerEventData> OnDragging;
+        public event Action<PointerEventData> OnDragEnded;
 
         #region public methods
 
@@ -115,13 +115,15 @@ namespace Source.UI.Components
 
                         // Prepare the object for dragging
                         canvasGroup.blocksRaycasts = false;
-                        canvasGroup.alpha = 0.7f;
+
+                        // Position the object with bottom-right corner at pointer
+                        PositionObjectBottomRightAtPointer(eventData);
 
                         // NOW fire the OnDragStarted event, since we've reached the threshold
                         if (!dragStartedEventFired)
                         {
                             dragStartedEventFired = true;
-                            OnDragStarted?.Invoke(eventData, FindObjectUnderPointer(eventData));
+                            OnDragStarted?.Invoke(eventData);
                         }
                     }
                 }
@@ -136,11 +138,35 @@ namespace Source.UI.Components
             // Move the object if threshold has been reached
             if (thresholdReached)
             {
-                Vector2 pointerDelta = eventData.delta / (canvas.scaleFactor > 0 ? canvas.scaleFactor : 1);
-                rectTransform.anchoredPosition += pointerDelta;
+                // Get the screen position of the pointer
+                Vector2 pointerPosition = eventData.position;
+
+                // Calculate the offset needed for the bottom-right corner in screen space
+                Vector2 pivotOffset = CalculatePivotOffsetInScreenSpace();
+
+                // Convert the desired position (pointer - offset) to rectTransform position
+                Vector2 targetPositionScreen = pointerPosition - pivotOffset;
+                Vector3 targetPositionWorld;
+
+                // Convert screen position to world position
+                if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+                {
+                    // For overlay canvas, screen position is directly usable
+                    targetPositionWorld = targetPositionScreen;
+                    targetPositionWorld.z = rectTransform.position.z; // Keep original z
+                }
+                else
+                {
+                    // For camera-based canvas, use camera to convert
+                    Camera cam = canvas.worldCamera ?? Camera.main;
+                    targetPositionWorld = cam.ScreenToWorldPoint(new Vector3(targetPositionScreen.x, targetPositionScreen.y, canvas.planeDistance));
+                }
+
+                // Set position directly in world space
+                rectTransform.position = targetPositionWorld;
 
                 // Notify listeners
-                OnDragging?.Invoke(eventData, FindObjectUnderPointer(eventData));
+                OnDragging?.Invoke(eventData);
             }
         }
 
@@ -156,11 +182,9 @@ namespace Source.UI.Components
             if (thresholdReached)
             {
                 canvasGroup.blocksRaycasts = true;
-                canvasGroup.alpha = 1f;
 
                 // Notify listeners
-                GameObject hoveredObject = FindObjectUnderPointer(eventData);
-                OnDragEnded?.Invoke(eventData, hoveredObject);
+                OnDragEnded?.Invoke(eventData);
             }
 
             // Reset drag state
@@ -190,30 +214,80 @@ namespace Source.UI.Components
         }
 
         /// <summary>
-        /// Find what object is currently under the pointer
+        /// Positions the object so its bottom-right corner is at the pointer position
+        /// Works correctly even if parent changes
         /// </summary>
-        private GameObject FindObjectUnderPointer(PointerEventData eventData)
+        private void PositionObjectBottomRightAtPointer(PointerEventData eventData)
         {
-            // Temporarily enable raycast blocking to prevent finding this object
-            bool originalBlocksRaycast = canvasGroup.blocksRaycasts;
-            canvasGroup.blocksRaycasts = false;
+            // Get the screen position of the pointer
+            Vector2 pointerPosition = eventData.position;
 
-            List<RaycastResult> results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(eventData, results);
+            // Calculate the offset needed for the bottom-right corner in screen space
+            Vector2 pivotOffset = CalculatePivotOffsetInScreenSpace();
 
-            // Restore original setting
-            canvasGroup.blocksRaycasts = originalBlocksRaycast;
+            // Convert the desired position (pointer - offset) to rectTransform position
+            // This works regardless of parent changes
+            Vector2 targetPositionScreen = pointerPosition - pivotOffset;
+            Vector3 targetPositionWorld;
 
-            // Return the first hit object that isn't this one
-            foreach (var result in results)
+            // Convert screen position to world position
+            if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
             {
-                if (result.gameObject != gameObject)
-                {
-                    return result.gameObject;
-                }
+                // For overlay canvas, screen position is directly usable
+                targetPositionWorld = targetPositionScreen;
+                targetPositionWorld.z = rectTransform.position.z; // Keep original z
+            }
+            else
+            {
+                // For camera-based canvas, use camera to convert
+                Camera cam = canvas.worldCamera ?? Camera.main;
+                targetPositionWorld = cam.ScreenToWorldPoint(new Vector3(targetPositionScreen.x, targetPositionScreen.y, canvas.planeDistance));
             }
 
-            return null;
+            // Set position directly in world space
+            rectTransform.position = targetPositionWorld;
+        }
+
+        /// <summary>
+        /// Calculates the offset from screen position to position the bottom-right corner at the pointer
+        /// Takes into account pivot, canvas scaling, and render mode
+        /// </summary>
+        private Vector2 CalculatePivotOffsetInScreenSpace()
+        {
+            // Get the rect's size in screen space
+            Vector2 rectSize = rectTransform.rect.size;
+
+            // Apply canvas scaling
+            rectSize.x *= canvas.scaleFactor;
+            rectSize.y *= canvas.scaleFactor;
+
+            // Calculate pivot offset in screen space
+            // For right-bottom corner:
+            // X: We want the right edge, so use (1 - pivot.x) * width
+            // Y: We want the bottom edge, so use (0 - pivot.y) * height
+            float pivotOffsetX = (1 - rectTransform.pivot.x) * rectSize.x;
+            float pivotOffsetY = (0 - rectTransform.pivot.y) * rectSize.y; // For bottom edge
+
+            return new Vector2(pivotOffsetX, pivotOffsetY);
+        }
+
+        /// <summary>
+        /// Calculates the offset from anchoredPosition to position the bottom-right corner at the pointer
+        /// Takes into account pivot and anchors
+        /// </summary>
+        private Vector2 CalculatePivotOffset()
+        {
+            // Get the rect's size
+            Vector2 rectSize = rectTransform.rect.size;
+
+            // Calculate pivot offset
+            // For bottom-right corner positioning:
+            // X: offset from pivot to right edge
+            // Y: offset from pivot to bottom edge
+            float pivotOffsetX = (1 - rectTransform.pivot.x) * rectSize.x;
+            float pivotOffsetY = (0 - rectTransform.pivot.y) * rectSize.y; // For bottom edge
+
+            return new Vector2(pivotOffsetX, pivotOffsetY);
         }
 
         #endregion

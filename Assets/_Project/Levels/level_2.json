@@ -1,31 +1,31 @@
 {
-  "levelId": "level_2",
-  "words": [
-    {
-      "solution": "MARKET",
-      "hint": "place to buy goods"
-    },
-    {
-      "solution": "MAKERS",
-      "hint": "creators"
-    },
-    {
-      "solution": "STREAM",
-      "hint": "small river"
-    },
-    {
-      "solution": "MASTER",
-      "hint": "expert"
-    }
-  ],
-  "clusters": [
-    "MA",
-    "RK",
-    "ET",
-    "KE",
-    "RS",
-    "ST",
-    "RE",
-    "AM"
-  ]
+    "levelId": "level_2",
+    "words": [
+        {
+            "solution": "MARKET",
+            "hint": "place to buy goods"
+        },
+        {
+            "solution": "MAKERS",
+            "hint": "creators"
+        },
+        {
+            "solution": "STREAM",
+            "hint": "small river"
+        },
+        {
+            "solution": "MASTER",
+            "hint": "expert"
+        }
+    ],
+    "clusters": [
+        "MA",
+        "RK",
+        "ET",
+        "KE",
+        "RS",
+        "ST",
+        "RE",
+        "AM"
+    ]
 }

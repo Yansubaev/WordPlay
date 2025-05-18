@@ -21,10 +21,9 @@ namespace Source.Game.Controllers
 
         [Inject]
         public void Inject(
-                    ILevelLoaderService levelLoaderService,
-                    IClusterGameService clusterGameService,
-                    IGameProgressService gameProgressService
-                    )
+            ILevelLoaderService levelLoaderService,
+            IClusterGameService clusterGameService,
+            IGameProgressService gameProgressService)
         {
             _levelLoaderService = levelLoaderService;
             _clusterGameService = clusterGameService;

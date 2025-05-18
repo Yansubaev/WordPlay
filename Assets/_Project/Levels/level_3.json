@@ -1,31 +1,31 @@
 {
-  "levelId": "level_3",
-  "words": [
-    {
-      "solution": "SILENT",
-      "hint": "not making noise"
-    },
-    {
-      "solution": "LISTEN",
-      "hint": "pay attention to sound"
-    },
-    {
-      "solution": "TINSEL",
-      "hint": "shiny decoration"
-    },
-    {
-      "solution": "ENLIST",
-      "hint": "join the army"
-    }
-  ],
-  "clusters": [
-    "SI",
-    "LE",
-    "NT",
-    "LI",
-    "ST",
-    "EN",
-    "TI",
-    "NS"
-  ]
+    "levelId": "level_3",
+    "words": [
+        {
+            "solution": "SILENT",
+            "hint": "not making noise"
+        },
+        {
+            "solution": "LISTEN",
+            "hint": "pay attention to sound"
+        },
+        {
+            "solution": "TINSEL",
+            "hint": "shiny decoration"
+        },
+        {
+            "solution": "ENLIST",
+            "hint": "join the army"
+        }
+    ],
+    "clusters": [
+        "SI",
+        "LE",
+        "NT",
+        "LI",
+        "ST",
+        "EN",
+        "TI",
+        "NS"
+    ]
 }
