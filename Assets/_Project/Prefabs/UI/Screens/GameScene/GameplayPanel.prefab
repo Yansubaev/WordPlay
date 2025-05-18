@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4036679253076391244}
   - component: {fileID: 621644811829612130}
-  - component: {fileID: 4778395481445961501}
+  - component: {fileID: 1653559904918813359}
   - component: {fileID: 4059651187433042349}
   - component: {fileID: 8532409882352965541}
   m_Layer: 5
@@ -50,7 +50,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 753988898117036358}
   m_CullTransparentMesh: 1
---- !u!114 &4778395481445961501
+--- !u!114 &1653559904918813359
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,13 +59,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 753988898117036358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60737cf666efa7344aef0b62ba585246, type: 3}
+  m_Script: {fileID: 11500000, guid: a3dbbaf4975fb9c46adc67cdab0147e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 4036679253076391244}
   _viewsContainer: {fileID: 8797927423271020329}
-  _viewPrefab: {fileID: 3080758029776291350, guid: bc2cbe8e0fb14ac4c95433de98f0156e, type: 3}
-  _words: []
+  _viewPrefab: {fileID: 6506288006755599255, guid: abe13c65f1288bf488befff39b28f885, type: 3}
+  _clusters: []
 --- !u!114 &4059651187433042349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +187,8 @@ MonoBehaviour:
   _wrapper: {fileID: 8093864126258600063}
   _pauseButton: {fileID: 7132585196175272630}
   _wordListView: {fileID: 2448450393766128291}
-  _clusterListView: {fileID: 4778395481445961501}
+  _clusterListView: {fileID: 1653559904918813359}
+  _dragArea: {fileID: 1188739046260433691}
 --- !u!225 &7564621492107646341
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -433,7 +434,43 @@ RectTransform:
   - {fileID: 4755838397444305240}
   - {fileID: 4617271851644281226}
   - {fileID: 4036679253076391244}
+  - {fileID: 1188739046260433691}
   m_Father: {fileID: 8139255202718671001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &4307653195711316591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1188739046260433691}
+  m_Layer: 5
+  m_Name: DragField
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1188739046260433691
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4307653195711316591}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8093864126258600063}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

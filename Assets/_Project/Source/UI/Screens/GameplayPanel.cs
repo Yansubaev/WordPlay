@@ -17,12 +17,15 @@ namespace Source.UI.Screens
         [SerializeField]
         private WordListView _wordListView;
         [SerializeField]
-        private WordListView _clusterListView;
+        private ClusterListView _clusterListView;
+        [SerializeField]
+        private RectTransform _dragArea;
+        
 
         private SignalBus _signalBus;
         private GameplayViewModel _viewModel;
         private WordListAdapter _wordListAdapter;
-        private WordListAdapter _clusterListAdapter;
+        private ClusterListAdapter _clusterListAdapter;
 
         #endregion
 
@@ -34,12 +37,7 @@ namespace Source.UI.Screens
                 .Where(levelData => levelData != null)
                 .Subscribe(levelData =>
                 {
-                    Debug.Log($"Level ID: {levelData.LevelId}");
-                    Debug.Log($"Target Words: {string.Join(", ", levelData.TargetWords)}");
-                    Debug.Log($"Clusters: {string.Join(", ", levelData.Clusters)}");
-                    Debug.Log($"Hints: {string.Join(", ", levelData.Hints)}");
-
-                    _wordListAdapter.UpdateDataset(levelData.TargetWords);
+                    _wordListAdapter.UpdateDataset(levelData.Grid);
                     _clusterListAdapter.UpdateDataset(levelData.Clusters);
                 })
                 .AddTo(disposables);
@@ -53,7 +51,7 @@ namespace Source.UI.Screens
         {
             _viewModel = ViewModelProvider.Get<GameplayViewModel>(this);
             _wordListAdapter = new WordListAdapter(_wordListView);
-            _clusterListAdapter = new WordListAdapter(_clusterListView);
+            _clusterListAdapter = new ClusterListAdapter(_clusterListView, _dragArea);
         }
 
         protected override void OnStarted()
