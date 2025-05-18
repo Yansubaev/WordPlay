@@ -1,31 +1,31 @@
 {
-  "levelId": "level_1",
-  "words": [
-    {
-      "solution": "PLANET",
-      "hint": "celestial body"
-    },
-    {
-      "solution": "PLANTS",
-      "hint": "living things that grow"
-    },
-    {
-      "solution": "LATENT",
-      "hint": "hidden, not obvious"
-    },
-    {
-      "solution": "PANELT",
-      "hint": "fictional word for gameplay"
-    }
-  ],
-  "clusters": [
-    "PL",
-    "AN",
-    "ET",
-    "LA",
-    "TE",
-    "NT",
-    "PA",
-    "TS"
-  ]
+    "levelId": "level_4",
+    "words": [
+        {
+            "solution": "PLANET",
+            "hint": "celestial body"
+        },
+        {
+            "solution": "PLANTS",
+            "hint": "living things that grow"
+        },
+        {
+            "solution": "LATENT",
+            "hint": "hidden, not obvious"
+        },
+        {
+            "solution": "PANELT",
+            "hint": "fictional word for gameplay"
+        }
+    ],
+    "clusters": [
+        "PL",
+        "AN",
+        "ET",
+        "LA",
+        "TE",
+        "NT",
+        "PA",
+        "TS"
+    ]
 }

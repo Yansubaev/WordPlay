@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Yans.UI.Adapters;
@@ -33,9 +35,15 @@ namespace Source.UI.Adapters
 
         protected override void OnBindView(ClusterView view, int position)
         {
+            view.OnDragBegin -= HandleDragBegin;
+            view.OnDragEnd -= HandleDragEnd;
+            // view.OnDragging -= HandleDragging;
+
             view.SetWord(_clusters[position]);
+
             view.OnDragBegin += HandleDragBegin;
             view.OnDragEnd += HandleDragEnd;
+            // view.OnDragging += HandleDragging;
         }
 
         #endregion
@@ -45,21 +53,32 @@ namespace Source.UI.Adapters
         private void HandleDragBegin(ClusterView view)
         {
             view.RectTransform.SetParent(_dragArea);
-            Debug.Log($"Drag started: {view.name}");
         }
 
-        private void HandleDragEnd(ClusterView view1, View view2)
+        private void HandleDragging(ClusterView clusterView, IEnumerable<View> views)
         {
-            Debug.Log($"Drag ended on: {view1.name}, {view2?.name ?? "null"}");
-
-                view1.SnapBack();
-                view1.RectTransform.SetParent(View.ViewsContainer);
-            if (view2 == null)
+            foreach (var view in views)
             {
+                if (view is LetterView letterView)
+                {
+                    letterView.Color = Color.cyan;
+                }
             }
-            else
+        }
+
+        private void HandleDragEnd(ClusterView clusterView, IEnumerable<View> views)
+        {
+            Debug.Log($"Drag ended on: {clusterView.name}, {string.Join(',', views.Select(v => v.name))}");
+
+            clusterView.SnapBack();
+            clusterView.RectTransform.SetParent(View.ViewsContainer);
+
+            foreach (var view in views)
             {
-                // view1.RectTransform.SetParent(View.ViewsContainer);
+                if (view is LetterView letterView)
+                {
+                    letterView.Color = Color.red;
+                }
             }
         }
 
