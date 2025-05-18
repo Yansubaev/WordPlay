@@ -21,6 +21,14 @@ namespace Yans.UI.Views
         private ObjectPool<V> _viewPool;
         #endregion
 
+        #region public properties
+
+        public Transform ViewsContainer
+        {
+            get => _viewsContainer;
+            set => _viewsContainer = value;
+        }
+
         public V this[int index]
         {
             get
@@ -35,6 +43,8 @@ namespace Yans.UI.Views
                 return view;
             }
         }
+
+        #endregion
 
         #region public methods
 

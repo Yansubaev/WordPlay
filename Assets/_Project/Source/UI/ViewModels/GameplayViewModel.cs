@@ -1,3 +1,4 @@
+using System.Linq;
 using R3;
 using Source.Game.Controllers;
 using Source.Game.Core;
@@ -11,6 +12,7 @@ namespace Source.UI.Screens
         #region private fields
         private ReactiveProperty<LevelViewData> _levelData = new();
         private GameController _gameController;
+        private IClusterGameService _clusterGameService;
         #endregion
 
         #region public properties
@@ -34,20 +36,19 @@ namespace Source.UI.Screens
         #region private methods
 
         [Inject]
-        private void Inject(GameController gameController)
+        private void Inject(GameController gameController, IClusterGameService clusterGameService)
         {
             _gameController = gameController;
+            _clusterGameService = clusterGameService;
         }
 
         private void HandleLevelStarted(LevelData data)
         {
-            
-            
             var levelViewData = new LevelViewData(
                 data.LevelId,
-                data.TargetWords.ToArray(),
+                _clusterGameService.GetGridState(),
                 data.Clusters.ToArray(),
-                data.Hints.ToArray()
+                data.Words.Select(e => e.Hint).ToArray()
             );
 
             _levelData.Value = levelViewData;
@@ -60,15 +61,15 @@ namespace Source.UI.Screens
     {
         #region public properties
         public string LevelId { get; private set; }
-        public string[] TargetWords { get; private set; }
+        public string[,] Grid { get; private set; }
         public string[] Clusters { get; private set; }
         public string[] Hints { get; private set; }
         #endregion
 
-        public LevelViewData(string levelId, string[] targetWords, string[] clusters, string[] hints)
+        public LevelViewData(string levelId, string[,] grid, string[] clusters, string[] hints)
         {
             LevelId = levelId;
-            TargetWords = targetWords;
+            Grid = grid;
             Clusters = clusters;
             Hints = hints;
         }

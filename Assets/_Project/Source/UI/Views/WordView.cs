@@ -28,5 +28,16 @@ namespace Source.UI
                 letterView.Character = word[i];
             }
         }
+
+        public void SetWord(string[] word)
+        {
+            _word = string.Join("", word);
+            ReleaseAllViews();
+            for (int i = 0; i < word.Length; i++)
+            {
+                var letterView = this[i];
+                letterView.Letter = word[i];
+            }
+        }
     }
 }

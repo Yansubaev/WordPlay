@@ -1,24 +1,31 @@
 {
-    "levelId": "level_1",
-    "targetWords": [
-        "СТАКАН",
-        "КЛАССА",
-        "ПАРТЕР",
-        "ПАСТЕР"
+    "levelId": "level_4",
+    "words": [
+        {
+            "solution": "REACTS",
+            "hint": "responds"
+        },
+        {
+            "solution": "CARETS",
+            "hint": "proofreading marks"
+        },
+        {
+            "solution": "CRATES",
+            "hint": "wooden boxes"
+        },
+        {
+            "solution": "CATERS",
+            "hint": "provides food"
+        }
     ],
     "clusters": [
-        "СТА",
-        "КЛ",
-        "АН",
-        "ССА",
-        "ПА",
-        "РТ",
-        "ЕР"
-    ],
-    "hints": [
-        "предмет",
-        "учеба",
-        "театр",
-        "ученый"
+        "RE",
+        "AC",
+        "TS",
+        "CA",
+        "RE",
+        "TS",
+        "CR",
+        "AT"
     ]
 }
