@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Source.UI.Settings;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -24,8 +25,13 @@ namespace Source.UI
 
         [SerializeField]
         private EnumerableView<LetterView> _parentEnumerableView;
-        
+
+        [SerializeField]
+        private ColorPalette _colorPalette;
+
         private View _currentObjectUnderCenter;
+        private bool _isHovered;
+        private Color _initialColor;
 
         #endregion
 
@@ -49,6 +55,29 @@ namespace Source.UI
             set => _image.color = value;
         }
 
+        public Color InitialColor
+        {
+            get => _initialColor;
+            set
+            {
+                _initialColor = value;
+                _image.color = value;
+            }
+        }
+
+        public bool IsHovered
+        {
+            get => _isHovered;
+            set
+            {
+                if (_isHovered != value)
+                {
+                    _isHovered = value;
+                    _image.color = value ? _colorPalette.HoverCellColor : _initialColor;
+                }
+            }
+        }
+
         public EnumerableView<LetterView> ParentEnumerableView
         {
             get
@@ -63,7 +92,7 @@ namespace Source.UI
                 }
                 return _parentEnumerableView;
             }
-        } 
+        }
 
         public int AdapterPosition
         {
@@ -90,7 +119,7 @@ namespace Source.UI
         /// </summary>
         /// <returns>The current object under the center</returns>
         public View CheckCenterOverlap()
-        {            
+        {
             View viewUnderCenter = FindObjectUnderCenter();
 
             // Check if we exited the previous object

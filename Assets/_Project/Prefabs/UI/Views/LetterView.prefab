@@ -64,6 +64,8 @@ MonoBehaviour:
   _text: {fileID: 2941536861419167823}
   _image: {fileID: 2878209121678917468}
   _canvasGroup: {fileID: 6559993843283480926}
+  _parentEnumerableView: {fileID: 0}
+  _colorPalette: {fileID: 11400000, guid: bac195867eebf6e48b2b126ebf39182b, type: 2}
 --- !u!114 &2878209121678917468
 MonoBehaviour:
   m_ObjectHideFlags: 0
