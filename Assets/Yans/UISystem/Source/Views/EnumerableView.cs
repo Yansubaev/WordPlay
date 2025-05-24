@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,19 @@ namespace Yans.UI.Views
             }
         }
 
+        public int Count
+        {
+            get
+            {
+                if (_activeViewsCache == null) Awake();
+                return _activeViewsCache.Count;
+            }
+        }
+
         #endregion
+
+        public event Action<V> OnViewCreated;
+        public event Action<V> OnViewDestroyed;
 
         #region public methods
 
@@ -81,7 +94,11 @@ namespace Yans.UI.Views
 
             _viewInstantiator = new DefaultViewInstantiator();
             _activeViewsCache = _viewsContainer.GetComponentsInChildren<V>(false).ToList();
-            _viewPool = new ObjectPool<V>(CreateNewView, OnGetFromPool, OnReleaseToPool, OnDestroyView);
+            _viewPool = new ObjectPool<V>(
+                CreateNewViewInternal,
+                OnGetFromPool,
+                OnReleaseToPool,
+                OnViewDestroyedInternal);
         }
 
         protected virtual V CreateNewView()
@@ -100,10 +117,24 @@ namespace Yans.UI.Views
         private V CreateView()
         {
             if (_viewPool == null) Awake();
+
             V view = _viewPool.Get();
             _activeViewsCache.Add(view);
             view.transform.SetSiblingIndex(_activeViewsCache.Count - 1);
             return view;
+        }
+
+        private V CreateNewViewInternal()
+        {
+            V view = CreateNewView();
+            OnViewCreated?.Invoke(view);
+            return view;
+        }
+
+        private void OnViewDestroyedInternal(V view)
+        {
+            OnViewDestroyed?.Invoke(view);
+            OnDestroyView(view);
         }
 
         private void OnGetFromPool(V view)

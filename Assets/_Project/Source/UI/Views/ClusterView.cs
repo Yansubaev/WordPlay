@@ -20,8 +20,10 @@ namespace Source.UI
         #endregion
 
         public event Action<ClusterView> OnDragBegin;
-        public event Action<ClusterView, IEnumerable<View>> OnDragEnd;
-        public event Action<ClusterView, IEnumerable<View>> OnDragging;
+        public event Action<ClusterView, View> OnDragEnd;
+        public event Action<ClusterView, View> OnDragging;
+        public event Action<ClusterView, LetterView> OnHoveringOverEnter;
+        public event Action<ClusterView, LetterView> OnHoveringOverExit;
 
         #region public methods
 
@@ -72,19 +74,17 @@ namespace Source.UI
 
         private void HandleCenterEnter(LetterView me, View target)
         {
-            Debug.Log($"Center Enter: {me.name} -> {target.name}");
             if (target is LetterView letterView)
             {
-                letterView.Color = Color.cyan;
+                OnHoveringOverEnter?.Invoke(this, letterView);                
             }
         }
 
         private void HandleCenterExit(LetterView me, View target)
         {
-            Debug.Log($"Center Exit: {me.name} -> {target.name}");
             if (target is LetterView letterView)
             {
-                letterView.Color = Color.white;
+                OnHoveringOverExit?.Invoke(this, letterView);
             }
         }
 
@@ -97,36 +97,27 @@ namespace Source.UI
         private void HandleDragEnded(PointerEventData data)
         {
             _canvasGroup.alpha = 1f;
-            var viewsUnder = FindViewsUnder();
-            OnDragEnd?.Invoke(this, viewsUnder);
+            var viewUnder = FindViewsUnder();
+            OnDragEnd?.Invoke(this, viewUnder);
         }
 
         private void HandleDragging(PointerEventData data)
         {
             _canvasGroup.alpha = 1f;
-            var viewsUnder = FindViewsUnder();
-            OnDragging?.Invoke(this, viewsUnder);
+            var viewUnder = FindViewsUnder();
+            OnDragging?.Invoke(this, viewUnder);
         }
 
-        private IEnumerable<View> FindViewsUnder()
+        private View FindViewsUnder()
         {
             var originalBlocksRaycast = _canvasGroup.blocksRaycasts;
             _canvasGroup.blocksRaycasts = false;
 
-            var viewsList = new List<View>();
-            foreach (var element in this)
-            {
-                var viewUnderCenter = element.CheckCenterOverlap();
-                if (viewUnderCenter != null)
-                {
-                    viewsList.Add(viewUnderCenter);
-                }
-            }
-            var views = viewsList;
+            var viewUnder = this[0].CheckCenterOverlap();
 
             _canvasGroup.blocksRaycasts = originalBlocksRaycast;
 
-            return views;
+            return viewUnder;
         }
 
         #endregion

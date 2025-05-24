@@ -1,6 +1,7 @@
 using R3;
 using Source.Signals;
 using Source.UI.Adapters;
+using Source.UI.Settings;
 using Source.UI.Views;
 using UnityEngine;
 using Yans.UI.Views;
@@ -14,19 +15,23 @@ namespace Source.UI.Screens
 
         [SerializeField]
         private ImageButtonView _pauseButton;
+
         [SerializeField]
         private WordListView _wordListView;
+
         [SerializeField]
         private ClusterListView _clusterListView;
+
         [SerializeField]
         private RectTransform _dragArea;
-        
+
+        [SerializeField]
+        private ColorPalette _colorPalette;
 
         private SignalBus _signalBus;
         private GameplayViewModel _viewModel;
         private WordListAdapter _wordListAdapter;
         private ClusterListAdapter _clusterListAdapter;
-
         #endregion
 
         #region public methods
@@ -37,7 +42,7 @@ namespace Source.UI.Screens
                 .Where(levelData => levelData != null)
                 .Subscribe(levelData =>
                 {
-                    _wordListAdapter.UpdateDataset(levelData.Grid);
+                    _wordListAdapter.UpdateDataset(levelData.Grid, levelData.ValidatedWords);
                     _clusterListAdapter.UpdateDataset(levelData.Clusters);
                 })
                 .AddTo(disposables);
@@ -50,7 +55,7 @@ namespace Source.UI.Screens
         protected override void OnCreated()
         {
             _viewModel = ViewModelProvider.Get<GameplayViewModel>(this);
-            _wordListAdapter = new WordListAdapter(_wordListView);
+            _wordListAdapter = new WordListAdapter(_wordListView, _colorPalette);
             _clusterListAdapter = new ClusterListAdapter(_clusterListView, _dragArea);
         }
 
@@ -58,12 +63,27 @@ namespace Source.UI.Screens
         {
             base.OnStarted();
             _pauseButton.OnClick += HandlePauseButtonClicked;
+            _clusterListAdapter.OnHoveringOverEnter += _wordListAdapter.HandleHoveringOverEnter;
+            _clusterListAdapter.OnHoveringOverExit += _wordListAdapter.HandleHoveringOverExit;
+            _clusterListAdapter.OnReleasedCluster += _wordListAdapter.HandleReleasedCluster;
+            _wordListAdapter.OnClusterPlaced += _viewModel.HandleClusterPlaced;
         }
 
         protected override void OnStopped()
         {
             base.OnStopped();
             _pauseButton.OnClick -= HandlePauseButtonClicked;
+            _clusterListAdapter.OnHoveringOverEnter -= _wordListAdapter.HandleHoveringOverEnter;
+            _clusterListAdapter.OnHoveringOverExit -= _wordListAdapter.HandleHoveringOverExit;
+            _clusterListAdapter.OnReleasedCluster -= _wordListAdapter.HandleReleasedCluster;
+            _wordListAdapter.OnClusterPlaced -= _viewModel.HandleClusterPlaced;
+        }
+
+        protected override void OnClosed()
+        {
+            base.OnClosed();
+            _wordListAdapter.Dispose();
+            _clusterListAdapter.Dispose();
         }
 
         #endregion

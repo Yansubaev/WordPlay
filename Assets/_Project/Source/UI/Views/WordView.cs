@@ -29,7 +29,7 @@ namespace Source.UI
             }
         }
 
-        public void SetWord(string[] word)
+        public void SetWord(string[] word, bool valid = false)
         {
             _word = string.Join("", word);
             ReleaseAllViews();
@@ -37,6 +37,7 @@ namespace Source.UI
             {
                 var letterView = this[i];
                 letterView.Letter = word[i];
+                letterView.Color = valid ? Color.green : Color.white;
             }
         }
     }

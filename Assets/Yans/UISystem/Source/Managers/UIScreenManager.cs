@@ -2,8 +2,8 @@ using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Yans.UI.UIScreens;
 using Yans.UI.Transitions;
+using Yans.UI.UIScreens;
 using Yans.ViewModels;
 
 namespace Yans.UI
@@ -41,7 +41,7 @@ namespace Yans.UI
             var newScreen = await _screenInstantiator.InstantiateScreen<T>(_uiRoot.ScreenRoot, _currentScreenOrientation);
             var prevScreen = _generalStack.LastOrDefault();
             _generalStack.Add(newScreen);
-            
+
             newScreen.Create(_viewModelProvider, newScreen.GetInstanceId());
             SafePauseLifecycle(prevScreen);
             SafeStartLifecycle(newScreen);
@@ -83,13 +83,47 @@ namespace Yans.UI
             CleanupScreen(screen);
         }
 
-        public UniTask CloseTop() =>
-            _generalStack.Count == 0 ? UniTask.CompletedTask : CloseScreen(_generalStack.Last());
+        public UniTask CloseTop()
+        {
+            return _generalStack.Count == 0 ? UniTask.CompletedTask : CloseScreen(_generalStack.Last());
+        }
 
         public void OnOrientationChanged(ScreenOrientation newOrientation)
         {
             _currentScreenOrientation = newOrientation;
             RebuildScreens();
+        }
+
+        public T GetScreen<T>() where T : UIScreen
+        {
+            var screen = _generalStack.OfType<T>().LastOrDefault();
+            if (screen == null)
+            {
+                throw new System.InvalidOperationException($"Screen of type {typeof(T).Name} is not found in the stack.");
+            }
+            return screen;
+        }
+
+        public bool TryGetScreen<T>(out T screen) where T : UIScreen
+        {
+            screen = _generalStack.OfType<T>().LastOrDefault();
+            return screen != null;
+        }
+
+        public void CloseAll()
+        {
+            if (_generalStack.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var screen in _generalStack)
+            {
+                screen.PauseLifecycle();
+                screen.StopLifecycle();
+                screen.Close();
+            }
+            _generalStack.Clear();
         }
 
         #endregion

@@ -1,50 +1,87 @@
-﻿using Yans.UI.Views;
+﻿using System;
+using UnityEngine;
+using Yans.UI.Views;
 
 namespace Yans.UI.Adapters
 {
-    public abstract class ListAdapter<V> where V : View
+    public abstract class ListAdapter<V> : IDisposable where V : View
     {
         #region private fields
-        private EnumerableView<V> _view;
+        private readonly EnumerableView<V> _enumerableView;
         private int _count;
         #endregion
 
         #region protected properties
-        protected EnumerableView<V> View => _view;
+        protected EnumerableView<V> EnumerableView => _enumerableView;
         protected int Count => _count;
         #endregion
 
         #region public methods
 
-        public ListAdapter(EnumerableView<V> view)
+        public ListAdapter(EnumerableView<V> enumerableView)
         {
-            _view = view;
+            _enumerableView = enumerableView;
+
+            enumerableView.OnViewCreated += OnViewHolderCreated;
+            enumerableView.OnViewDestroyed += OnViewHolderDestroyed;
         }
 
         #endregion
 
         #region protected methods
+
         protected void NotifyDatasetChanged(int count)
         {
             _count = count;
             DistributeData();
         }
 
-        protected abstract void OnBindView(V view, int position);
+        protected virtual void OnViewHolderCreated(V view)
+        {
+        }
+
+        protected virtual void OnBeforeBinding()
+        {
+        }
+
+        protected abstract void OnBindViewHolder(V view, int position);
+
+        protected virtual void OnAfterBinding()
+        {
+        }
+
+        protected virtual void OnViewHolderDestroyed(V v)
+        {
+        }
+
         #endregion
 
         #region private methods
 
         private void DistributeData()
         {
+            OnBeforeBinding();
             if (_count > 0)
             {
                 for (int i = 0; i < _count; i++)
                 {
-                    OnBindView(_view[i], i);
+                    OnBindViewHolder(_enumerableView[i], i);
                 }
             }
+            OnAfterBinding();
+        }
 
+        #endregion
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            if (_enumerableView != null)
+            {
+                _enumerableView.OnViewCreated -= OnViewHolderCreated;
+                _enumerableView.OnViewDestroyed -= OnViewHolderDestroyed;
+            }
         }
 
         #endregion

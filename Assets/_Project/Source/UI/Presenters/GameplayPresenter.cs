@@ -34,6 +34,11 @@ namespace Source.UI
             await _uiService.CloseTop();
         }
 
+        public void CloseGameplayScreen()
+        {
+            _uiService.CloseAll();
+        }
+
         #endregion
     }
 }

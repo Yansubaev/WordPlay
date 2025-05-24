@@ -6,7 +6,7 @@ namespace Source.Game.Core
     {
         void StartLevel(LevelData levelData);
         bool TryPlaceCluster(string cluster, int row, int column);
-        bool Validate(out List<string> matchedWords);
+        bool Validate(out List<string> matchedWords, out List<int> posInGrid);
         string[,] GetGridState();
         List<string> GetAvailableClusters();
     }

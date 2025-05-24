@@ -50,6 +50,10 @@ namespace Source.Installers
                 .FromResolve();
 
             Container.BindSignal<ExitGameSignal>()
+                .ToMethod<GameplayPresenter>(x => x.CloseGameplayScreen)
+                .FromResolve();
+
+            Container.BindSignal<ExitGameSignal>()
                 .ToMethod<GameState>(x => x.ReturnToMainMenu)
                 .FromResolve();
         }

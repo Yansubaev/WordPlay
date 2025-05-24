@@ -54,6 +54,8 @@ MonoBehaviour:
   _viewsContainer: {fileID: 4558112442250027521}
   _viewPrefab: {fileID: 481472279637195862, guid: bdbd5ffa3f25b2c43a99fc62180d5c02, type: 3}
   _words: []
+  _layoutGroup: {fileID: 8250642225755608792}
+  _contentSizeFitter: {fileID: 7174059912215307786}
 --- !u!114 &8250642225755608792
 MonoBehaviour:
   m_ObjectHideFlags: 0
