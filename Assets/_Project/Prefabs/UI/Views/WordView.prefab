@@ -54,6 +54,7 @@ MonoBehaviour:
   _viewsContainer: {fileID: 8674558585989035118}
   _viewPrefab: {fileID: 9096006409401109893, guid: 8339d2b8be93ff6439aa2d1565cf6581, type: 3}
   _word: 
+  _colorPalette: {fileID: 11400000, guid: bac195867eebf6e48b2b126ebf39182b, type: 2}
 --- !u!114 &3295482030628992303
 MonoBehaviour:
   m_ObjectHideFlags: 0

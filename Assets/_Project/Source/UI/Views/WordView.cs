@@ -1,3 +1,4 @@
+using Source.UI.Settings;
 using UnityEngine;
 using Yans.UI.Views;
 
@@ -6,6 +7,7 @@ namespace Source.UI
     public class WordView : EnumerableView<LetterView>
     {
         [SerializeField] private string _word;
+        [SerializeField] private ColorPalette _colorPalette;
 
         public string Word
         {
@@ -37,7 +39,7 @@ namespace Source.UI
             {
                 var letterView = this[i];
                 letterView.Letter = word[i];
-                letterView.Color = valid ? Color.green : Color.white;
+                letterView.InitialColor = valid ? _colorPalette.ValidCellColor : _colorPalette.DefaultCellColor;
             }
         }
     }

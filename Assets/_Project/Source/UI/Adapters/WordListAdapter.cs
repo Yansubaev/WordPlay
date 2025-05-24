@@ -38,12 +38,12 @@ namespace Source.UI.Adapters
 
         public void HandleHoveringOverEnter(ClusterView clusterView, LetterView letterView)
         {
-            PaintViewsFromLeadingView(clusterView, letterView, _colorPalette.HoverCellColor);
+            PaintViewsFromLeadingView(clusterView, letterView, true);
         }
 
         public void HandleHoveringOverExit(ClusterView clusterView, LetterView letterView)
         {
-            PaintViewsFromLeadingView(clusterView, letterView, _colorPalette.DefaultCellColor);
+            PaintViewsFromLeadingView(clusterView, letterView, false);
         }
 
         public void HandleReleasedCluster(ClusterView clusterView, LetterView letterView)
@@ -91,7 +91,7 @@ namespace Source.UI.Adapters
 
         #region private methods
 
-        private void PaintViewsFromLeadingView(ClusterView clusterView, LetterView letterView, Color color)
+        private void PaintViewsFromLeadingView(ClusterView clusterView, LetterView letterView, bool hovering)
         {
             var clusterSize = clusterView.Count;
             var letterPos = letterView.AdapterPosition;
@@ -101,7 +101,7 @@ namespace Source.UI.Adapters
             for (int i = letterPos; i < rangeEnd; i++)
             {
                 var letter = letterParent[i];
-                letter.Color = color;
+                letter.IsHovered = hovering;
             }
 
         }
