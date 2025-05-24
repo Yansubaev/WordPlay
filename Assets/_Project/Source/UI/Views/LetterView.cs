@@ -9,7 +9,6 @@ namespace Source.UI
 {
     public class LetterView : View
     {
-        // Delegates for center enter/exit events
         public delegate void CenterOverlapEvent(LetterView me, View target);
 
         #region private fields
@@ -23,7 +22,9 @@ namespace Source.UI
         [SerializeField]
         private CanvasGroup _canvasGroup;
 
-        // Object currently under the center
+        [SerializeField]
+        private EnumerableView<LetterView> _parentEnumerableView;
+        
         private View _currentObjectUnderCenter;
 
         #endregion
@@ -48,6 +49,33 @@ namespace Source.UI
             set => _image.color = value;
         }
 
+        public EnumerableView<LetterView> ParentEnumerableView
+        {
+            get
+            {
+                if (_parentEnumerableView == null)
+                {
+                    _parentEnumerableView = GetComponentInParent<EnumerableView<LetterView>>();
+                    if (_parentEnumerableView == null)
+                    {
+                        Debug.LogWarning($"No EnumerableView found for {gameObject.name}");
+                    }
+                }
+                return _parentEnumerableView;
+            }
+        } 
+
+        public int AdapterPosition
+        {
+            get
+            {
+                if (ParentEnumerableView == null)
+                    return -1;
+
+                return RectTransform.GetSiblingIndex();
+            }
+        }
+
         #endregion
 
         // Events for center enter/exit
@@ -65,16 +93,16 @@ namespace Source.UI
         {            
             View viewUnderCenter = FindObjectUnderCenter();
 
-            // Check if we entered a new object
-            if (viewUnderCenter != null && viewUnderCenter != _currentObjectUnderCenter)
-            {
-                OnCenterEnter?.Invoke(this, viewUnderCenter);
-            }
-
             // Check if we exited the previous object
             if (_currentObjectUnderCenter != null && viewUnderCenter != _currentObjectUnderCenter)
             {
                 OnCenterExit?.Invoke(this, _currentObjectUnderCenter);
+            }
+
+            // Check if we entered a new object
+            if (viewUnderCenter != null && viewUnderCenter != _currentObjectUnderCenter)
+            {
+                OnCenterEnter?.Invoke(this, viewUnderCenter);
             }
 
             // Update current object reference

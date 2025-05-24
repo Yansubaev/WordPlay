@@ -41,7 +41,7 @@ namespace Source.Game.Controllers
 
         public void CloseGame()
         {
-            if (_clusterGameService.Validate(out var matches))
+            if (_clusterGameService.Validate(out var matches, out var posInGrid))
             {
             }
 
@@ -58,6 +58,10 @@ namespace Source.Game.Controllers
             _cancellationTokenSource.Cancel();
         }
 
+        public LevelData GetCurrentLevelData()
+        {
+            return _levelData;
+        }
         #endregion
     }
 }

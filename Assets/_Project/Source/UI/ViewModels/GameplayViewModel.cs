@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using R3;
 using Source.Game.Controllers;
@@ -47,11 +48,44 @@ namespace Source.UI.Screens
             var levelViewData = new LevelViewData(
                 data.LevelId,
                 _clusterGameService.GetGridState(),
-                data.Clusters.ToArray(),
+                _clusterGameService.GetAvailableClusters().ToArray(),
                 data.Words.Select(e => e.Hint).ToArray()
             );
 
             _levelData.Value = levelViewData;
+        }
+
+        public void HandleClusterPlaced(string cluster, int wordIndex, int startIndex)
+        {
+            if (_clusterGameService.TryPlaceCluster(cluster, wordIndex, startIndex))
+            {
+                var validationSuccessful = _clusterGameService.Validate(out var matches, out var posInGrid);
+
+                var data = _gameController.GetCurrentLevelData();
+
+                var levelViewData = new LevelViewData(
+                    data.LevelId,
+                    _clusterGameService.GetGridState(),
+                    _clusterGameService.GetAvailableClusters().ToArray(),
+                    data.Words.Select(e => e.Hint).ToArray(),
+                    posInGrid.ToArray()
+                );
+
+                _levelData.Value = levelViewData;
+            }
+        }
+
+        public void ValidateLevel()
+        {
+            if (_clusterGameService.Validate(out var matches, out var posInGrid))
+            {
+                // Handle successful validation, e.g., show success message or proceed to next level
+
+            }
+            else
+            {
+                // Handle validation failure, e.g., show error message
+            }
         }
 
         #endregion
@@ -64,14 +98,16 @@ namespace Source.UI.Screens
         public string[,] Grid { get; private set; }
         public string[] Clusters { get; private set; }
         public string[] Hints { get; private set; }
+        public int[] ValidatedWords { get; private set; } = Array.Empty<int>();
         #endregion
 
-        public LevelViewData(string levelId, string[,] grid, string[] clusters, string[] hints)
+        public LevelViewData(string levelId, string[,] grid, string[] clusters, string[] hints, int[] validatedWords = null)
         {
             LevelId = levelId;
             Grid = grid;
             Clusters = clusters;
             Hints = hints;
+            ValidatedWords = validatedWords ?? Array.Empty<int>();
         }
     }
 }

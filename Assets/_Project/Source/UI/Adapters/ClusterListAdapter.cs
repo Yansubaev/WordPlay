@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Yans.UI.Adapters;
@@ -15,6 +14,10 @@ namespace Source.UI.Adapters
         private readonly Transform _dragArea;
         #endregion
 
+        public event Action<ClusterView, LetterView> OnHoveringOverEnter;
+        public event Action<ClusterView, LetterView> OnHoveringOverExit;
+        public event Action<ClusterView, LetterView> OnReleasedCluster;
+
         public ClusterListAdapter(EnumerableView<ClusterView> view, Transform dragArea) : base(view)
         {
             _dragArea = dragArea;
@@ -26,24 +29,37 @@ namespace Source.UI.Adapters
         {
             _clusters = clusters is List<string> list ? list : new List<string>(clusters);
             NotifyDatasetChanged(_clusters.Count);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(View.RectTransform);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(EnumerableView.RectTransform);
         }
 
         #endregion
 
         #region protected methods
 
-        protected override void OnBindView(ClusterView view, int position)
+        protected override void OnViewHolderCreated(ClusterView view)
+        {
+            view.OnDragBegin += HandleDragBegin;
+            view.OnDragEnd += HandleDragEnd;
+            view.OnHoveringOverEnter += HandleHoveringOverEnter;
+            view.OnHoveringOverExit += HandleHoveringOverExit;
+        }
+
+        protected override void OnBeforeBinding()
+        {
+            EnumerableView.ReleaseAllViews();
+        }
+        
+        protected override void OnBindViewHolder(ClusterView view, int position)
+        {
+            view.SetWord(_clusters[position]);
+        }
+
+        protected override void OnViewHolderDestroyed(ClusterView view)
         {
             view.OnDragBegin -= HandleDragBegin;
             view.OnDragEnd -= HandleDragEnd;
-            // view.OnDragging -= HandleDragging;
-
-            view.SetWord(_clusters[position]);
-
-            view.OnDragBegin += HandleDragBegin;
-            view.OnDragEnd += HandleDragEnd;
-            // view.OnDragging += HandleDragging;
+            view.OnHoveringOverEnter -= HandleHoveringOverEnter;
+            view.OnHoveringOverExit -= HandleHoveringOverExit;
         }
 
         #endregion
@@ -55,30 +71,24 @@ namespace Source.UI.Adapters
             view.RectTransform.SetParent(_dragArea);
         }
 
-        private void HandleDragging(ClusterView clusterView, IEnumerable<View> views)
+        private void HandleHoveringOverEnter(ClusterView clusterView, LetterView letterView)
         {
-            foreach (var view in views)
-            {
-                if (view is LetterView letterView)
-                {
-                    letterView.Color = Color.cyan;
-                }
-            }
+            OnHoveringOverEnter?.Invoke(clusterView, letterView);
         }
 
-        private void HandleDragEnd(ClusterView clusterView, IEnumerable<View> views)
+        private void HandleHoveringOverExit(ClusterView clusterView, LetterView letterView)
         {
-            Debug.Log($"Drag ended on: {clusterView.name}, {string.Join(',', views.Select(v => v.name))}");
+            OnHoveringOverExit?.Invoke(clusterView, letterView);
+        }
 
+        private void HandleDragEnd(ClusterView clusterView, View view)
+        {
             clusterView.SnapBack();
-            clusterView.RectTransform.SetParent(View.ViewsContainer);
+            clusterView.RectTransform.SetParent(EnumerableView.ViewsContainer);
 
-            foreach (var view in views)
+            if (view is LetterView letterView)
             {
-                if (view is LetterView letterView)
-                {
-                    letterView.Color = Color.red;
-                }
+                OnReleasedCluster?.Invoke(clusterView, letterView);
             }
         }
 

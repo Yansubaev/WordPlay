@@ -9,6 +9,18 @@ namespace Source.UI
     public class WordListView : EnumerableView<WordView>
     {
         [SerializeField] private List<string> _words;
+        [SerializeField] private LayoutGroup _layoutGroup;
+        [SerializeField] private ContentSizeFitter _contentSizeFitter;
+
+        public List<string> Words
+        {
+            get => _words;
+            set => SetWords(value);
+        }
+
+        public LayoutGroup LayoutGroup => _layoutGroup;
+
+        public ContentSizeFitter ContentSizeFitter => _contentSizeFitter;
 
         protected override void OnValidate()
         {
