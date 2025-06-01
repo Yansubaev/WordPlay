@@ -12,11 +12,12 @@ namespace Source.Game.Core
         private int _wordCount;
         private List<string> _availableClusters;
         private HashSet<string> _targetWords;
-        private bool[,] _preFilledCells; // Track which cells are pre-filled
+        private bool[,] _preFilledCells;
         #endregion
 
         #region public methods
 
+        // Track which cells are pre-filled
         public void StartLevel(LevelData levelData)
         {
             if (levelData == null)
@@ -29,7 +30,7 @@ namespace Source.Game.Core
             _wordCount = levelData.Words.Count;
             _grid = new string[_wordCount, _wordLength];
             _preFilledCells = new bool[_wordCount, _wordLength];
-            
+
             // Initialize grid
             for (int r = 0; r < _wordCount; r++)
                 for (int c = 0; c < _wordLength; c++)
@@ -48,7 +49,7 @@ namespace Source.Game.Core
         public bool TryPlaceCluster(string cluster, int row, int column)
         {
             Debug.Log($"[ClusterGameService] Attempting to place cluster '{cluster}' at ({row}, {column})");
-            
+
             if (string.IsNullOrEmpty(cluster) || row < 0 || column < 0 || row >= _wordCount || column + cluster.Length > _wordLength)
             {
                 Debug.LogError("[ClusterGameService] Invalid cluster placement parameters");
@@ -93,7 +94,7 @@ namespace Source.Game.Core
             return true;
         }
 
-        public bool RemoveCluster(string cluster, int row, int column)
+        public bool TryRemoveCluster(string cluster, int row, int column)
         {
             if (string.IsNullOrEmpty(cluster) || row < 0 || column < 0 || row >= _wordCount || column + cluster.Length > _wordLength)
             {
@@ -175,19 +176,19 @@ namespace Source.Game.Core
         {
             var availableClustersCopy = new List<string>(levelData.Clusters);
             var wordCoverage = new List<bool[]>();
-            
+
             // Initialize coverage arrays for each word
             foreach (var word in levelData.Words)
             {
                 wordCoverage.Add(new bool[word.Solution.Length]);
             }
-            
+
             // Try to cover all words with available clusters using randomized order
             bool foundMatch;
             do
             {
                 foundMatch = false;
-                
+
                 // Randomize cluster order for fair distribution
                 var shuffledClusters = new List<string>(availableClustersCopy);
                 for (int i = 0; i < shuffledClusters.Count; i++)
@@ -195,11 +196,11 @@ namespace Source.Game.Core
                     int randomIndex = UnityEngine.Random.Range(i, shuffledClusters.Count);
                     (shuffledClusters[i], shuffledClusters[randomIndex]) = (shuffledClusters[randomIndex], shuffledClusters[i]);
                 }
-                
+
                 foreach (var cluster in shuffledClusters)
                 {
                     bool clusterUsed = false;
-                    
+
                     // Randomize word order for fair distribution
                     var wordIndices = Enumerable.Range(0, levelData.Words.Count).ToList();
                     for (int i = 0; i < wordIndices.Count; i++)
@@ -207,15 +208,15 @@ namespace Source.Game.Core
                         int randomIndex = UnityEngine.Random.Range(i, wordIndices.Count);
                         (wordIndices[i], wordIndices[randomIndex]) = (wordIndices[randomIndex], wordIndices[i]);
                     }
-                    
+
                     // Try to place this cluster in any word (randomized order)
                     foreach (int wordIndex in wordIndices)
                     {
                         if (clusterUsed) break;
-                        
+
                         var word = levelData.Words[wordIndex].Solution;
                         var coverage = wordCoverage[wordIndex];
-                        
+
                         // Generate randomized position order
                         var positions = Enumerable.Range(0, word.Length - cluster.Length + 1).ToList();
                         for (int i = 0; i < positions.Count; i++)
@@ -223,7 +224,7 @@ namespace Source.Game.Core
                             int randomIndex = UnityEngine.Random.Range(i, positions.Count);
                             (positions[i], positions[randomIndex]) = (positions[randomIndex], positions[i]);
                         }
-                        
+
                         // Try to place cluster at each position (randomized order)
                         foreach (int pos in positions)
                         {
@@ -234,7 +235,7 @@ namespace Source.Game.Core
                                 {
                                     coverage[pos + i] = true;
                                 }
-                                
+
                                 // Remove cluster from available list
                                 availableClustersCopy.Remove(cluster);
                                 foundMatch = true;
@@ -243,17 +244,17 @@ namespace Source.Game.Core
                             }
                         }
                     }
-                    
+
                     if (clusterUsed) break;
                 }
             } while (foundMatch);
-            
+
             // Pre-fill uncovered positions
             for (int wordIndex = 0; wordIndex < levelData.Words.Count; wordIndex++)
             {
                 var word = levelData.Words[wordIndex].Solution;
                 var coverage = wordCoverage[wordIndex];
-                
+
                 for (int pos = 0; pos < word.Length; pos++)
                 {
                     if (!coverage[pos])
@@ -269,15 +270,15 @@ namespace Source.Game.Core
         {
             var unformablePositions = new List<int>();
             var usedClusters = new List<bool>(new bool[clusters.Count]);
-            
+
             // Try to cover the word with available clusters
             bool[] covered = new bool[word.Length];
-            
+
             // Greedy approach: try to place clusters starting from longest
             var sortedClusters = clusters.Select((cluster, index) => new { Cluster = cluster, Index = index })
                                        .OrderByDescending(x => x.Cluster.Length)
                                        .ToList();
-            
+
             bool foundMatch;
             do
             {
@@ -285,7 +286,7 @@ namespace Source.Game.Core
                 foreach (var clusterInfo in sortedClusters)
                 {
                     if (usedClusters[clusterInfo.Index]) continue;
-                    
+
                     // Try to place this cluster at each position
                     for (int pos = 0; pos <= word.Length - clusterInfo.Cluster.Length; pos++)
                     {
@@ -304,7 +305,7 @@ namespace Source.Game.Core
                     if (foundMatch) break;
                 }
             } while (foundMatch);
-            
+
             // Find uncovered positions
             for (int i = 0; i < covered.Length; i++)
             {
@@ -313,7 +314,7 @@ namespace Source.Game.Core
                     unformablePositions.Add(i);
                 }
             }
-            
+
             return unformablePositions;
         }
 
