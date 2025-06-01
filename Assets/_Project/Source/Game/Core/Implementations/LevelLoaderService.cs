@@ -1,7 +1,7 @@
-using System;
-using System.Threading;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+using System;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -9,13 +9,18 @@ namespace Source.Game.Core
 {
     public class LevelLoaderService : ILevelLoaderService
     {
-        private const string AddressTemplate = "Level/ru/{0}";
+        private readonly string _addressTemplate;
+
+        public LevelLoaderService(string addressTemplate)
+        {
+            _addressTemplate = addressTemplate;
+        }
 
         public async UniTask<LevelData> LoadLevel(string levelId, CancellationToken ct)
         {
             try
             {
-                var handle = Addressables.LoadAssetAsync<TextAsset>(string.Format(AddressTemplate, levelId));
+                var handle = Addressables.LoadAssetAsync<TextAsset>(string.Format(_addressTemplate, levelId));
 
                 await handle.ToUniTask(cancellationToken: ct);
 

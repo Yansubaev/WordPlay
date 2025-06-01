@@ -5,7 +5,6 @@ using Source.Game.Core;
 using System;
 using System.Linq;
 using Yans.ViewModels;
-using Zenject;
 
 namespace Source.UI.Screens
 {
@@ -23,14 +22,14 @@ namespace Source.UI.Screens
         #region private fields
         private ReactiveProperty<LevelViewData> _levelData = new();
         private ReactiveProperty<bool> _canUndo = new(false);
-        private GameSessionService _gameSessionService;
+        private GameSessionManager _gameSessionManager;
         private IClusterGameService _clusterGameService;
         private CommandManager _commandManager = new();
         #endregion
 
-        public GameplayViewModel(GameSessionService gameController, IClusterGameService clusterGameService)
+        public GameplayViewModel(GameSessionManager sessionManager, IClusterGameService clusterGameService)
         {
-            _gameSessionService = gameController;
+            _gameSessionManager = sessionManager;
             _clusterGameService = clusterGameService;
         }
 
@@ -54,7 +53,7 @@ namespace Source.UI.Screens
         public void UpdateLevelData()
         {
             var validationSuccessful = _clusterGameService.Validate(out var matches, out var posInGrid);
-            var data = _gameSessionService.GetCurrentLevelData();
+            var data = _gameSessionManager.GetCurrentLevelData();
 
             var levelViewData = new LevelViewData(
                 data.LevelId,
@@ -85,17 +84,15 @@ namespace Source.UI.Screens
 
         protected override void OnCreated()
         {
-            _gameSessionService.OnLevelStarted += HandleLevelStarted;
+            _gameSessionManager.OnLevelStarted += HandleLevelStarted;
         }
 
         protected override void OnAborted()
         {
-            _gameSessionService.OnLevelStarted -= HandleLevelStarted;
+            _gameSessionManager.OnLevelStarted -= HandleLevelStarted;
         }
 
         #endregion
-
-        #region private methods
 
         private void HandleLevelStarted(LevelData data)
         {
@@ -112,8 +109,6 @@ namespace Source.UI.Screens
 
             _levelData.Value = levelViewData;
         }
-
-        #endregion
     }
 
     public class LevelViewData

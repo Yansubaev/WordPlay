@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Source.Game.Controllers
 {
-    public class GameSessionService
+    public class GameSessionManager
     {
         #region private fields
         private ILevelLoaderService _levelLoaderService;
