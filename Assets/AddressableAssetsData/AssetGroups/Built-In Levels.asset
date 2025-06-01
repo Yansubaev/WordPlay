@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Built-In Levels
   m_GUID: 7440a8405157eb745ae4d6f098c29e13
   m_SerializeEntries:
+  - m_GUID: 2e9925fbd742dbc4db6573837d9f5ba2
+    m_Address: Levels/En/level_chain.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 83cddf8cf6ed0ff4796916cc3bc9dc14
     m_Address: Levels/En/level_1.json
     m_ReadOnly: 0
