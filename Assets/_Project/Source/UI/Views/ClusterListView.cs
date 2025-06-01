@@ -10,11 +10,13 @@ namespace Source.UI
     {
         [SerializeField] private List<string> _clusters;
 
-        protected override void OnValidate()
-        {
-            SetClusters(_clusters);
-        }
-
+#if UNITY_EDITOR
+            protected override void OnValidate()
+            {
+                SetClusters(_clusters);
+            }
+    
+#endif
         public void SetClusters(IEnumerable<string> clusters)
         {
             _clusters = clusters is List<string> clusterList ? clusterList : clusters.ToList();
