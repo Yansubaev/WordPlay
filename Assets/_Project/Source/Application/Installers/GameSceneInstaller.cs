@@ -18,7 +18,7 @@ namespace Source.Installers
             Container.Bind<ILevelLoaderService>().To<LevelLoaderService>().AsSingle();
             Container.Bind<IClusterGameService>().To<ClusterGameService>().AsSingle();
             Container.Bind<IGameProgressService>().To<GameProgressService>().AsSingle();
-            Container.Bind<GameController>().AsSingle();
+            Container.Bind<GameSessionService>().AsSingle();
 
             BindSignals();
         }
@@ -34,7 +34,7 @@ namespace Source.Installers
                 .FromResolve();
 
             Container.BindSignal<StartGameSignal>()
-                .ToMethod<GameController>(x => x.StartGame)
+                .ToMethod<GameSessionService>(x => x.StartGame)
                 .FromResolve();
 
             Container.BindSignal<PauseGameSignal>()
@@ -46,7 +46,7 @@ namespace Source.Installers
                 .FromResolve();
 
             Container.BindSignal<ExitGameSignal>()
-                .ToMethod<GameController>(x => x.CloseGame)
+                .ToMethod<GameSessionService>(x => x.CloseGame)
                 .FromResolve();
 
             Container.BindSignal<ExitGameSignal>()

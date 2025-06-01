@@ -22,11 +22,13 @@ namespace Source.UI
 
         public ContentSizeFitter ContentSizeFitter => _contentSizeFitter;
 
-        protected override void OnValidate()
-        {
-            SetWords(_words);
-        }
-
+#if UNITY_EDITOR
+            protected override void OnValidate()
+            {
+                SetWords(_words);
+            }
+    
+#endif
         public void SetWords(IEnumerable<string> words)
         {
             _words = words is List<string> wordList ? wordList : words.ToList();

@@ -15,10 +15,12 @@ namespace Source.UI
             set => SetWord(value);
         }
 
-        protected override void OnValidate()
-        {
-            SetWord(_word);
-        }
+#if UNITYEDITOR
+            protected override void OnValidate()
+            {
+                SetWord(_word);
+            }
+#endif
 
         public void SetWord(string word)
         {
