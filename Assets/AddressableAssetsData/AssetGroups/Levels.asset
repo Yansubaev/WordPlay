@@ -15,8 +15,20 @@ MonoBehaviour:
   m_GroupName: Levels
   m_GUID: 656efdbd78f7da84d9dd8950e023362e
   m_SerializeEntries:
-  - m_GUID: 83cddf8cf6ed0ff4796916cc3bc9dc14
-    m_Address: Level/ru/level_1
+  - m_GUID: 515ccd076e4b1be468ceda6ed39a3dcf
+    m_Address: Levels/En/level_3.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Level
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 675e7bd934436384fbf6d53b7eb94437
+    m_Address: Levels/En/level_4.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Level
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea7be48852ff11f4d9b99ac13c99802e
+    m_Address: Levels/En/level_2.json
     m_ReadOnly: 0
     m_SerializedLabels:
     - Level

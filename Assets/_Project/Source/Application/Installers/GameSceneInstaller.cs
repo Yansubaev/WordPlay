@@ -15,10 +15,17 @@ namespace Source.Installers
         public override void InstallBindings()
         {
             Container.Bind<GameplayPresenter>().AsSingle();
-            Container.Bind<ILevelLoaderService>().To<LevelLoaderService>().AsSingle();
+            Container.Bind<ILevelLoaderService>()
+                .To<LevelLoaderService>()
+                .FromMethod(() =>
+                {
+                    var addressTemplate = "Levels/En/{0}.json";
+                    return new LevelLoaderService(addressTemplate);
+                })
+                .AsSingle();
             Container.Bind<IClusterGameService>().To<ClusterGameService>().AsSingle();
             Container.Bind<IGameProgressService>().To<GameProgressService>().AsSingle();
-            Container.Bind<GameSessionService>().AsSingle();
+            Container.Bind<GameSessionManager>().AsSingle();
 
             BindSignals();
         }
@@ -34,7 +41,7 @@ namespace Source.Installers
                 .FromResolve();
 
             Container.BindSignal<StartGameSignal>()
-                .ToMethod<GameSessionService>(x => x.StartGame)
+                .ToMethod<GameSessionManager>(x => x.StartGame)
                 .FromResolve();
 
             Container.BindSignal<PauseGameSignal>()
@@ -46,7 +53,7 @@ namespace Source.Installers
                 .FromResolve();
 
             Container.BindSignal<ExitGameSignal>()
-                .ToMethod<GameSessionService>(x => x.CloseGame)
+                .ToMethod<GameSessionManager>(x => x.CloseGame)
                 .FromResolve();
 
             Container.BindSignal<ExitGameSignal>()
