@@ -19,10 +19,7 @@ namespace Source.Game.Core
 
             if (string.IsNullOrEmpty(json))
             {
-                return new GameProgress()
-                {
-                    CurrentLevelId = "level_1",
-                };
+                return null;
             }
             else
             {

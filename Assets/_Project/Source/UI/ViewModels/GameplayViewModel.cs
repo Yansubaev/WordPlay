@@ -12,19 +12,17 @@ namespace Source.UI.Screens
 
     public class GameplayViewModel : ViewModel
     {
-        private const int MaxHistorySize = 50;
-
         #region public properties
         public ReactiveProperty<LevelViewData> LevelData => _levelData;
         public ReactiveProperty<bool> CanUndo => _canUndo;
         #endregion
 
         #region private fields
-        private ReactiveProperty<LevelViewData> _levelData = new();
-        private ReactiveProperty<bool> _canUndo = new(false);
-        private GameSessionManager _gameSessionManager;
-        private IClusterGameService _clusterGameService;
-        private CommandManager _commandManager = new();
+        private readonly ReactiveProperty<LevelViewData> _levelData = new();
+        private readonly ReactiveProperty<bool> _canUndo = new(false);
+        private readonly GameSessionManager _gameSessionManager;
+        private readonly IClusterGameService _clusterGameService;
+        private readonly CommandManager _commandManager = new();
         #endregion
 
         public GameplayViewModel(GameSessionManager sessionManager, IClusterGameService clusterGameService)
@@ -37,7 +35,6 @@ namespace Source.UI.Screens
 
         public void HandleClusterPlaced(string cluster, int wordIndex, int startIndex)
         {
-            // Создаем команду для размещения кластера
             var command = new PlaceClusterCommand(_clusterGameService, this, cluster, wordIndex, startIndex);
 
             _commandManager.ExecuteCommand(command);
@@ -64,18 +61,8 @@ namespace Source.UI.Screens
             );
 
             _levelData.Value = levelViewData;
-        }
 
-        public void ValidateLevel()
-        {
-            if (_clusterGameService.Validate(out var matches, out var posInGrid))
-            {
-                // Handle successful validation, e.g., show success message or proceed to next level
-            }
-            else
-            {
-                // Handle validation failure, e.g., show error message
-            }
+            _gameSessionManager.ValidateCurrentLevel();
         }
 
         #endregion

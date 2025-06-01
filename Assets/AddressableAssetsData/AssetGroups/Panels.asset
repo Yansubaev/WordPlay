@@ -15,11 +15,6 @@ MonoBehaviour:
   m_GroupName: Panels
   m_GUID: 1e8c6704200dbbd4cbd29c031cc80af0
   m_SerializeEntries:
-  - m_GUID: 20ee5c99dd8c785418bacba389737f66
-    m_Address: UI/Panels/SettingsPanel/Landscape
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 86efbec2ede1bbb4a8388bf53dd2fe1e
     m_Address: UI/Panels/GameplayPanel
     m_ReadOnly: 0
