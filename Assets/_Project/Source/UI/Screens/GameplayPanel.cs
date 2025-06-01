@@ -17,6 +17,9 @@ namespace Source.UI.Screens
         private ImageButtonView _pauseButton;
 
         [SerializeField]
+        private ImageButtonView _undoButton;
+
+        [SerializeField]
         private WordListView _wordListView;
 
         [SerializeField]
@@ -46,6 +49,13 @@ namespace Source.UI.Screens
                     _clusterListAdapter.UpdateDataset(levelData.Clusters);
                 })
                 .AddTo(disposables);
+
+            _viewModel.CanUndo
+                .Subscribe(canUndo =>
+                {
+                    _undoButton.Interactable = canUndo;
+                })
+                .AddTo(disposables);
         }
 
         #endregion
@@ -63,6 +73,7 @@ namespace Source.UI.Screens
         {
             base.OnStarted();
             _pauseButton.OnClick += HandlePauseButtonClicked;
+            _undoButton.OnClick += HandleUndoButtonClicked;
             _clusterListAdapter.OnHoveringOverEnter += _wordListAdapter.HandleHoveringOverEnter;
             _clusterListAdapter.OnHoveringOverExit += _wordListAdapter.HandleHoveringOverExit;
             _clusterListAdapter.OnReleasedCluster += _wordListAdapter.HandleReleasedCluster;
@@ -73,6 +84,7 @@ namespace Source.UI.Screens
         {
             base.OnStopped();
             _pauseButton.OnClick -= HandlePauseButtonClicked;
+            _undoButton.OnClick -= HandleUndoButtonClicked;
             _clusterListAdapter.OnHoveringOverEnter -= _wordListAdapter.HandleHoveringOverEnter;
             _clusterListAdapter.OnHoveringOverExit -= _wordListAdapter.HandleHoveringOverExit;
             _clusterListAdapter.OnReleasedCluster -= _wordListAdapter.HandleReleasedCluster;
@@ -99,6 +111,11 @@ namespace Source.UI.Screens
         private void HandlePauseButtonClicked(View view)
         {
             _signalBus.Fire<PauseGameSignal>();
+        }
+
+        private void HandleUndoButtonClicked(View view)
+        {
+            _viewModel.HandleUndoCommand();
         }
 
         #endregion

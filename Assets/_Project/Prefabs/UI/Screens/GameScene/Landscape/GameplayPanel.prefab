@@ -32,6 +32,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameplayPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 2419887415614655661, guid: 86efbec2ede1bbb4a8388bf53dd2fe1e, type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2419887415614655661, guid: 86efbec2ede1bbb4a8388bf53dd2fe1e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2419887415614655661, guid: 86efbec2ede1bbb4a8388bf53dd2fe1e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2419887415614655661, guid: 86efbec2ede1bbb4a8388bf53dd2fe1e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -400
+      objectReference: {fileID: 0}
+    - target: {fileID: 2419887415614655661, guid: 86efbec2ede1bbb4a8388bf53dd2fe1e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -22
+      objectReference: {fileID: 0}
     - target: {fileID: 2577357870562180292, guid: 86efbec2ede1bbb4a8388bf53dd2fe1e, type: 3}
       propertyPath: m_IsActive
       value: 1
