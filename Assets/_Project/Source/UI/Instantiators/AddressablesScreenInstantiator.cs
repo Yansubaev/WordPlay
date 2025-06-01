@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using Yans.UI;
 using Yans.UI.UIScreens;
 
-namespace Yans.UI
+namespace Source.UI.Instantiators
 {
     public class AddressablesScreenInstantiator : ScreenInstantiator
     {
