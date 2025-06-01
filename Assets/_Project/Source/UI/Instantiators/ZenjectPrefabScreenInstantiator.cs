@@ -3,7 +3,7 @@ using Yans.UI;
 using Yans.UI.UIScreens;
 using Zenject;
 
-namespace Source.Infrastructure.UI
+namespace Source.UI.Instantiators
 {
     public class ZenjectPrefabScreenInstantiator : PrefabScreenInstantiator
     {
