@@ -1,10 +1,7 @@
 using Cysharp.Threading.Tasks;
-using System.Collections.Generic;
 using System.Threading;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace Source.Infrastructure.SceneManagement
 {
@@ -14,14 +11,16 @@ namespace Source.Infrastructure.SceneManagement
 
     public class SceneLoaderService : ISceneLoaderService
     {
-        #region private constants
-        private const string SceneKeyTemplate = "Scenes/{0}";
+        #region private fields
+        private readonly DiContainer _container;
+        string _currentScene;
         #endregion
 
-        #region private fields
-        private IDictionary<string, SceneInstance> _loadedScenes = new Dictionary<string, SceneInstance>();
-        SceneInstance _currentScene;
-        #endregion
+        public SceneLoaderService(DiContainer container)
+        {
+            _container = container;
+            _currentScene = default;
+        }
 
         #region public methods
 
@@ -32,20 +31,12 @@ namespace Source.Infrastructure.SceneManagement
         public async UniTask LoadSceneAsync(string sceneName, LoadSceneMode mode = LoadSceneMode.Single, CancellationToken cancellationToken = default)
         {
             var oldScene = _currentScene;
-            
-            _currentScene = await Addressables
-                .LoadSceneAsync(string.Format(SceneKeyTemplate, sceneName), mode)
-                .ToUniTask(cancellationToken: cancellationToken);
 
-            _loadedScenes[sceneName] = _currentScene;
+            var op = SceneManager.LoadSceneAsync(sceneName, mode);
+            op.allowSceneActivation = true;
 
-            if (mode == LoadSceneMode.Single && oldScene.Scene.IsValid())
-            {
-                await Addressables.UnloadSceneAsync(oldScene, true)
-                    .ToUniTask(cancellationToken: cancellationToken);
-
-                _loadedScenes.Remove(oldScene.Scene.name);
-            }
+            await op.ToUniTask(cancellationToken: cancellationToken);
+            _currentScene = sceneName;
         }
 
         /// <summary>
@@ -54,14 +45,17 @@ namespace Source.Infrastructure.SceneManagement
         /// <param name="sceneName">The name of the scene to unload.</param>
         public async UniTask UnloadScene(string sceneName, CancellationToken cancellationToken = default)
         {
-            if (_loadedScenes.TryGetValue(sceneName, out SceneInstance sceneInstance))
+            if (string.IsNullOrEmpty(sceneName))
             {
-                _loadedScenes.Remove(sceneName);
-                await Addressables.UnloadSceneAsync(sceneInstance, true).ToUniTask(cancellationToken: cancellationToken);
+                throw new System.ArgumentException("Scene name cannot be null or empty.", nameof(sceneName));
             }
-            else
+
+            var op = SceneManager.UnloadSceneAsync(sceneName);
+            await op.ToUniTask(cancellationToken: cancellationToken);
+
+            if (_currentScene == sceneName)
             {
-                Debug.LogWarning($"Scene {sceneName} is not loaded.");
+                _currentScene = default;
             }
         }
 

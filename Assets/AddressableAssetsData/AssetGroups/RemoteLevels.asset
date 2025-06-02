@@ -10,32 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Panels
+  m_Name: RemoteLevels
   m_EditorClassIdentifier: 
-  m_GroupName: Panels
-  m_GUID: 1e8c6704200dbbd4cbd29c031cc80af0
+  m_GroupName: RemoteLevels
+  m_GUID: 656efdbd78f7da84d9dd8950e023362e
   m_SerializeEntries:
-  - m_GUID: 86efbec2ede1bbb4a8388bf53dd2fe1e
-    m_Address: UI/Panels/GameplayPanel
+  - m_GUID: 515ccd076e4b1be468ceda6ed39a3dcf
+    m_Address: Levels/En/level_3.json
     m_ReadOnly: 0
     m_SerializedLabels:
-    - UI
+    - Level
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cb2875bcc6af7144591071f8f581df3f
-    m_Address: UI/Panels/MainMenuPanel
+  - m_GUID: 675e7bd934436384fbf6d53b7eb94437
+    m_Address: Levels/En/level_4.json
     m_ReadOnly: 0
     m_SerializedLabels:
-    - UI
+    - Level
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e27765958833a734689822b5554b1334
-    m_Address: UI/Panels/SettingsPanel
+  - m_GUID: ea7be48852ff11f4d9b99ac13c99802e
+    m_Address: Levels/En/level_2.json
     m_ReadOnly: 0
     m_SerializedLabels:
-    - UI
+    - Level
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 85610afe089c4874480e340fd4698d99, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: daa513ba071a6b441bcb5ba734297f22, type: 2}
-    - {fileID: 11400000, guid: b8dff169d7592a14c90aded750756009, type: 2}
+    - {fileID: 11400000, guid: b3f94878ebdf6a64cb9e18ed09b82df2, type: 2}
+    - {fileID: 11400000, guid: 8a7916c5d1c023e49be42a1136e8db2b, type: 2}
