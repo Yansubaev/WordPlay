@@ -343,6 +343,15 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.services.cloud-diagnostics": {
+      "version": "1.0.10",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.services.core": "1.12.5"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.services.core": {
       "version": "1.14.0",
       "depth": 1,
