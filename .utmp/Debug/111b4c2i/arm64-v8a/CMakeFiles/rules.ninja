@@ -42,7 +42,7 @@ rule CXX_SHARED_LIBRARY_LINKER__game_Debug
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = "C:\Program Files\Unity\Hub\Editor\6000.0.49f1\Editor\Data\PlaybackEngines\AndroidPlayer\SDK\cmake\3.22.1\bin\cmake.exe" --regenerate-during-build -SC:\Development\Unity\WordPlay\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp -BC:\Development\Unity\WordPlay\.utmp\Debug\111b4c2i\arm64-v8a
+  command = "C:\Program Files\Unity\Hub\Editor\6000.0.49f1\Editor\Data\PlaybackEngines\AndroidPlayer\SDK\cmake\3.22.1\bin\cmake.exe" --regenerate-during-build -SC:\Development\Unity\WordPlay\Library\PramData\AndroidApplicationController\Cache\com.yans.wordplay\gradle-project\unityLibrary\src\main\cpp -BC:\Development\Unity\WordPlay\.utmp\Debug\111b4c2i\arm64-v8a
   description = Re-running CMake...
   generator = 1
 

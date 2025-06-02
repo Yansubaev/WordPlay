@@ -250,6 +250,22 @@
 			"value" : "C:/Program Files/Unity/Hub/Editor/6000.0.49f1/Editor/Data/PlaybackEngines/AndroidPlayer/SDK/cmake/3.22.1/bin/ctest.exe"
 		},
 		{
+			"name" : "CMAKE_CXX_COMPILER",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "(This variable does not exist and should not be used)"
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : ""
+		},
+		{
 			"name" : "CMAKE_CXX_COMPILER_AR",
 			"properties" : 
 			[
@@ -376,6 +392,22 @@
 			],
 			"type" : "STRING",
 			"value" : "-latomic -lm"
+		},
+		{
+			"name" : "CMAKE_C_COMPILER",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "(This variable does not exist and should not be used)"
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : ""
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_AR",
@@ -707,7 +739,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Development/Unity/WordPlay/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp"
+			"value" : "C:/Development/Unity/WordPlay/Library/PramData/AndroidApplicationController/Cache/com.yans.wordplay/gradle-project/unityLibrary/src/main/cpp"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -743,7 +775,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "C:\\Development\\Unity\\WordPlay\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\Debug\\111b4c2i\\obj\\arm64-v8a"
+			"value" : "C:\\Development\\Unity\\WordPlay\\Library\\PramData\\AndroidApplicationController\\Cache\\com.yans.wordplay\\gradle-project\\unityLibrary\\build\\intermediates\\cxx\\Debug\\111b4c2i\\obj\\arm64-v8a"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -1015,7 +1047,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "C:\\Development\\Unity\\WordPlay\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\Debug\\111b4c2i\\obj\\arm64-v8a"
+			"value" : "C:\\Development\\Unity\\WordPlay\\Library\\PramData\\AndroidApplicationController\\Cache\\com.yans.wordplay\\gradle-project\\unityLibrary\\build\\intermediates\\cxx\\Debug\\111b4c2i\\obj\\arm64-v8a"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
@@ -1255,11 +1287,11 @@
 			[
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "The CMake toolchain file"
 				}
 			],
-			"type" : "UNINITIALIZED",
-			"value" : "C:\\Program Files\\Unity\\Hub\\Editor\\6000.0.49f1\\Editor\\Data\\PlaybackEngines\\AndroidPlayer\\NDK\\build\\cmake\\android.toolchain.cmake"
+			"type" : "FILEPATH",
+			"value" : "C:/Program Files/Unity/Hub/Editor/6000.0.49f1/Editor/Data/PlaybackEngines/AndroidPlayer/NDK/build/cmake/android.toolchain.cmake"
 		},
 		{
 			"name" : "CMAKE_VERBOSE_MAKEFILE",
@@ -1311,7 +1343,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Development/Unity/WordPlay/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp"
+			"value" : "C:/Development/Unity/WordPlay/Library/PramData/AndroidApplicationController/Cache/com.yans.wordplay/gradle-project/unityLibrary/src/main/cpp"
 		},
 		{
 			"name" : "game-activity_DIR",
@@ -1371,67 +1403,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Development/Unity/WordPlay/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity"
-		},
-		{
-			"name" : "games-frame-pacing_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "The directory containing a CMake configuration file for games-frame-pacing."
-				}
-			],
-			"type" : "PATH",
-			"value" : "C:/Development/Unity/WordPlay/.utmp/Debug/111b4c2i/prefab/arm64-v8a/prefab/lib/aarch64-linux-android/cmake/games-frame-pacing"
-		},
-		{
-			"name" : "swappywrapper_BINARY_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "C:/Development/Unity/WordPlay/.utmp/Debug/111b4c2i/arm64-v8a/FramePacing"
-		},
-		{
-			"name" : "swappywrapper_IS_TOP_LEVEL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "OFF"
-		},
-		{
-			"name" : "swappywrapper_LIB_DEPENDS",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Dependencies for the target"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "general;android;general;games-frame-pacing::swappy_static;general;log;general;c++;"
-		},
-		{
-			"name" : "swappywrapper_SOURCE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "C:/Development/Unity/WordPlay/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/FramePacing"
+			"value" : "C:/Development/Unity/WordPlay/Library/PramData/AndroidApplicationController/Cache/com.yans.wordplay/gradle-project/unityLibrary/src/main/cpp/GameActivity"
 		}
 	],
 	"kind" : "cache",
