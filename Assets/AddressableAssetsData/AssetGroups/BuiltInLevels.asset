@@ -10,20 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: BuiltInLevels
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
-  m_GUID: bf9e68b53d1a6e24282f2713d7a068b1
+  m_GroupName: BuiltInLevels
+  m_GUID: 7440a8405157eb745ae4d6f098c29e13
   m_SerializeEntries:
-  - m_GUID: 7553f83793fe12940a403c4712a5e4c8
-    m_Address: UI/Root/UIRoot.prefab
+  - m_GUID: 2e9925fbd742dbc4db6573837d9f5ba2
+    m_Address: Levels/En/level_chain.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83cddf8cf6ed0ff4796916cc3bc9dc14
+    m_Address: Levels/En/level_1.json
     m_ReadOnly: 0
     m_SerializedLabels:
-    - UI
+    - Level
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 85610afe089c4874480e340fd4698d99, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: efc77cd14649aa0438d348124934c97d, type: 2}
-    - {fileID: 11400000, guid: 20d5dd04757c04e458c31da182cfa73c, type: 2}
+    - {fileID: 11400000, guid: fadaaf64d0eb11646bc850a91f442766, type: 2}
+    - {fileID: 11400000, guid: 4d3c4aa998e435744ac21fa60d217896, type: 2}

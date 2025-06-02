@@ -1,7 +1,7 @@
 {
   "buildFiles": [
-    "C:\\Development\\Unity\\WordPlay\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\src\\main\\cpp\\CMakeLists.txt",
-    "C:\\Development\\Unity\\WordPlay\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\src\\main\\cpp\\GameActivity\\CMakeLists.txt"
+    "C:\\Development\\Unity\\WordPlay\\Library\\PramData\\AndroidApplicationController\\Cache\\com.yans.wordplay\\gradle-project\\unityLibrary\\src\\main\\cpp\\CMakeLists.txt",
+    "C:\\Development\\Unity\\WordPlay\\Library\\PramData\\AndroidApplicationController\\Cache\\com.yans.wordplay\\gradle-project\\unityLibrary\\src\\main\\cpp\\GameActivity\\CMakeLists.txt"
   ],
   "cleanCommandsComponents": [
     [
@@ -22,7 +22,7 @@
       "toolchain": "toolchain",
       "abi": "arm64-v8a",
       "artifactName": "game",
-      "output": "C:\\Development\\Unity\\WordPlay\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\Debug\\111b4c2i\\obj\\arm64-v8a\\libgame.so",
+      "output": "C:\\Development\\Unity\\WordPlay\\Library\\PramData\\AndroidApplicationController\\Cache\\com.yans.wordplay\\gradle-project\\unityLibrary\\build\\intermediates\\cxx\\Debug\\111b4c2i\\obj\\arm64-v8a\\libgame.so",
       "runtimeFiles": []
     }
   },
