@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using Zenject;
 
 namespace Source.Game.Core
 {
@@ -12,7 +13,7 @@ namespace Source.Game.Core
     {
         private readonly string _addressTemplate;
 
-        public LevelLoaderService(string addressTemplate)
+        public LevelLoaderService([Inject(Id = "addressTemplate")] string addressTemplate)
         {
             _addressTemplate = addressTemplate;
         }
