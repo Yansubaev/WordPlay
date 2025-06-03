@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Unity.VisualScripting;
 
 namespace Source.Game.Controllers
 {
     public class GameSessionManager
     {
+        public event Action<LevelData> OnLevelStarted;
+
         #region private fields
         private readonly ILevelLoaderService _levelLoaderService;
         private readonly IClusterGameService _clusterGameService;
@@ -20,10 +21,6 @@ namespace Source.Game.Controllers
         private CancellationTokenSource _cancellationTokenSource = new();
         #endregion
 
-        public event Action<LevelData> OnLevelStarted;
-
-        #region public methods
-
         public GameSessionManager(
             ILevelLoaderService levelLoaderService,
             IClusterGameService clusterGameService,
@@ -33,6 +30,8 @@ namespace Source.Game.Controllers
             _clusterGameService = clusterGameService;
             _gameProgressService = gameProgressService;
         }
+
+        #region public methods
 
         public async void StartGame()
         {
@@ -89,7 +88,10 @@ namespace Source.Game.Controllers
                 }
             }
         }
+
         #endregion
+
+        #region private methods
 
         private void StartNextLevel()
         {
@@ -111,5 +113,7 @@ namespace Source.Game.Controllers
             _clusterGameService.StartLevel(_currentLevelData);
             OnLevelStarted?.Invoke(_currentLevelData);
         }
+
+        #endregion
     }
 }
