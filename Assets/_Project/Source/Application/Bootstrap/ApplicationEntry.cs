@@ -51,7 +51,7 @@ namespace Source.Infrastructure
             int targetFrameRate = GetOptimalFrameRate(deviceRefreshRate);
             
             // Set the target framerate
-            Application.targetFrameRate = targetFrameRate;
+            UnityEngine.Application.targetFrameRate = targetFrameRate;
             
             // Also set VSync if appropriate
             QualitySettings.vSyncCount = ShouldUseVSync(targetFrameRate, deviceRefreshRate) ? 1 : 0;

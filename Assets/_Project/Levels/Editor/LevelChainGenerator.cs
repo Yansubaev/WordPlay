@@ -205,7 +205,7 @@ namespace Source.Editor
 
         private static string GetRelativePath(string absolutePath)
         {
-            string projectPath = Path.GetFullPath(Application.dataPath).Replace('\\', '/');
+            string projectPath = Path.GetFullPath(UnityEngine.Application.dataPath).Replace('\\', '/');
             absolutePath = absolutePath.Replace('\\', '/');
 
             if (!absolutePath.StartsWith(projectPath))
