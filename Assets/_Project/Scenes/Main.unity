@@ -468,7 +468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _uiRoot: {fileID: 264452879}
   _screenInstantiator: {fileID: 373183561}
-  _config: {fileID: 11400000, guid: b31f1e46bff77604ebf49cae7e12dffd, type: 2}
+  _config: {fileID: 11400000, guid: 89ebdf1d58bd7c54fb5949cbcaee8d72, type: 2}
 --- !u!1001 &855210335816216689
 PrefabInstance:
   m_ObjectHideFlags: 0
