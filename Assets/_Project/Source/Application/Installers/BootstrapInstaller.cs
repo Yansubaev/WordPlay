@@ -1,3 +1,5 @@
+using Source.Application.Services;
+using Source.Game.Core;
 using Source.Infrastructure.SceneManagement;
 using Source.Infrastructure.StateMachine;
 using Source.Infrastructure.StateMachine.States;
@@ -17,6 +19,11 @@ namespace Source.Installers
 
             DeclareSignals();
 
+            Container.BindInstance("Levels/En/{0}.json").WithId("addressTemplate");
+
+            Container.Bind<ILevelChainRepository>().To<LevelChainRepository>().AsTransient();
+            Container.Bind<ILevelPreloadingService>().To<LevelPreloadingService>().AsSingle();
+            Container.Bind<IGameProgressService>().To<GameProgressService>().AsSingle();
             Container.Bind<ISceneLoaderService>().To<SceneLoaderService>().AsSingle();
             Container.Bind<GameStateMachine>().AsSingle();
 
