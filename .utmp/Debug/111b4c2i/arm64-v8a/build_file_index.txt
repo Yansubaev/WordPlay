@@ -1,2 +1,0 @@
-C:\Development\Unity\WordPlay\Library\PramData\AndroidApplicationController\Cache\com.yans.wordplay\gradle-project\unityLibrary\src\main\cpp\CMakeLists.txt
-C:\Development\Unity\WordPlay\Library\PramData\AndroidApplicationController\Cache\com.yans.wordplay\gradle-project\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt

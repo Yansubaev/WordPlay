@@ -14,6 +14,7 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
@@ -85,3 +86,5 @@ Assets/StreamingAssets/BuildinAssetBundles
 
 # End of https://www.toptal.com/developers/gitignore/api/unity
 .idea/
+.utmp/
+.vscode/
