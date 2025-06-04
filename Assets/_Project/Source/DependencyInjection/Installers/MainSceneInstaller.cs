@@ -1,6 +1,6 @@
+using Source.Infrastructure.Signals;
 using Source.Infrastructure.StateMachine.States;
 using Source.Presentation.Presenters;
-using Source.Signals;
 using Zenject;
 
 namespace Source.DI.Installers

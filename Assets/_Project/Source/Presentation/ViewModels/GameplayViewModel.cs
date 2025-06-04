@@ -38,7 +38,6 @@ namespace Source.Presentation.ViewModels
         {
             var command = new PlaceClusterCommand(
                 _clusterGameService,
-                this,
                 cluster,
                 wordIndex,
                 startIndex,

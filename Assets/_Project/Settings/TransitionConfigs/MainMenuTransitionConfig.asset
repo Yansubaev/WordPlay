@@ -14,27 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Transitions:
   - From:
-      rid: 8047432344825757848
+      rid: 8047432364545278038
     To:
-      rid: 8047432344825757849
+      rid: 8047432364545278039
     Type: 2
   - From:
-      rid: 8047432344825757850
+      rid: 8047432364545278040
     To:
-      rid: 8047432344825757851
+      rid: 8047432364545278041
     Type: 3
   references:
     version: 2
     RefIds:
-    - rid: 8047432344825757848
-      type: {class: MainMenuPanelType, ns: Source.Presentation.Transitions, asm: Assembly-CSharp}
+    - rid: 8047432364545278038
+      type: {class: MainMenuPanelType, ns: Source.Presentation.Transitions, asm: Presentation}
       data: 
-    - rid: 8047432344825757849
-      type: {class: SettingsPanelType, ns: Source.Presentation.Transitions, asm: Assembly-CSharp}
+    - rid: 8047432364545278039
+      type: {class: SettingsPanelType, ns: Source.Presentation.Transitions, asm: Presentation}
       data: 
-    - rid: 8047432344825757850
-      type: {class: SettingsPanelType, ns: Source.Presentation.Transitions, asm: Assembly-CSharp}
+    - rid: 8047432364545278040
+      type: {class: SettingsPanelType, ns: Source.Presentation.Transitions, asm: Presentation}
       data: 
-    - rid: 8047432344825757851
-      type: {class: MainMenuPanelType, ns: Source.Presentation.Transitions, asm: Assembly-CSharp}
+    - rid: 8047432364545278041
+      type: {class: MainMenuPanelType, ns: Source.Presentation.Transitions, asm: Presentation}
       data: 

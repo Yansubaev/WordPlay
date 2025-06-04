@@ -1,5 +1,5 @@
 using System;
-using Source.Signals;
+using Source.Infrastructure.Signals;
 using Source.Presentation.Views;
 using UnityEngine;
 using UnityEngine.UI;

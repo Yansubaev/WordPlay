@@ -1,5 +1,5 @@
 using Cysharp.Threading.Tasks;
-using Source.Signals;
+using Source.Infrastructure.Signals;
 using Zenject;
 
 namespace Source.Infrastructure.StateMachine.States
@@ -11,14 +11,14 @@ namespace Source.Infrastructure.StateMachine.States
         private GameStateMachine _stateMachine;
         #endregion
 
+        #region public methods
+
         [Inject]
         public void Inject(SignalBus signalBus, GameStateMachine stateMachine)
         {
             _signalBus = signalBus;
             _stateMachine = stateMachine;
         }
-
-        #region public methods
 
         public UniTask Enter()
         {

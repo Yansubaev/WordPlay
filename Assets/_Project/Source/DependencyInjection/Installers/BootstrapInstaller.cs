@@ -1,7 +1,7 @@
 using Source.Infrastructure.SceneManagement;
+using Source.Infrastructure.Signals;
 using Source.Infrastructure.StateMachine;
 using Source.Infrastructure.StateMachine.States;
-using Source.Signals;
 using UnityEngine;
 using Zenject;
 
