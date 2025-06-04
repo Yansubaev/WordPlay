@@ -7,7 +7,7 @@ using Yans.UI.UIScreens;
 using Yans.UI.Views;
 using Zenject;
 
-namespace Source.Presentation.Screens
+namespace Source.Presentation.Panels
 {
     public class SettingsPanel : UIPanel
     {

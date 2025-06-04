@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace Source.Game.Controllers
+namespace Source.Application.Controllers
 {
     public class GameSessionManager
     {

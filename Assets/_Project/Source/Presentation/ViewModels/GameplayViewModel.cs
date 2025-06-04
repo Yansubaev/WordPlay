@@ -2,7 +2,7 @@ using R3;
 using Source.Application.Commands;
 using Source.Domain.Entities;
 using Source.Domain.Serivces;
-using Source.Game.Controllers;
+using Source.Application.Controllers;
 using System;
 using System.Linq;
 using Yans.ViewModels;

@@ -10,7 +10,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.Exceptions;
 using Zenject;
 
-namespace Source.Application.Services
+namespace Source.Application.Repositories
 {
     public class LevelRepository : BaseRepository, ILevelRepository
     {

@@ -7,6 +7,6 @@ namespace Source.Presentation.Transitions
     [Serializable]
     public class SettingsPanelType : UIScreenType
     {
-        public override Type GetScreenType() => typeof(Source.Presentation.Screens.SettingsPanel);
+        public override Type GetScreenType() => typeof(Source.Presentation.Panels.SettingsPanel);
     }
 }
