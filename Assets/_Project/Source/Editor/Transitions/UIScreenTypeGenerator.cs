@@ -31,7 +31,7 @@ namespace Source.Presentation.Transitions.Editor
             }
 
             string baseFolder = Path.GetDirectoryName(generatorScriptPath);
-            string outputFolder = Path.Combine(baseFolder, "../ScreenTypeRefrences/");
+            string outputFolder = Path.Combine(baseFolder, "../../Presentation/Transitions/ScreenTypeRefrences/");
             string absoluteOutput = Path.GetFullPath(outputFolder);
 
             Directory.CreateDirectory(absoluteOutput);
