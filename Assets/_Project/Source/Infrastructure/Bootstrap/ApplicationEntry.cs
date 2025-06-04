@@ -2,7 +2,6 @@ using Cysharp.Threading.Tasks;
 using Source.Infrastructure.StateMachine;
 using Source.Infrastructure.StateMachine.States;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using Zenject;
 
 namespace Source.Infrastructure
@@ -12,11 +11,7 @@ namespace Source.Infrastructure
     /// </summary>
     public class ApplicationEntry : MonoBehaviour
     {
-        #region private fields
         private GameStateMachine _stateMachine;
-        #endregion
-
-        #region public methods
 
         [Inject]
         public void Inject(GameStateMachine stateMachine)
@@ -24,16 +19,12 @@ namespace Source.Infrastructure
             _stateMachine = stateMachine;
         }
 
-        #endregion
-
         #region private methods
 
-        private async void Start()
+        private void Start()
         {
             Debug.Log("ApplicationEntry: Starting the application entry");
             SetOptimalFrameRate();
-
-            var t = await Addressables.InitializeAsync(true);
 
             // Initialize the state machine with the bootstrap state
             _stateMachine.Enter<BootstrapState>().Forget();
@@ -46,16 +37,16 @@ namespace Source.Infrastructure
         {
             // Get the device's refresh rate (using refreshRateRatio for newer Unity versions)
             int deviceRefreshRate = Mathf.RoundToInt((float)Screen.currentResolution.refreshRateRatio.value);
-            
+
             // Determine target framerate based on device capabilities
             int targetFrameRate = GetOptimalFrameRate(deviceRefreshRate);
-            
+
             // Set the target framerate
             UnityEngine.Application.targetFrameRate = targetFrameRate;
-            
+
             // Also set VSync if appropriate
             QualitySettings.vSyncCount = ShouldUseVSync(targetFrameRate, deviceRefreshRate) ? 1 : 0;
-            
+
             Debug.Log($"ApplicationEntry: Device refresh rate: {deviceRefreshRate}Hz, Target framerate: {targetFrameRate}fps, VSync: {(QualitySettings.vSyncCount > 0 ? "On" : "Off")}");
         }
 
@@ -122,10 +113,10 @@ namespace Source.Infrastructure
             // This helps prevent screen tearing
             if (targetFrameRate == deviceRefreshRate)
                 return true;
-                
+
             if (deviceRefreshRate % targetFrameRate == 0)
                 return true;
-                
+
             // For mobile devices, prefer VSync to reduce power consumption
 #if UNITY_ANDROID || UNITY_IOS
             return true;

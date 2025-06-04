@@ -1,5 +1,5 @@
 using Cysharp.Threading.Tasks;
-using Source.Signals;
+using Source.Infrastructure.Signals;
 using Zenject;
 
 namespace Source.Infrastructure.StateMachine.States

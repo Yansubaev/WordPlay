@@ -1,6 +1,5 @@
 using System;
 using Source.Domain.Serivces;
-using Source.Presentation.ViewModels;
 
 namespace Source.Application.Commands
 {
@@ -13,7 +12,6 @@ namespace Source.Application.Commands
 
         #region private fields
         private readonly IClusterGameService _clusterGameService;
-        private readonly GameplayViewModel _gameplayViewModel;
         private readonly string _cluster;
         private readonly int _wordIndex;
         private readonly int _startIndex;
@@ -22,14 +20,12 @@ namespace Source.Application.Commands
 
         public PlaceClusterCommand(
             IClusterGameService clusterGameService,
-            GameplayViewModel gameplayViewModel,
             string cluster,
             int wordIndex,
             int startIndex,
             Action onCommandExecuted = null)
         {
             _clusterGameService = clusterGameService;
-            _gameplayViewModel = gameplayViewModel;
             _cluster = cluster;
             _wordIndex = wordIndex;
             _startIndex = startIndex;

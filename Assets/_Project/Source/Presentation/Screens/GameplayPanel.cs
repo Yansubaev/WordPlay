@@ -1,9 +1,9 @@
 using R3;
+using Source.Infrastructure.Signals;
 using Source.Presentation.Adapters;
 using Source.Presentation.Settings;
 using Source.Presentation.ViewModels;
 using Source.Presentation.Views;
-using Source.Signals;
 using UnityEngine;
 using Yans.UI.Views;
 using Zenject;

@@ -1,4 +1,4 @@
-using Source.Signals;
+using Source.Infrastructure.Signals;
 using Source.Presentation.Views;
 using UnityEngine;
 using Yans.UI.UIScreens;
