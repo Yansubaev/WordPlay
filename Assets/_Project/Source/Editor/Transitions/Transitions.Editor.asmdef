@@ -1,0 +1,19 @@
+{
+    "name": "Transitions.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d586c099226ea1b4490faa68a5350cf1",
+        "GUID:4914622f6d933ba4b867dacf9143233c"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

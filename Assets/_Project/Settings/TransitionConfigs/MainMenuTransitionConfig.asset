@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc77694a72c1b5428eacfdfa2bbdce5, type: 3}
+  m_Name: MainMenuTransitionConfig
+  m_EditorClassIdentifier: 
+  Transitions:
+  - From:
+      rid: 8047432364545278038
+    To:
+      rid: 8047432364545278039
+    Type: 2
+  - From:
+      rid: 8047432364545278040
+    To:
+      rid: 8047432364545278041
+    Type: 3
+  references:
+    version: 2
+    RefIds:
+    - rid: 8047432364545278038
+      type: {class: MainMenuPanelType, ns: Source.Presentation.Transitions, asm: Presentation}
+      data: 
+    - rid: 8047432364545278039
+      type: {class: SettingsPanelType, ns: Source.Presentation.Transitions, asm: Presentation}
+      data: 
+    - rid: 8047432364545278040
+      type: {class: SettingsPanelType, ns: Source.Presentation.Transitions, asm: Presentation}
+      data: 
+    - rid: 8047432364545278041
+      type: {class: MainMenuPanelType, ns: Source.Presentation.Transitions, asm: Presentation}
+      data: 
