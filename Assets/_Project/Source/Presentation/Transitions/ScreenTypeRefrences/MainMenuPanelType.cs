@@ -7,6 +7,6 @@ namespace Source.Presentation.Transitions
     [Serializable]
     public class MainMenuPanelType : UIScreenType
     {
-        public override Type GetScreenType() => typeof(Source.Presentation.Screens.MainMenuPanel);
+        public override Type GetScreenType() => typeof(Source.Presentation.Panels.MainMenuPanel);
     }
 }

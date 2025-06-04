@@ -1,7 +1,7 @@
 using R3;
 using Yans.UI.UIScreens;
 
-namespace Source.Presentation.Screens
+namespace Source.Presentation.Panels
 {
     public abstract class ViewModelPanel : UIPanel
     {

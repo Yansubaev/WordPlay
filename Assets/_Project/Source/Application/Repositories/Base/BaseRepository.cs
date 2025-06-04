@@ -1,19 +1,20 @@
-using System;
 using Cysharp.Threading.Tasks;
 using Source.Application.ErrorHandling;
+using Source.Application.Services;
+using System;
 using UnityEngine;
 
-namespace Source.Application.Services
+namespace Source.Application.Repositories
 {
     public abstract class BaseRepository
     {
         private readonly IExceptionHandler _errorHandler;
-        
+
         protected BaseRepository(IExceptionHandler exceptionHandler = null)
         {
             _errorHandler = exceptionHandler ?? new DefaultExceptionHandler();
         }
-        
+
         protected async UniTask<T> Execute<T>(Func<UniTask<T>> apiCall, T defaultValue = default)
         {
             try
@@ -28,6 +29,5 @@ namespace Source.Application.Services
                 return _errorHandler.Handle(ex, defaultValue);
             }
         }
-
     }
 }

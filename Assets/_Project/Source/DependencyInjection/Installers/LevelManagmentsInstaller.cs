@@ -1,7 +1,8 @@
+using Source.Application.Repositories;
 using Source.Application.Services;
+using Source.Domain.Repositories;
 using Source.Domain.Serivces;
 using Zenject;
-using Source.Domain.Repositories;
 
 namespace Source.DI.Installers
 {
@@ -15,6 +16,8 @@ namespace Source.DI.Installers
             BindServices();
         }
 
+        #region private methods
+
         private void BindRepositories()
         {
             Container.Bind<ILevelRepository>().To<LevelRepository>().AsSingle();
@@ -27,5 +30,7 @@ namespace Source.DI.Installers
             Container.Bind<ILevelPreloadingService>().To<LevelPreloadingService>().AsSingle();
             Container.Bind<ILevelLoadingService>().To<LevelLoadingService>().AsSingle();
         }
+
+        #endregion
     }
 }

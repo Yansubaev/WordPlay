@@ -8,7 +8,7 @@ using UnityEngine;
 using Yans.UI.Views;
 using Zenject;
 
-namespace Source.Presentation.Screens
+namespace Source.Presentation.Panels
 {
     public class GameplayPanel : ViewModelPanel
     {

@@ -7,6 +7,6 @@ namespace Source.Presentation.Transitions
     [Serializable]
     public class GameplayPanelType : UIScreenType
     {
-        public override Type GetScreenType() => typeof(Source.Presentation.Screens.GameplayPanel);
+        public override Type GetScreenType() => typeof(Source.Presentation.Panels.GameplayPanel);
     }
 }

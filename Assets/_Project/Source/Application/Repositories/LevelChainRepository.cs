@@ -9,7 +9,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Zenject;
 
-namespace Source.Application.Services
+namespace Source.Application.Repositories
 {
     public class LevelChainRepository : BaseRepository, ILevelChainRepository
     {
