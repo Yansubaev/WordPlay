@@ -83,6 +83,8 @@ Export/
 Assets/StreamingAssets/BuildinAssetBundles
 *.DS_Store
 
+# Addressables Cloud Content Delivery build cache
+CCDBuildData/
 
 # End of https://www.toptal.com/developers/gitignore/api/unity
 .idea/
