@@ -22,7 +22,7 @@ namespace Source.Application.Repositories
 
         public UniTask<string[]> LoadLevelChain(CancellationToken ct = default)
         {
-            return Execute<string[]>(async () =>
+            return Execute(async () =>
             {
                 var handle = Addressables.LoadAssetAsync<TextAsset>(string.Format(_addressTemplate, "level_chain"));
 

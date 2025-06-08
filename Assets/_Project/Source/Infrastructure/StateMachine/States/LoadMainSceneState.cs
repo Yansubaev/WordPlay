@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Source.Infrastructure.StateMachine.States
@@ -53,6 +54,15 @@ namespace Source.Infrastructure.StateMachine.States
             var levelChain = await _levelChainRepository.LoadLevelChain(_cts.Token);
             var progress = _gameProgressService.LoadProgress();
 
+            // levelChain = null;
+
+            if (levelChain == null || levelChain.Length == 0)
+            {
+                Debug.LogError("Level chain is empty or null. Cannot load levels.");
+                ShowWarningAndRetry();
+                return;
+            }
+
             var levelsToLoad = new List<string>();
 
             if (progress == null)
@@ -87,6 +97,12 @@ namespace Source.Infrastructure.StateMachine.States
             return UniTask.CompletedTask;
         }
 
+        public async void RetryLoading()
+        {
+            await _sceneLoader.UnloadScene("Loading");
+            _stateMachine.Enter<LoadMainSceneState>().Forget();
+        }
+
         public void LateDispose()
         {
             if (_cts != null)
@@ -109,28 +125,36 @@ namespace Source.Infrastructure.StateMachine.States
 
         private async void LoadLevelsWithProgress(string[] levelIds)
         {
-            await _sceneLoader.LoadSceneAsync("Loading", cancellationToken: _cts.Token);
+            await _sceneLoader.LoadSceneAsync("Loading", LoadSceneMode.Additive, cancellationToken: _cts.Token);
 
             var result = await _levelPreloadingService.LoadLevels(
                 levelIds,
                 progress =>
                 {
-                    _signalBus.Fire(new LoadingProgressSignal(progress));
+                    _signalBus.TryFireId("LoadingProgress", progress);
                 },
                 _cts.Token);
 
             if (result == LevelPreloadingResult.Completed || result == LevelPreloadingResult.CompletedPartially)
             {
+                // _signalBus.TryFireId("LoadingProgress", -1f);
                 EnterMainMenu();
             }
             else
             {
                 Debug.LogError("Failed to load levels.");
-                _signalBus.Fire(new LoadingProgressSignal(-1f));
+                _signalBus.TryFireId("LoadingProgress", -1f);
 
                 // EnterMainMenu();
             }
 
+        }
+
+        private async void ShowWarningAndRetry()
+        {
+            await _sceneLoader.LoadSceneAsync("Loading", LoadSceneMode.Additive, cancellationToken: _cts.Token);
+            await UniTask.Yield();
+            _signalBus.TryFireId("LoadingProgress", -1f);
         }
 
         #endregion

@@ -8,6 +8,8 @@ namespace Source.Presentation.ViewModels
 {
     public class LoadingProgressViewModel : ViewModel
     {
+        public event Action OnFailedToLoad;
+
         public ReadOnlyReactiveProperty<float> Progress => _progress;
 
         #region private fields
@@ -15,41 +17,39 @@ namespace Source.Presentation.ViewModels
         private SignalBus _signalBus;
         #endregion
 
-        public event Action OnFailedToLoad;
-
         public LoadingProgressViewModel(SignalBus signalBus)
         {
             _signalBus = signalBus;
+        }
+
+        public void RetryLoading()
+        {
+            _signalBus.Fire<RetryLoadingSignal>();
         }
 
         #region protected methods
 
         protected override void OnCreated()
         {
-            _signalBus.Subscribe<LoadingProgressSignal>(OnLoadingProgressSignalReceived);
+            _signalBus.SubscribeId<float>("LoadingProgress", OnLoadingProgressSignalReceived);
         }
 
         protected override void OnAborted()
         {
-            _signalBus.TryUnsubscribe<LoadingProgressSignal>(OnLoadingProgressSignalReceived);
+            _signalBus.TryUnsubscribeId<float>("LoadingProgress", OnLoadingProgressSignalReceived);
         }
 
         #endregion
 
-        private void OnLoadingProgressSignalReceived(LoadingProgressSignal signal)
+        private void OnLoadingProgressSignalReceived(float progress)
         {
-            if (signal == null)
-            {
-                throw new ArgumentNullException(nameof(signal), "LoadingProgressSignal cannot be null");
-            }
-
-            if (signal.ProgressNomalized < 0f || signal.ProgressNomalized > 1f)
+            if (progress < 0f || progress > 1f)
             {
                 OnFailedToLoad?.Invoke();
                 return;
             }
 
-            _progress.Value = signal.ProgressNomalized;
+            _progress.Value = progress;
         }
     }
 }

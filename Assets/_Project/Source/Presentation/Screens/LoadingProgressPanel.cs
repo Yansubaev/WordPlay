@@ -1,8 +1,10 @@
 using R3;
 using Source.Presentation.ViewModels;
+using Source.Presentation.Views;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Yans.UI.Views;
 
 namespace Source.Presentation.Panels
 {
@@ -15,6 +17,9 @@ namespace Source.Presentation.Panels
 
         [SerializeField]
         private TextMeshProUGUI _progressText;
+
+        [SerializeField]
+        private TextButtonView _tryAgainButton;
 
         private LoadingProgressViewModel _viewModel;
         #endregion
@@ -38,23 +43,32 @@ namespace Source.Presentation.Panels
         {
             base.OnStarted();
             _viewModel.OnFailedToLoad += HandleFailedToLoad;
+            _tryAgainButton.OnClick += HandleRetryButtonClick;
         }
 
         protected override void OnStopped()
         {
             base.OnStopped();
             _viewModel.OnFailedToLoad -= HandleFailedToLoad;
+            _tryAgainButton.OnClick -= HandleRetryButtonClick;
         }
 
         #endregion
 
         #region private methods
 
+        private void HandleRetryButtonClick(View view)
+        {
+            _tryAgainButton.SetVisibility(false);
+            _progressBar.gameObject.SetActive(true);
+            _viewModel.RetryLoading();
+        }
+
         private void HandleFailedToLoad()
         {
-            Debug.LogError("Failed to load levels. Please check your configuration or network connection.");
             _progressText.text = "Failed to load assets.";
             _progressBar.gameObject.SetActive(false);
+            _tryAgainButton.SetVisibility(true);
         }
 
         private void SetProgress(float progress)

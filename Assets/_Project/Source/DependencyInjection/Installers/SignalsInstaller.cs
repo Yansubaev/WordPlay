@@ -12,7 +12,8 @@ namespace Source.DI.Installers
 
             SignalBusInstaller.Install(Container);
 
-            Container.DeclareSignal<LoadingProgressSignal>().OptionalSubscriber();
+            Container.DeclareSignal<float>().WithId("LoadingProgress").OptionalSubscriber();
+            Container.DeclareSignal<RetryLoadingSignal>();
             Container.DeclareSignal<ShowMainMenuSignal>();
             Container.DeclareSignal<OpenSettingsSignal>();
             Container.DeclareSignal<CloseSettingsSignal>();

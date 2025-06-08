@@ -34,5 +34,27 @@ namespace Yans.UI.Views
         }
 
         #endregion
+
+        public void SetVisibility(bool isVisible)
+        {
+            if (isVisible)
+            {
+                SetViewVisible();
+            }
+            else
+            {
+                SetViewHidden();
+            }
+        }
+
+        protected virtual void SetViewVisible()
+        {
+            gameObject.SetActive(true);
+        }
+
+        protected virtual void SetViewHidden()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -38,7 +38,6 @@ namespace Source.Application.Services
 
             }
 
-
             return false; // All levels are cached and cache is relevant
         }
 
