@@ -11,6 +11,14 @@ namespace Yans.UI
     [DisallowMultipleComponent]
     public class UIRoot : MonoBehaviour
     {
+        #region public properties
+        public Canvas Canvas => _canvas;
+        public CanvasScaler CanvasScaler => _canvasScaler;
+        public GraphicRaycaster GraphicRaycaster => _graphicRaycaster;
+        public RectTransform ScreenRoot => _screenRoot;
+        public ScreenOrientation CurrentOrientation => _currentOrientation;
+        #endregion
+
         #region private fields
 
         [SerializeField]
@@ -27,14 +35,6 @@ namespace Yans.UI
 
         private ScreenOrientation _currentOrientation;
         private readonly List<IOrientationChangeListener> _orientationListeners = new();
-        #endregion
-
-        #region public properties
-        public Canvas Canvas => _canvas;
-        public CanvasScaler CanvasScaler => _canvasScaler;
-        public GraphicRaycaster GraphicRaycaster => _graphicRaycaster;
-        public RectTransform ScreenRoot => _screenRoot;
-        public ScreenOrientation CurrentOrientation => _currentOrientation;
         #endregion
 
         #region public methods
@@ -58,7 +58,7 @@ namespace Yans.UI
 
         private void Awake()
         {
-            _currentOrientation = UnityEngine.Screen.orientation;
+            _currentOrientation = Screen.orientation;
         }
 
         private void Update()
@@ -68,9 +68,9 @@ namespace Yans.UI
 
         private void CheckOrientation()
         {
-            if (_currentOrientation != UnityEngine.Screen.orientation)
+            if (_currentOrientation != Screen.orientation)
             {
-                _currentOrientation = UnityEngine.Screen.orientation;
+                _currentOrientation = Screen.orientation;
                 NotifyOrientationListeners();
             }
         }

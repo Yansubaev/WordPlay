@@ -7,30 +7,35 @@ namespace Yans.UI.UIScreens
 {
     public abstract class UIScreen : UIBehaviour, IViewModelOwner
     {
-        [SerializeField] private Canvas _canvas;
-        [SerializeField] private GraphicRaycaster _graphicRaycaster;
-        [SerializeField] private RectTransform _transitionRoot;
-        [SerializeField] private CanvasGroup _fadeRoot;
-
-        private IViewModelProvider _viewModelProvider;
-        private string _instanceId;
-
+        #region public properties
         public Canvas Canvas => _canvas;
         public GraphicRaycaster GraphicRaycaster => _graphicRaycaster;
         public RectTransform TransitionRoot => _transitionRoot;
         public CanvasGroup FadeRoot => _fadeRoot;
-        protected IViewModelProvider ViewModelProvider => _viewModelProvider;
-
         public bool IsLifecycleStarted { get; private set; }
         public bool IsLifecycleResumed { get; private set; }
+        #endregion
+        protected IViewModelProvider ViewModelProvider => _viewModelProvider;
 
-        protected virtual void OnCreated() { }
-        protected virtual void OnStarted() { }
-        protected virtual void OnResumed() { }
-        protected virtual void OnPaused() { }
-        protected virtual void OnStopped() { }
-        protected virtual void OnClosed() { }
+        #region private fields
 
+        [SerializeField]
+        private Canvas _canvas;
+
+        [SerializeField]
+        private GraphicRaycaster _graphicRaycaster;
+
+        [SerializeField]
+        private RectTransform _transitionRoot;
+
+        [SerializeField]
+        private CanvasGroup _fadeRoot;
+
+        private IViewModelProvider _viewModelProvider;
+        private string _instanceId;
+        #endregion
+
+        #region public methods
 
         public string GetInstanceId()
         {
@@ -83,8 +88,8 @@ namespace Yans.UI.UIScreens
 
         public void PauseLifecycle()
         {
-            if(!IsLifecycleResumed) return;
-            
+            if (!IsLifecycleResumed) return;
+
 #if LOG_SCREEN_LIFECYCLE
             Debug.Log($"<color=orange>[SCREEN] {name}.PauseScreen</color>", gameObject);
 #endif
@@ -97,8 +102,8 @@ namespace Yans.UI.UIScreens
 
         public void StopLifecycle()
         {
-            if(!IsLifecycleStarted) return;
-            
+            if (!IsLifecycleStarted) return;
+
 #if LOG_SCREEN_LIFECYCLE
             Debug.Log($"<color=yellow>[SCREEN] {name}.StopScreen</color>", gameObject);
 #endif
@@ -116,5 +121,21 @@ namespace Yans.UI.UIScreens
 
             OnClosed();
         }
+
+        #endregion
+
+        #region protected methods
+        protected virtual void OnCreated() { }
+
+        protected virtual void OnStarted() { }
+
+        protected virtual void OnResumed() { }
+
+        protected virtual void OnPaused() { }
+
+        protected virtual void OnStopped() { }
+
+        protected virtual void OnClosed() { }
+        #endregion
     }
 }
