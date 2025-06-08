@@ -48,7 +48,7 @@ namespace Yans.UI
 
             await HandlePanelsTransition(prevScreen, newScreen);
 
-            if (prevScreen is not UIPopup)
+            if (newScreen != null && !newScreen.GetType().IsSubclassOf(typeof(UIPopup)))
                 SafeStopLifecycle(prevScreen);
 
             SafeResumeLifecycle(newScreen);
