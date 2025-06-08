@@ -21,6 +21,38 @@ namespace Source.Application.Repositories
             _addressTemplate = addressTemplate;
         }
 
+        public async UniTask<bool> IsLevelAvaialble(string levelId, CancellationToken ct = default)
+        {
+            try
+            {
+                string address = string.Format(_addressTemplate, levelId);
+
+                // Check if the address exists in Addressables
+                var locationsHandle = Addressables.LoadResourceLocationsAsync(address);
+                await locationsHandle.ToUniTask(cancellationToken: ct);
+
+                if (locationsHandle.Status != AsyncOperationStatus.Succeeded || locationsHandle.Result.Count == 0)
+                {
+                    Addressables.Release(locationsHandle);
+                    return false; // Not found in Addressables
+                }
+                Addressables.Release(locationsHandle);
+
+                // Check if the asset is cached and up-to-date (download size == 0 means cached and no update needed)
+                var sizeHandle = Addressables.GetDownloadSizeAsync(address);
+                await sizeHandle.ToUniTask(cancellationToken: ct);
+                bool isCached = sizeHandle.Status == AsyncOperationStatus.Succeeded && sizeHandle.Result == 0;
+                Addressables.Release(sizeHandle);
+
+                return isCached;
+            }
+            catch (OperationCanceledException ex)
+            {
+                Debug.LogException(ex);
+                return false;
+            }
+        }
+
         public async UniTask<AddressableResult<LevelData>> LoadLevel(string levelId, Action<float> onProgress = null, CancellationToken ct = default)
         {
             AsyncOperationHandle<TextAsset> handle = default;
@@ -60,13 +92,11 @@ namespace Source.Application.Repositories
             {
                 Debug.LogException(ex);
                 return new AddressableResult<LevelData>(AddressableStatus.InvalidKey);
-
             }
             catch (JsonException ex)
             {
                 Debug.LogException(ex);
                 return new AddressableResult<LevelData>(AddressableStatus.Failed);
-
             }
             catch (Exception ex)
             {

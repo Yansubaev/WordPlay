@@ -1,10 +1,11 @@
+using Cysharp.Threading.Tasks;
 using Source.Presentation.Panels;
 using Yans.UI;
 using Zenject;
 
 namespace Source.Presentation.Presenters
 {
-    public class MainMenuPresenter
+    public class LoadingProgressPresenter
     {
         #region private fields
         private IScreenManager _uiService;
@@ -18,19 +19,9 @@ namespace Source.Presentation.Presenters
             _uiService = uiService;
         }
 
-        public async void ShowMainMenu()
+        public void ShowLoadingProgress()
         {
-            await _uiService.OpenScreen<MainMenuPanel>();
-        }
-
-        public async void ShowSettingsScreen()
-        {
-            await _uiService.OpenScreen<SettingsPanel>();
-        }
-
-        public async void CloseSettings()
-        {
-            await _uiService.CloseTop();
+            _uiService.OpenScreen<LoadingProgressPanel>().Forget();
         }
 
         #endregion

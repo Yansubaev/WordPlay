@@ -1,5 +1,4 @@
 using Source.Infrastructure.SceneManagement;
-using Source.Infrastructure.Signals;
 using Source.Infrastructure.StateMachine;
 using Source.Infrastructure.StateMachine.States;
 using UnityEngine;
@@ -13,9 +12,6 @@ namespace Source.DI.Installers
         {
             Debug.Log("<color=green>[ZEN] BootstrapInstaller.InstallBindings</color>");
 
-            SignalBusInstaller.Install(Container);
-
-            DeclareSignals();
 
             Container.Bind<ISceneLoaderService>().To<SceneLoaderService>().AsSingle();
 
@@ -24,18 +20,6 @@ namespace Source.DI.Installers
 
         #region private methods
 
-        private void DeclareSignals()
-        {
-            Container.DeclareSignal<ShowMainMenuSignal>();
-            Container.DeclareSignal<OpenSettingsSignal>();
-            Container.DeclareSignal<CloseSettingsSignal>();
-            Container.DeclareSignal<OpenGameSignal>();
-            Container.DeclareSignal<StartGameSignal>();
-            Container.DeclareSignal<ExitGameSignal>();
-            Container.DeclareSignal<ShowGameplayScreenSignal>();
-            Container.DeclareSignal<PauseGameSignal>();
-            Container.DeclareSignal<ResumeGameSignal>();
-        }
 
         private void BindStateMachine()
         {

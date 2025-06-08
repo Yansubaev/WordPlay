@@ -26,7 +26,6 @@ namespace Source.Infrastructure
             Debug.Log("ApplicationEntry: Starting the application entry");
             SetOptimalFrameRate();
 
-            // Initialize the state machine with the bootstrap state
             _stateMachine.Enter<BootstrapState>().Forget();
         }
 
