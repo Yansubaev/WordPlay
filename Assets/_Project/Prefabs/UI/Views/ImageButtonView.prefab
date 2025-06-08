@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 7674308233229238078}
   - component: {fileID: 6885581081220892837}
   - component: {fileID: 5367366120746771664}
+  - component: {fileID: 700840209065964474}
   - component: {fileID: 20508529546587224}
   - component: {fileID: 8224250362712239270}
   m_Layer: 5
-  m_Name: ImageButton
+  m_Name: ImageButtonView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +63,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 7674308233229238078}
   _clickInterceptor: {fileID: 8224250362712239270}
+  _canvasGroup: {fileID: 700840209065964474}
   _image: {fileID: 6276476147176120873}
+--- !u!225 &700840209065964474
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4166412368280724948}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &20508529546587224
 MonoBehaviour:
   m_ObjectHideFlags: 0

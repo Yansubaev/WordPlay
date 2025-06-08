@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using Zenject;
 
@@ -12,13 +13,13 @@ namespace Source.Infrastructure.SceneManagement
     public class SceneLoaderService : ISceneLoaderService
     {
         #region private fields
-        private readonly DiContainer _container;
+        private readonly ZenjectSceneLoader _sceneLaoder;
         string _currentScene;
         #endregion
 
-        public SceneLoaderService(DiContainer container)
+        public SceneLoaderService(ZenjectSceneLoader sceneLoader)
         {
-            _container = container;
+            _sceneLaoder = sceneLoader;
             _currentScene = default;
         }
 
@@ -28,11 +29,14 @@ namespace Source.Infrastructure.SceneManagement
         /// Loads a scene asynchronously.
         /// </summary>
         /// <param name="sceneName">The name of the scene to load.</param>
-        public async UniTask LoadSceneAsync(string sceneName, LoadSceneMode mode = LoadSceneMode.Single, CancellationToken cancellationToken = default)
+        public async UniTask LoadSceneAsync(
+            string sceneName,
+            LoadSceneMode mode = LoadSceneMode.Single,
+            CancellationToken cancellationToken = default)
         {
             var oldScene = _currentScene;
 
-            var op = SceneManager.LoadSceneAsync(sceneName, mode);
+            var op = _sceneLaoder.LoadSceneAsync(sceneName, mode);
             op.allowSceneActivation = true;
 
             await op.ToUniTask(cancellationToken: cancellationToken);
@@ -51,6 +55,7 @@ namespace Source.Infrastructure.SceneManagement
             }
 
             var op = SceneManager.UnloadSceneAsync(sceneName);
+            
             await op.ToUniTask(cancellationToken: cancellationToken);
 
             if (_currentScene == sceneName)
