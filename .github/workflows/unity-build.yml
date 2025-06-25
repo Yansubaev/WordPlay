@@ -51,7 +51,7 @@ jobs:
 
       # Step 5: Install Unity Editor
       - name: Install Unity
-        uses: game-ci/unity-installer@v2
+        uses: game-ci/unity-installer@v3 # Updated to the latest version
         with:
           version: ${{ env.UNITY_VERSION }}
 
@@ -81,13 +81,13 @@ jobs:
 
       # Step 8: Upload Build Artifacts
       - name: Upload Android Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # Updated to the latest version
         with:
           name: Android
           path: Build/Android/app.apk
 
       - name: Upload WebGL Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # Updated to the latest version
         with:
           name: WebGL
           path: Build/WebGL
