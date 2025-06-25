@@ -3,24 +3,26 @@ name: Unity Build
 on:
   push:
     branches:
-      - test-ci # Run workflow only for the test-ci branch
+      - test-ci # Trigger workflow only on the test-ci branch
   pull_request:
     branches:
       - test-ci
-  workflow_dispatch: # Allows you to run the workflow manually
+  workflow_dispatch: # Allow manual triggering of the workflow
 
 jobs:
   build:
     name: Build Unity Project
     runs-on: ubuntu-latest
-    
+
     env:
-      UNITY_VERSION: 6000.0.51f1 # Specify your Unity version
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }} # Unity account email
+      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }} # Unity account password
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }} # Unity license file
 
     steps:
       # Step 1: Checkout the repository
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2: Cache Unity Library
       - name: Cache Unity Library
@@ -31,63 +33,37 @@ jobs:
           restore-keys: |
             Library-${{ runner.os }}-
 
-      # Step 3: Cache Unity UPM
-      - name: Cache Unity UPM
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/unity
-          key: UPM-${{ runner.os }}-${{ hashFiles('Packages/manifest.json') }}
-          restore-keys: |
-            UPM-${{ runner.os }}-
-
-      # Step 4: Cache Gradle for Android
-      - name: Cache Gradle
-        uses: actions/cache@v3
-        with:
-          path: ~/.gradle/caches
-          key: Gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            Gradle-${{ runner.os }}-
-
-      # Step 5: Install Unity Editor
-      - name: Install Unity
-        uses: game-ci/unity-installer@v3 # Updated to the latest version
-        with:
-          version: ${{ env.UNITY_VERSION }}
-
-      # Step 6: Build for Android
+      # Step 3: Build for Android
       - name: Build Android APK
-        run: |
-          /opt/unity/Editor/Unity \
-            -batchmode \
-            -nographics \
-            -quit \
-            -projectPath . \
-            -executeMethod BuildScript.BuildAndroid \
-            -customBuildTarget Android \
-            -customBuildPath Build/Android/app.apk
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: Android # Build target platform
+          androidExportType: androidPackage # Export as APK
 
-      # Step 7: Build for WebGL
+      # Step 4: Build for WebGL
       - name: Build WebGL
-        run: |
-          /opt/unity/Editor/Unity \
-            -batchmode \
-            -nographics \
-            -quit \
-            -projectPath . \
-            -executeMethod BuildScript.BuildWebGL \
-            -customBuildTarget WebGL \
-            -customBuildPath Build/WebGL
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: WebGL # Build target platform
 
-      # Step 8: Upload Build Artifacts
+      # Step 5: Upload Android Artifact
       - name: Upload Android Artifact
-        uses: actions/upload-artifact@v4 # Updated to the latest version
+        uses: actions/upload-artifact@v4
         with:
           name: Android
-          path: Build/Android/app.apk
+          path: build/Android # Path to the Android build output
 
+      # Step 6: Upload WebGL Artifact
       - name: Upload WebGL Artifact
-        uses: actions/upload-artifact@v4 # Updated to the latest version
+        uses: actions/upload-artifact@v4
         with:
           name: WebGL
-          path: Build/WebGL
+          path: build/WebGL # Path to the WebGL build output
