@@ -29,9 +29,9 @@ namespace Source.Presentation.Presenters
             await _uiService.OpenScreen<PausePopup>();
         }
 
-        public async void ClosePausePopup()
+        public void ClosePausePopup()
         {
-            await _uiService.CloseTop();
+            _uiService.CloseTop();
         }
 
         public void CloseGameplayScreen()

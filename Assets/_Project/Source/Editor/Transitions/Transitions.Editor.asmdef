@@ -2,8 +2,8 @@
     "name": "Transitions.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:d586c099226ea1b4490faa68a5350cf1",
-        "GUID:4914622f6d933ba4b867dacf9143233c"
+        "GUID:4914622f6d933ba4b867dacf9143233c",
+        "GUID:45afbe7071dcf8a4491e8c8d3f6698ac"
     ],
     "includePlatforms": [
         "Editor"

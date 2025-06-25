@@ -28,9 +28,9 @@ namespace Source.Presentation.Presenters
             await _uiService.OpenScreen<SettingsPanel>();
         }
 
-        public async void CloseSettings()
+        public void CloseSettings()
         {
-            await _uiService.CloseTop();
+            _uiService.CloseTop();
         }
 
         #endregion
