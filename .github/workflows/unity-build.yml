@@ -1,0 +1,93 @@
+name: Unity Build
+
+on:
+  push:
+    branches:
+      - test-ci # Run workflow only for the test-ci branch
+  pull_request:
+    branches:
+      - test-ci
+  workflow_dispatch: # Allows you to run the workflow manually
+
+jobs:
+  build:
+    name: Build Unity Project
+    runs-on: ubuntu-latest
+    
+    env:
+      UNITY_VERSION: 6000.0.51f1 # Specify your Unity version
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Cache Unity Library
+      - name: Cache Unity Library
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ runner.os }}-${{ hashFiles('**/*.cs') }}
+          restore-keys: |
+            Library-${{ runner.os }}-
+
+      # Step 3: Cache Unity UPM
+      - name: Cache Unity UPM
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/unity
+          key: UPM-${{ runner.os }}-${{ hashFiles('Packages/manifest.json') }}
+          restore-keys: |
+            UPM-${{ runner.os }}-
+
+      # Step 4: Cache Gradle for Android
+      - name: Cache Gradle
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: Gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            Gradle-${{ runner.os }}-
+
+      # Step 5: Install Unity Editor
+      - name: Install Unity
+        uses: game-ci/unity-installer@v2
+        with:
+          version: ${{ env.UNITY_VERSION }}
+
+      # Step 6: Build for Android
+      - name: Build Android APK
+        run: |
+          /opt/unity/Editor/Unity \
+            -batchmode \
+            -nographics \
+            -quit \
+            -projectPath . \
+            -executeMethod BuildScript.BuildAndroid \
+            -customBuildTarget Android \
+            -customBuildPath Build/Android/app.apk
+
+      # Step 7: Build for WebGL
+      - name: Build WebGL
+        run: |
+          /opt/unity/Editor/Unity \
+            -batchmode \
+            -nographics \
+            -quit \
+            -projectPath . \
+            -executeMethod BuildScript.BuildWebGL \
+            -customBuildTarget WebGL \
+            -customBuildPath Build/WebGL
+
+      # Step 8: Upload Build Artifacts
+      - name: Upload Android Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Android
+          path: Build/Android/app.apk
+
+      - name: Upload WebGL Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: WebGL
+          path: Build/WebGL
