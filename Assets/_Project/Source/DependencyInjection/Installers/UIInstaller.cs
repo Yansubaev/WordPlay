@@ -32,7 +32,7 @@ namespace Source.DI.Installers
             Container.Bind<UIRoot>().FromInstance(_uiRoot).AsSingle();
             Container.Bind<IScreenInstantiator>().To<ZenjectPrefabScreenInstantiator>()
                 .FromInstance(_screenInstantiator).AsSingle();
-            Container.Bind<IViewModelProvider>().To<ViewModelProvider>().AsSingle();
+            Container.Bind<IViewModelProvider>().To<ZenjectViewModelProvider>().AsSingle();
             Container.Bind<IScreenManager>().To<UIScreenManager>().AsSingle();
 
         }

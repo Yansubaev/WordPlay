@@ -1,9 +1,9 @@
 using Source.Infrastructure.Signals;
-using Source.Presentation.Views;
 using UnityEngine;
 using Yans.UI.UIScreens;
 using Yans.UI.Views;
 using Zenject;
+using ButtonView = Source.Presentation.Views.ButtonView;
 
 namespace Source.Presentation.Popups
 {
