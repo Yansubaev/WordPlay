@@ -30,7 +30,7 @@ jobs:
           
           # All of these default to true, but feel free to set to
           # "false" if necessary for your workflow
-          android: true
+          android: false # Keep Android tools for Android build
           dotnet: true
           haskell: true
           large-packages: true
@@ -41,6 +41,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0 # Fetch full git history for proper versioning
           lfs: true # Enable Git LFS if your project uses it
 
       # Step 3: Cache Unity Library
@@ -64,6 +65,7 @@ jobs:
           androidExportType: androidPackage # Export as APK
           unityVersion: auto # Auto-detect Unity version from project
           versioning: Semantic # Use semantic versioning
+          allowDirtyBuild: true # Allow building with uncommitted changes
 
       # Step 5: Build for WebGL
       - name: Build WebGL
@@ -76,6 +78,7 @@ jobs:
           targetPlatform: WebGL # Build target platform
           unityVersion: auto # Auto-detect Unity version from project
           versioning: Semantic # Use semantic versioning
+          allowDirtyBuild: true # Allow building with uncommitted changes
 
       # Step 6: Upload Android Artifact
       - name: Upload Android Artifact
