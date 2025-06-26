@@ -10,8 +10,8 @@ on:
   workflow_dispatch: # Allow manual triggering of the workflow
 
 jobs:
-  build:
-    name: Build Unity Project
+  build-android:
+    name: Build Android
     runs-on: ubuntu-latest
 
     env:
@@ -44,14 +44,14 @@ jobs:
           fetch-depth: 0 # Fetch full git history for proper versioning
           lfs: true # Enable Git LFS if your project uses it
 
-      # Step 3: Cache Unity Library
+      # Step 3: Cache Unity Library for Android
       - name: Cache Unity Library
         uses: actions/cache@v3
         with:
           path: Library
-          key: Library-${{ runner.os }}-${{ hashFiles('**/*.cs', 'Packages/manifest.json') }}
+          key: Library-Android-${{ hashFiles('**/*.cs', 'Packages/manifest.json') }}
           restore-keys: |
-            Library-${{ runner.os }}-
+            Library-Android-
 
       # Step 4: Build for Android
       - name: Build Android APK
@@ -67,7 +67,58 @@ jobs:
           versioning: Semantic # Use semantic versioning
           allowDirtyBuild: true # Allow building with uncommitted changes
 
-      # Step 5: Build for WebGL
+      # Step 5: Upload Android Artifact
+      - name: Upload Android Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Android-Build
+          path: build/Android # Path to the Android build output
+          retention-days: 7 # Keep artifacts for 7 days
+
+  build-webgl:
+    name: Build WebGL
+    runs-on: ubuntu-latest
+
+    env:
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }} # Unity account email
+      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }} # Unity account password
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }} # Unity license file
+
+    steps:
+      # Step 1: Free up disk space on Ubuntu runner
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # This might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+          
+          # All of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true # Remove Android tools for WebGL build
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
+      # Step 2: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch full git history for proper versioning
+          lfs: true # Enable Git LFS if your project uses it
+
+      # Step 3: Cache Unity Library for WebGL
+      - name: Cache Unity Library
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-WebGL-${{ hashFiles('**/*.cs', 'Packages/manifest.json') }}
+          restore-keys: |
+            Library-WebGL-
+
+      # Step 4: Build for WebGL
       - name: Build WebGL
         uses: game-ci/unity-builder@v4
         env:
@@ -80,15 +131,7 @@ jobs:
           versioning: Semantic # Use semantic versioning
           allowDirtyBuild: true # Allow building with uncommitted changes
 
-      # Step 6: Upload Android Artifact
-      - name: Upload Android Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Android-Build
-          path: build/Android # Path to the Android build output
-          retention-days: 7 # Keep artifacts for 7 days
-
-      # Step 7: Upload WebGL Artifact
+      # Step 5: Upload WebGL Artifact
       - name: Upload WebGL Artifact
         uses: actions/upload-artifact@v4
         with:
